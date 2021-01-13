@@ -1,0 +1,40 @@
+# Created by .ignore support plugin (hsz.mobi)
+### Example user template template
+### Example user template
+
+# IntelliJ project files
+.idea
+*.iml
+out
+gen
+### Actionscript template
+# Build and Release Folders
+bin-debug/
+bin-release/
+[Oo]bj/
+[Bb]in/
+
+# Other files and folders
+.settings/
+
+# Executables
+*.swf
+*.air
+*.ipa
+*.apk
+
+# Project files, i.e. `.project`, `.actionScriptProperties` and `.flexProperties`
+# should NOT be excluded as they contain compiler settings and other important
+# information for Eclipse / Flash Builder.
+
+.gitignore
+.idea/
+"\344\270\223\351\242\230\347\257\207/"
+"\345\210\206\345\270\203\345\274\217\345\255\230\345\202\250\347\257\207/"
+"\345\210\206\345\270\203\350\256\241\347\256\227\346\241\206\346\236\266\347\257\207/"
+"\345\270\270\350\247\201\345\244\247\346\225\260\346\215\256\351\241\271\347\233\256/"
+"\345\270\270\350\247\201\347\273\204\344\273\266\346\225\264\347\220\206/"
+"\346\225\260\346\215\256\344\273\223\345\272\223\347\257\207/"
+"\347\233\221\346\216\247\350\277\220\347\273\264\347\257\207/"
+"\347\274\226\347\250\213\350\257\255\350\250\200\347\257\207/"
+"\350\260\203\345\272\246\347\263\273\347\273\237\347\257\207/"
