@@ -113,6 +113,12 @@
       <version>${flink.version}</version>
       <!--           <scope>provided</scope>-->
     </dependency>
+<!--    <dependency>-->
+<!--      <groupId>org.apache.flink</groupId>-->
+<!--      <artifactId>flink-jdbc_2.11</artifactId>-->
+<!--      <version>1.10.3</version>-->
+<!--      &lt;!&ndash;           <scope>provided</scope>&ndash;&gt;-->
+<!--    </dependency>-->
     <dependency>
       <groupId>org.apache.flink</groupId>
       <artifactId>flink-connector-redis_2.11</artifactId>
