@@ -1,10 +1,12 @@
 package com.luoj.task.example.redis;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.flink.api.common.RuntimeExecutionMode;
 import org.apache.flink.api.common.functions.FilterFunction;
 import org.apache.flink.api.common.functions.FlatMapFunction;
 import org.apache.flink.api.common.serialization.SimpleStringSchema;
 import org.apache.flink.api.java.tuple.Tuple2;
+import org.apache.flink.streaming.api.TimeCharacteristic;
 import org.apache.flink.streaming.api.datastream.DataStreamSource;
 import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
@@ -25,15 +27,18 @@ import java.util.Properties;
  * @author: lj
  * @create: 2021/03/04 10:43
  */
+@Slf4j
 public class Redis_Demo {
+
     public static void main(String[] args) throws Exception {
 
         // TODO 1.env
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         env.setRuntimeMode(RuntimeExecutionMode.AUTOMATIC);
+        env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime);
 
         // TODO 2.source
-        DataStreamSource<String> lines = env.socketTextStream("node1", 9999);
+        DataStreamSource<String> lines = env.socketTextStream("172.17.11.26", 9999);
 
         // TODO 3.transformation
         SingleOutputStreamOperator<Tuple2<String, Integer>> result = lines.flatMap(new FlatMapFunction<String, Tuple2<String, Integer>>() {
@@ -48,12 +53,17 @@ public class Redis_Demo {
 
         // TODO 4.sink
         result.print();
-        FlinkJedisPoolConfig config = new FlinkJedisPoolConfig.Builder().setHost("").build();
-        RedisSink<Tuple2<String, Integer>> redisSink = new RedisSink<>(config, new MyRedisMapper());
+
+        // /opt/app/redis/redis/bin/redis-server  /opt/app/redis/redis-5.0.4/redis.conf
+        FlinkJedisPoolConfig flinkJedisPoolConfig = new FlinkJedisPoolConfig.Builder().setHost("172.17.8.26").setDatabase(0).setPort(6379).build();
+        RedisSink<Tuple2<String, Integer>> redisSink = new RedisSink<>(flinkJedisPoolConfig, new MyRedisMapper());
         result.addSink(redisSink);
+
         // TODO 5.execute
         env.execute();
+
     }
+
     public static class MyRedisMapper implements RedisMapper<Tuple2<String, Integer>>{
 
         @Override
@@ -64,11 +74,13 @@ public class Redis_Demo {
 
         @Override
         public String getKeyFromData(Tuple2<String, Integer> t) {
+            log.info(" >>>>>>>>>>> key:{}", t.f0);
             return t.f0;
         }
 
         @Override
         public String getValueFromData(Tuple2<String, Integer> t) {
+            log.info(" >>>>>>>>>>> value:{}", t.f1);
             return t.f1.toString();
         }
     }

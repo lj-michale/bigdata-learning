@@ -24,7 +24,7 @@ public class Source_Demo03_Socket {
         env.setRuntimeMode(RuntimeExecutionMode.AUTOMATIC);
 
         // 2.source
-        DataStreamSource<String> lines = env.socketTextStream("node1", 9999);
+        DataStreamSource<String> lines = env.socketTextStream("172.17.11.26", 9999);
 
         // 3.transformation
         SingleOutputStreamOperator<Tuple2<String, Integer>> wordAndOne = lines.flatMap(new FlatMapFunction<String, Tuple2<String, Integer>>() {
