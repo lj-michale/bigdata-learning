@@ -13,7 +13,16 @@ object SparkSQLDemo {
       .enableHiveSupport()
       .getOrCreate()
 
-    sparkSession.sql("show databases").show()
+    sparkSession.sql("show databases").explain()
+
+    sparkSession.sql(
+      """
+        |SELECT app_key,msg_id,uid,platform
+        |FROM edw.third_msg_status_latest_hour_log
+        |WHERE data_hour >= 2021020400
+        |AND data_hour <= 2021020500
+        |""".stripMargin).explain()
+
 
 
     sparkSession.stop()

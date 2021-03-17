@@ -1,0 +1,206 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.bigdata</groupId>
+  <artifactId>flink-learning</artifactId>
+  <version>1.0.2-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <flink.version>1.12.1</flink.version>
+    <hadoop.version>2.6.5</hadoop.version>
+    <java.version>1.8</java.version>
+    <scala.binary.version>2.11</scala.binary.version>
+    <maven.compiler.source>${java.version}</maven.compiler.source>
+    <maven.compiler.target>${java.version}</maven.compiler.target>
+    <hive.version>2.3.6</hive.version>
+    <!-- Secondary components -->
+    <async.client.version>2.10.4</async.client.version>
+    <ch.driver.version>0.1.40</ch.driver.version>
+    <!-- Testing components -->
+    <log4j.version>2.11.2</log4j.version>
+  </properties>
+
+  <repositories>
+    <repository>
+      <id>apache.snapshots</id>
+      <name>Apache Development Snapshot Repository</name>
+      <url>https://repository.apache.org/content/repositories/snapshots/</url>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
+
+  <pluginRepositories>
+    <pluginRepository>
+      <id>scala-tools.org</id>
+      <name>Scala-Tools Maven2 Repository</name>
+      <url>http://scala-tools.org/repo-releases</url>
+    </pluginRepository>
+  </pluginRepositories>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.apache.flink</groupId>
+      <artifactId>flink-scala_${scala.binary.version}</artifactId>
+      <version>${flink.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.flink</groupId>
+      <artifactId>flink-java</artifactId>
+      <version>${flink.version}</version>
+      <!--            <scope>provided</scope>-->
+    </dependency>
+    <dependency>
+      <groupId>org.apache.flink</groupId>
+      <artifactId>flink-streaming-scala_${scala.binary.version}</artifactId>
+      <version>${flink.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.flink</groupId>
+      <artifactId>flink-streaming-java_${scala.binary.version}</artifactId>
+      <version>${flink.version}</version>
+      <!--            <scope>provided</scope>-->
+    </dependency>
+    <dependency>
+      <groupId>org.apache.flink</groupId>
+      <artifactId>flink-clients_${scala.binary.version}</artifactId>
+      <version>${flink.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.flink</groupId>
+      <artifactId>flink-json</artifactId>
+      <version>${flink.version}</version>
+      <!--            <scope>provided</scope>-->
+    </dependency>
+    <dependency>
+      <groupId>org.apache.flink</groupId>
+      <artifactId>flink-table-common</artifactId>
+      <version>${flink.version}</version>
+      <!--            <scope>provided</scope>-->
+    </dependency>
+    <dependency>
+      <groupId>org.apache.flink</groupId>
+      <artifactId>flink-table-api-scala-bridge_${scala.binary.version}</artifactId>
+      <version>${flink.version}</version>
+      <!--            <scope>provided</scope>-->
+    </dependency>
+    <dependency>
+      <groupId>org.apache.flink</groupId>
+      <artifactId>flink-table-api-java-bridge_${scala.binary.version}</artifactId>
+      <version>${flink.version}</version>
+      <!--            <scope>provided</scope>-->
+    </dependency>
+    <dependency>
+      <groupId>org.apache.flink</groupId>
+      <artifactId>flink-table-planner-blink_${scala.binary.version}</artifactId>
+      <version>1.12.1</version>
+      <!--            <scope>provided</scope>-->
+    </dependency>
+    <dependency>
+      <groupId>org.apache.flink</groupId>
+      <artifactId>flink-connector-kafka_${scala.binary.version}</artifactId>
+      <version>${flink.version}</version>
+      <!--           <scope>provided</scope>-->
+    </dependency>
+    <dependency>
+      <groupId>org.apache.flink</groupId>
+      <artifactId>flink-sql-connector-kafka_${scala.binary.version}</artifactId>
+      <version>${flink.version}</version>
+      <!--           <scope>provided</scope>-->
+    </dependency>
+    <dependency>
+      <groupId>org.apache.flink</groupId>
+      <artifactId>flink-connector-redis_2.11</artifactId>
+      <version>1.1.5</version>
+      <!--<scope>provided</scope>-->
+    </dependency>
+    <dependency>
+      <groupId>org.apache.flink</groupId>
+      <artifactId>flink-statebackend-rocksdb_2.11</artifactId>
+      <version>${flink.version}</version>
+      <!--        <scope>provided</scope>-->
+    </dependency>
+    <dependency>
+      <groupId>org.apache.flink</groupId>
+      <artifactId>flink-connector-filesystem_2.11</artifactId>
+      <version>1.11.2</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.flink</groupId>
+      <artifactId>flink-hadoop-compatibility_2.11</artifactId>
+      <version>${flink.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.hadoop</groupId>
+      <artifactId>hadoop-client</artifactId>
+      <version>${hadoop.version}</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.scala-tools</groupId>
+        <artifactId>maven-scala-plugin</artifactId>
+        <version>2.15.2</version>
+        <executions>
+          <execution>
+            <id>scala-compile-first</id>
+            <goals>
+              <goal>compile</goal>
+            </goals>
+            <configuration>
+              <includes>
+                <include>**/*.scala</include>
+              </includes>
+            </configuration>
+          </execution>
+          <execution>
+            <id>scala-test-compile</id>
+            <goals>
+              <goal>testCompile</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <!-- Maven Assembly Plugin -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <version>3.1.1</version>
+        <configuration>
+          <!-- get all project dependencies -->
+          <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+          </descriptorRefs>
+          <!-- MainClass in mainfest make a executable jar -->
+        </configuration>
+        <executions>
+          <execution>
+            <id>make-assembly</id>
+            <!-- bind to the packaging phase -->
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.5</version>
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+          <encoding>UTF-8</encoding>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
