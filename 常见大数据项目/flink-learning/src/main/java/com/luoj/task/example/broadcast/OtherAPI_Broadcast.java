@@ -31,6 +31,7 @@ import java.util.Map;
  * 然后使用scoreDS(学号,学科,成绩)和广播数据(学号,姓名)进行关联,得到这样格式的数据:(姓名,学科,成绩)
  */
 public class OtherAPI_Broadcast {
+
     public static void main(String[] args) throws Exception {
         //1.env
         ExecutionEnvironment env = ExecutionEnvironment.getExecutionEnvironment();
@@ -79,4 +80,5 @@ public class OtherAPI_Broadcast {
         //4.Sink
         result.print();
     }
+
 }
