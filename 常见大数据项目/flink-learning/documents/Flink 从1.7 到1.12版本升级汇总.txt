@@ -56,3 +56,5 @@ Flink 从1.7 到1.12版本升级汇总
     7.5.4. Table API/SQL 中的其它改进
     7.6. PyFlink: Python DataStream API
     7.7.PyFlink 中的其它改进
+
+https://app.yinxiang.com/fx/8c4bb076-ed16-4173-afe0-2a6839c32fa1
