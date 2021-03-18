@@ -1,4 +1,4 @@
-package com.luoj.task.example.source;
+package com.luoj.task.learn.source;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,4 +1,4 @@
-package com.luoj.task.example.broadcast;
+package com.luoj.task.learn.broadcast;
 
 import org.apache.flink.api.common.functions.RichMapFunction;
 import org.apache.flink.api.java.ExecutionEnvironment;

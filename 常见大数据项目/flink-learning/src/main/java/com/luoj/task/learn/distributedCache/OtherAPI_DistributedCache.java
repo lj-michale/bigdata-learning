@@ -1,4 +1,4 @@
-package com.luoj.task.example.distributedCache;
+package com.luoj.task.learn.distributedCache;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.flink.api.common.functions.RichMapFunction;
@@ -46,7 +46,9 @@ import java.util.Map;
  * 将scoreDS(学号, 学科, 成绩)中的数据和分布式缓存中的数据(学号,姓名)关联,得到这样格式的数据: (学生姓名,学科,成绩)
  */
 public class OtherAPI_DistributedCache {
+
     public static void main(String[] args) throws Exception {
+
         //1.env
         ExecutionEnvironment env = ExecutionEnvironment.getExecutionEnvironment();
 

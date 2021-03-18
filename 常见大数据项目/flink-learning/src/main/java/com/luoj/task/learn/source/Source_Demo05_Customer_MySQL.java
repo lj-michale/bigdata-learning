@@ -1,4 +1,4 @@
-package com.luoj.task.example.source;
+package com.luoj.task.learn.source;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,8 +13,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.Random;
-import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 /**

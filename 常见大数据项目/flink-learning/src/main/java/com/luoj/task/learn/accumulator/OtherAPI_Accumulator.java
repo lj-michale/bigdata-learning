@@ -1,4 +1,4 @@
-package com.luoj.task.example.accumulator;
+package com.luoj.task.learn.accumulator;
 
 import org.apache.flink.api.common.JobExecutionResult;
 import org.apache.flink.api.common.accumulators.IntCounter;

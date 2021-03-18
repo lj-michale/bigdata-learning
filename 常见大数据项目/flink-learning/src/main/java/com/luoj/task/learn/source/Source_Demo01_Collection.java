@@ -1,4 +1,4 @@
-package com.luoj.task.example.source;
+package com.luoj.task.learn.source;
 
 import org.apache.flink.api.common.RuntimeExecutionMode;
 import org.apache.flink.streaming.api.datastream.DataStreamSource;

@@ -1,4 +1,4 @@
-package com.luoj.task.example.kafka;
+package com.luoj.task.learn.kafka;
 
 import org.apache.flink.api.common.RuntimeExecutionMode;
 import org.apache.flink.api.common.serialization.SimpleStringSchema;
@@ -8,7 +8,8 @@ import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer;
 
 import java.util.Properties;
 
-/**
+/**https://blog.csdn.net/dcc15011003101/article/details/106298498/
+ * https://blog.csdn.net/dcc15011003101/article/details/106298498/
  * @program flink-demo
  * @description: 演示flinkconnectors-kafkaConsumer-相当于source
  * @author: erainm
