@@ -1,0 +1,58 @@
+
+Flink 从1.7 到1.12版本升级汇总
+
+二 .Flink 1.7 版本
+    2.1. Flink中的Scala 2.12支持
+    2.2. 状态变化
+    2.3. Exactly-once语义的S3 StreamingFileSink
+    2.4. Streaming SQL中支持MATCH_RECOGNIZE
+    2.5. Streaming SQL中的 Temporal Tables 和 Temporal Joins
+    2.6. 版本化REST API
+    2.7. Kafka 2.0 Connector
+    2.8. 本地恢复
+    2.9. 删除Flink的传统模式
+三 .Flink 1.8 版本
+    3.1. 使用TTL（生存时间）连续增量清除旧的Key状态
+    3.2. 恢复保存点时对模式迁移的新支持
+    3.3. 保存点兼容性
+    3.4. RocksDB版本冲突并切换到FRocksDB（FLINK-10471）
+    3.5. Maven 依赖
+    3.6. TaskManager配置（FLINK-11716）
+    3.7. Table API 的变动
+    3.8. 连接器变动
+四 .Flink 1.9 版本
+    4.1. 细粒度批作业恢复 (FLIP-1)
+    4.2. State Processor API (FLIP-43)
+    4.3. Stop-with-Savepoint (FLIP-34)
+    4.4. 重构 Flink WebUI
+    4.5. 新 Blink SQL 查询处理器预览
+    4.6. Table API / SQL 的其他改进
+五 .Flink 1.10 版本 [重要版本 : Blink 整合完成]
+    5.1. 内存管理及配置优化
+    5.2. 统一的作业提交逻辑
+    5.3. 原生 Kubernetes 集成（Beta）
+    5.4. Table API/SQL: 生产可用的 Hive 集成
+    5.5. 其他 Table API/SQL 优化
+    5.6. PyFlink: 支持原生用户自定义函数（UDF）
+    5.7. 重要变更
+六 .Flink 1.11 版本 [重要版本]
+    6.1. Table & SQL 支持 Change Data Capture（CDC）
+    6.2. Table & SQL 支持 JDBC Catalog
+    6.3. Hive 实时数仓
+    6.4. 全新 Source API
+    6.5. PyFlink 生态
+    6.6. 生产可用性和稳定性提升
+    6.6.1 支持 application 模式和 Kubernetes 增强
+    6.6.2 Checkpoint & Savepoint 优化
+七 .Flink 1.12 版本 [重要版本]
+    7.1. DataStream API 支持批执行模式
+    7.2. 新的 Data Sink API (Beta)
+    7.3. 基于 Kubernetes 的高可用 (HA) 方案
+    7.4. 其它功能改进
+    7.5. Table API/SQL 变更
+    7.5.1. SQL Connectors 中的 Metadata 处理
+    7.5.2. Upsert Kafka Connector
+    7.5.3. SQL 中 支持 Temporal Table Join
+    7.5.4. Table API/SQL 中的其它改进
+    7.6. PyFlink: Python DataStream API
+    7.7.PyFlink 中的其它改进
