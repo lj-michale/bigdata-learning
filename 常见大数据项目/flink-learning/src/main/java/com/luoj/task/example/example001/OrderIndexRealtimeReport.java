@@ -148,6 +148,7 @@ public class OrderIndexRealtimeReport {
          * */
 
         env.execute("OrderIndexRealtimeReport");
+
     }
 
     public static final class OrderAndGmvAggregateFunc implements AggregateFunction<SubOrderDetail,

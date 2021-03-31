@@ -72,9 +72,15 @@ public class Sink_Demo02 {
 
         @Override
         public void close() throws Exception {
-            if (conn != null) conn.close();
-            if (ps != null) ps.close();
-            if (rs != null) rs.close();
+            if (conn != null) {
+                conn.close();
+            }
+            if (ps != null) {
+                ps.close();
+            }
+            if (rs != null) {
+                rs.close();
+            }
         }
     }
 }
