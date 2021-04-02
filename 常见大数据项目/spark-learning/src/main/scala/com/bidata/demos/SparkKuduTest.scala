@@ -33,9 +33,9 @@ object SparkKuduTest {
     val tableName = "spark_kudu"
     val schema = StructType(
       StructField("userId", StringType, false) ::
-        StructField("name", StringType, false) ::
-        StructField("age", IntegerType, false) ::
-        StructField("sex", StringType, false) :: Nil
+      StructField("name", StringType, false) ::
+      StructField("age", IntegerType, false) ::
+      StructField("sex", StringType, false) :: Nil
     )
 
     val primaryKey = Seq("userId")
