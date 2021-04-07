@@ -1,0 +1,42 @@
+
+SparkSql 控制输出文件数量且大小均匀(distribute by rand())
+Q：Spark如何控制文件你输出数量？
+A：这个简单，用 coalesce或者repartition，num=(1.0*(df.count())/7000000).ceil.toInt
+Q：Spark让输出文件大小均匀？
+A：在sparksql的查询最后加上distribute by rand()
+
+本文重点：distribute by 关键字控制map输出结果的分发,相同字段的map输出会发到一个reduce节点处理，如果字段是rand()一个随机数，能能保证每个分区的数量基本一致
+
+简单的demo如下：
+import org.apache.spark.sql.SparkSession
+
+object DistributeByDemo {
+  def main(args: Array[String]): Unit = {
+    val spark = SparkSession.builder()
+      .appName("InsertRepositoryNew")
+      .master("local[*]")
+      .config("hive.exec.dynamic.partition.mode", "nonstrict")
+      //.config("hive.exec.reducers.bytes.per.reducer","1024000000")
+      .config("spark.sql.shuffle.partitions", "100")
+      .enableHiveSupport()
+      .getOrCreate()
+
+    val df = spark.sql(
+      s"""
+         |select id,name,age,insert_date
+         |from testdata.staff
+         |distribute by rand()
+      """.stripMargin)
+    val num = (1.0 * (df.count()) / 100).ceil.toInt
+    df.coalesce(num).createOrReplaceTempView("res")
+    spark.sql(
+      """
+        |insert overwrite table testdata.staff2 partition(insert_date)
+        |select * from res
+      """.stripMargin)
+    spark.stop()
+  }
+}
+
+
+原文链接：https://blog.csdn.net/weixin_42003671/article/details/93005087
