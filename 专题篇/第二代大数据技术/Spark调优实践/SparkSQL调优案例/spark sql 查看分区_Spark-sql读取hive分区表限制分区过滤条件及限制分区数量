@@ -18,8 +18,6 @@ val spark = SparkSession.builder().config(conf).withExtensions(extBuilder).enabl
 
 
 
-
-
 /**
 * @descr CheckPartitionTable规则执行类
 */
