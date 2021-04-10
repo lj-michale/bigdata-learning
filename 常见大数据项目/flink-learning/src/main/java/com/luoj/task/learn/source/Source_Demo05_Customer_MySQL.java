@@ -1,5 +1,6 @@
 package com.luoj.task.learn.source;
 
+import com.luoj.task.learn.partition.MyPartition;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,6 +30,8 @@ public class Source_Demo05_Customer_MySQL {
         env.setRuntimeMode(RuntimeExecutionMode.AUTOMATIC);
         // 2.source
         DataStreamSource<Student> streamSource = env.addSource(new MySQLSource()).setParallelism(2);
+        // 自定义分区
+        streamSource.partitionCustom(new MyPartition(), 0);
         // 3.transformation
 
         // 4.sink
