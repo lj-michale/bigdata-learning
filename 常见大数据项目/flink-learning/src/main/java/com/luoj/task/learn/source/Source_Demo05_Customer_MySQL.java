@@ -47,6 +47,9 @@ public class Source_Demo05_Customer_MySQL {
         private Integer id;
         private String name;
         private Integer age;
+
+        public Student(String split, int parseInt) {
+        }
     }
 
     public static class MySQLSource extends RichParallelSourceFunction<Student>{
