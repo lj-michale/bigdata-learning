@@ -1,0 +1,18 @@
+
+
+--------------------------------------------
+Hadoop
+--------------------------------------------
+NameNode: Hadoop中HDFS的主节点进程名称
+DataNode: Hadoop中HDFS的从节点进程名称
+SecondaryNameNode: Hadoop中HDFS的辅助节点名称
+
+ResourceManager: Hadoop中Yarn的主节点进程
+NodeManager: Hadoop中Yarn的从节点进程
+
+
+--------------------------------------------
+Flink
+--------------------------------------------
+JobManager: Flink主节点进程名称
+TaskManager: Flink从节点进程名称
