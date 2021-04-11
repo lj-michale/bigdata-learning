@@ -1,4 +1,4 @@
-package com.bidata.common
+package com.bidata.demos
 
 import java.util.Properties
 
