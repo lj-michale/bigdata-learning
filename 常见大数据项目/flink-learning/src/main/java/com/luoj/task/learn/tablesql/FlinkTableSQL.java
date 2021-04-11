@@ -49,12 +49,11 @@ public class FlinkTableSQL {
         // SQL Query
         Table sqlQuery = tableEnv.sqlQuery("select count(1), avg(age) from student");
 
-
         // CsvTableSink
         CsvTableSink csvTableSink = new CsvTableSink("", ",", 1, FileSystem.WriteMode.OVERWRITE);
 
         // 注册TableSink
-       sqlQuery.executeInsert("outputTable");
+        sqlQuery.executeInsert("outputTable");
 
         env.execute("Start Table Api for Stream");
 
