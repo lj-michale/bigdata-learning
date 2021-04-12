@@ -28,12 +28,12 @@ import java.sql.Timestamp;
 import java.sql.Types;
 
 
-/*
- * (1)当 Table 被转换成 DataStream 时（参阅与 DataStream 和 DataSet API 结合）。转换完成后，它就成为一个普通的 DataStream 程序，
- * 并会在调用 StreamExecutionEnvironment.execute() 时被执行。注意 从 1.11 版本开始，sqlUpdate 方法 和 insertInto 方法被废弃，
- * (2)从这两个方法构建的 Table 程序必须通过 StreamTableEnvironment.execute() 方法执行，
- *                        而不能通过 StreamExecutionEnvironment.execute() 方法来执行。
- * */
+/**
+  * (1)当 Table 被转换成 DataStream 时（参阅与 DataStream 和 DataSet API 结合）。转换完成后，它就成为一个普通的 DataStream 程序，
+  * 并会在调用 StreamExecutionEnvironment.execute() 时被执行。注意 从 1.11 版本开始，sqlUpdate 方法 和 insertInto 方法被废弃，
+  * (2)从这两个方法构建的 Table 程序必须通过 StreamTableEnvironment.execute() 方法执行，
+  *                        而不能通过 StreamExecutionEnvironment.execute() 方法来执行。
+  * */
 public class StreamTableApi {
 
     public static void main(String[] args) throws Exception {
