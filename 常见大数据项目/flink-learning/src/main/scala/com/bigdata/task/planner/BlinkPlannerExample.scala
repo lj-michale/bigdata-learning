@@ -46,6 +46,8 @@ object BlinkPlannerExample {
       .build()
     val bsTableEnv:StreamTableEnvironment = StreamTableEnvironment.create(bsEnv, bsSettings)
 
+    ///////////////////////////////////////////// DataStream  ///////////////////////////////////////////
+
     val props = new Properties()
     props.setProperty("bootstrap.servers","172.17.11.31:9092, 172.17.11.30:9092")
     props.setProperty("group.id","consumer-group")
@@ -97,7 +99,6 @@ object BlinkPlannerExample {
 //      """.stripMargin)
 //    bsTableEnv.toAppendStream[String](query).print()
 
-    ///////////////////////////////////////////// DataStream  ///////////////////////////////////////////
     val sensorDStream: DataStream[SensorReading] = dStream.map( line => {
         val jsonData = JSON.parseObject(line)
         val code:String = jsonData.getString("code")
@@ -143,12 +144,18 @@ object BlinkPlannerExample {
 //    windowDStream.addSink(producer)
     waterMarkStream.print()
 
-
     ///////////////////////////////////////////// TableApi  /////////////////////////////////////////////
 
 
 
+
+
+
     ///////////////////////////////////////////// TableSQL  /////////////////////////////////////////////
+
+
+
+
 
 
     bsEnv.execute(s"${this.getClass.getSimpleName}")
