@@ -46,11 +46,11 @@ public class FlinkTableSQLByBatchMode {
 
         tEnv.getConfig().setSqlDialect(SqlDialect.DEFAULT);
 
-        String dataAnalysisSQL =
-                "SELECT t2.manufacturer, t1.app_key, t1.platform, t1.channel, t1.app_alive, t1.awake_type, t1.uid, t1.from_package\n" +
+        String dataAnalysisSQL = "SELECT t2.manufacturer, t1.app_key, t1.platform, t1.channel, t1.app_alive, t1.awake_type, t1.uid, t1.from_package\n" +
                 "FROM edw.android_awake_target_log t1\n" +
                 "LEFT JOIN edw.device_info_fact t2 ON t1.uid = t2.uid\n" +
                 "WHERE t2.data_date =20201218";
+
         TableResult tableResult = tEnv.executeSql(dataAnalysisSQL);
         tableResult.print();
 
