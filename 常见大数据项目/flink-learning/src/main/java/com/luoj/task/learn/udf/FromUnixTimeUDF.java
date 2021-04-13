@@ -1,4 +1,4 @@
-package com.luoj.udf;
+package com.luoj.task.learn.udf;
 
 import org.apache.flink.table.functions.ScalarFunction;
 
