@@ -1,0 +1,37 @@
+
+public static void main(String[] args) {
+    StreamExecutionEnvironment env
+            = StreamExecutionEnvironment.getExecutionEnvironment();
+    env.setParallelism(1);
+
+    StreamTableEnvironment tableEnv = StreamTableEnvironment.create(env);
+
+    // 1.1 基于老版本 Planner 的流处理
+    EnvironmentSettings oldEnvSettings = EnvironmentSettings.newInstance()
+            .useOldPlanner()
+            .inStreamingMode()
+            .build();
+
+    StreamTableEnvironment oldstreamTableEnv = StreamTableEnvironment.create(env, oldEnvSettings);
+
+    // 1.2 基于老版本 Planner 的批处理
+    ExecutionEnvironment batchEnv = ExecutionEnvironment.getExecutionEnvironment();
+    BatchTableEnvironment oldbatchTableEnv = BatchTableEnvironment.create(batchEnv);
+
+    // 1.3 基于 blink 的流处理
+    EnvironmentSettings blinkEnvSettings = EnvironmentSettings.newInstance()
+            .useBlinkPlanner()
+            .inStreamingMode()
+            .build();
+
+    StreamTableEnvironment blinkstreamTableEnv = StreamTableEnvironment.create(env, blinkEnvSettings);
+
+    // 1.4 基于 blink 的批处理
+    EnvironmentSettings batchEnvSettings = EnvironmentSettings.newInstance()
+            .useBlinkPlanner()
+            .inBatchMode()
+            .build();
+
+    TableEnvironment blinkBatchTableEnv = TableEnvironment.create(batchEnvSettings);
+
+}

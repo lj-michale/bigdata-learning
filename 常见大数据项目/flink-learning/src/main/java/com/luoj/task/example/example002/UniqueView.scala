@@ -47,6 +47,7 @@ object UniqueView {
 }
 
 class MyTrigger extends Trigger[(String, Long), TimeWindow] {
+
   override def onElement(element: (String, Long), timestamp: Long, window: TimeWindow, ctx: Trigger.TriggerContext): TriggerResult = TriggerResult.FIRE_AND_PURGE
 
   override def onProcessingTime(time: Long, window: TimeWindow, ctx: Trigger.TriggerContext): TriggerResult = TriggerResult.CONTINUE
