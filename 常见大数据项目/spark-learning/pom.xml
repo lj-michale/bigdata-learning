@@ -128,6 +128,12 @@
       <artifactId>spark-avro_2.11</artifactId>
       <version>4.0.0</version>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/org.apache.spark/spark-graphx -->
+    <dependency>
+      <groupId>org.apache.spark</groupId>
+      <artifactId>spark-graphx_2.12</artifactId>
+      <version>2.4.3</version>
+    </dependency>
   </dependencies>
 
   <build>
