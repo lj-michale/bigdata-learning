@@ -129,6 +129,12 @@
       <artifactId>spark-avro_2.11</artifactId>
       <version>4.0.0</version>
     </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>1.16.20</version>
+      <scope>provided</scope>
+    </dependency>
     <!-- https://mvnrepository.com/artifact/org.apache.spark/spark-graphx -->
     <dependency>
       <groupId>org.apache.spark</groupId>
