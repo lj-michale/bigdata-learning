@@ -8,6 +8,7 @@ import java.util.concurrent.{Callable, Executors}
 
 import scala.collection.JavaConverters._
 
+// https://blog.csdn.net/u010454030/article/details/74353886?utm_medium=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-1.control&dist_request_id=1331978.127.16185672603667071&depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-1.control
 object MuiltSparkJob {
 
   def main(args: Array[String]): Unit = {
