@@ -5,16 +5,14 @@
 //import org.apache.spark.sql.hive.HiveContext
 //import org.scalatest.{BeforeAndAfterAll, BeforeAndAfterEach, FunSuite}
 //
-//object MakingNestedTableTest   extends FunSuite with
-//  BeforeAndAfterEach with BeforeAndAfterAll {
+//
+//object MakingNestedTableTest extends FunSuite with BeforeAndAfterEach with BeforeAndAfterAll {
 //
 //  @transient var sc: SparkContext = null
 //  @transient var hiveContext: HiveContext = null
 //
 //  override def beforeAll(): Unit = {
-//
 //    val envMap = Map[String, String](("Xmx", "512m"))
-//
 //    val sparkConfig = new SparkConf()
 //    sparkConfig.set("spark.broadcast.compress", "false")
 //    sparkConfig.set("spark.shuffle.compress", "false")

@@ -41,7 +41,7 @@ class TestableQueueInputDStream[T: ClassTag](
       if (oneAtATime) {
         Some(buffer.head)
       } else {
-        Some(new UnionRDD(context.sc, buffer.toSeq))
+        Some(new UnionRDD(context.sparkContext, buffer.toSeq))
       }
     } else if (defaultRDD != null) {
       Some(defaultRDD)
