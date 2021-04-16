@@ -31,6 +31,18 @@ object IcebergExample002 {
     val catalog:HiveCatalog = new HiveCatalog(spark.sparkContext.hadoopConfiguration)
     val table:Table = catalog.createTable(name, schema, spec)
 
+//    利用time travel回溯某一个snapshot的数据
+//    在读取时，通过option指定as-of-timestamp或者snapshot-id来访问之前某一个snapshot中的数据：
+
+//    在DataFrame的基础上，创建local temporary view后，也可以通过SQL SELECT来读取Iceberg table的内容：
+    val df = spark.read.format("iceberg")
+      .load("db.table")
+
+    df.createOrReplaceTempView("view")
+    spark.sql("""SELECT * FROM view""").show()
+
+    // 写入Iceberg
+    df.write.format("iceberg").mode("append").save("db.table")
 
     spark.close()
 
