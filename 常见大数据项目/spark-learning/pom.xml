@@ -12,6 +12,7 @@
     <spark.version>2.2.0</spark.version>
     <hadoop.version>2.7.4</hadoop.version>
     <kafka.version>1.0.0</kafka.version>
+    <iceberg.version>0.10.0</iceberg.version>
   </properties>
 
   <repositories>
@@ -106,6 +107,21 @@
       <groupId>com.typesafe</groupId>
       <artifactId>config</artifactId>
       <version>1.3.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.iceberg</groupId>
+      <artifactId>iceberg-core</artifactId>
+      <version>0.10.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.iceberg</groupId>
+      <artifactId>iceberg-spark3-runtime</artifactId>
+      <version>0.10.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.avro</groupId>
+      <artifactId>avro</artifactId>
+      <version>1.9.0</version>
     </dependency>
   </dependencies>
 
