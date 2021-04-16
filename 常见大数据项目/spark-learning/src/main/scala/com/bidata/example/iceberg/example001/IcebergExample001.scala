@@ -9,9 +9,9 @@ object IcebergExample001 {
 
     val spark: SparkSession = SparkSession
       .builder()
-      .config("spark.sql.catalog.hadoop_prod.type", "hadoop") // 设置数据源类别为hadoop
-      .config("spark.sql.catalog.hadoop_prod", classOf[SparkCatalog].getName)
-      .config("spark.sql.catalog.hadoop_prod.warehouse", "hdfs://linux01:8020//doit/iceberg/warehouse/") // 设置数据源位置
+//      .config("spark.sql.catalog.hadoop_prod.type", "hadoop") // 设置数据源类别为hadoop
+//      .config("spark.sql.catalog.hadoop_prod", classOf[SparkCatalog].getName)
+//      .config("spark.sql.catalog.hadoop_prod.warehouse", "hdfs://linux01:8020//doit/iceberg/warehouse/") // 设置数据源位置
       .appName(this.getClass.getSimpleName)
       .master("local[*]")
       .getOrCreate()
