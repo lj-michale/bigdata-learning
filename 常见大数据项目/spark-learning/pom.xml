@@ -13,6 +13,7 @@
     <hadoop.version>2.7.4</hadoop.version>
     <kafka.version>1.0.0</kafka.version>
     <iceberg.version>0.10.0</iceberg.version>
+    <scala.binary.version>2.11</scala.binary.version>
   </properties>
 
   <repositories>
@@ -133,6 +134,12 @@
       <groupId>org.apache.spark</groupId>
       <artifactId>spark-graphx_2.12</artifactId>
       <version>2.4.3</version>
+    </dependency>
+    <dependency>
+      <groupId>org.scalatest</groupId>
+      <artifactId>scalatest_${scala.binary.version}</artifactId>
+      <version>2.2.4</version>
+<!--      <scope>test</scope>-->
     </dependency>
   </dependencies>
 
