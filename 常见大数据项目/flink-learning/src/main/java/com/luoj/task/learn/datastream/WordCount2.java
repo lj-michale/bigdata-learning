@@ -1,4 +1,4 @@
-package com.luoj.task.learn.dataset;
+package com.luoj.task.learn.datastream;
 
 import org.apache.flink.api.common.RuntimeExecutionMode;
 import org.apache.flink.api.common.functions.FlatMapFunction;
@@ -47,6 +47,7 @@ public class WordCount2 {
         });
 
         KeyedStream<Tuple2<String, Integer>, String> grouped = wordAndOne.keyBy(t -> t.f0);
+
         SingleOutputStreamOperator<Tuple2<String, Integer>> result = grouped.sum(1);
 
         ////////////////////////// Transformation End ///////////////////////////////////////

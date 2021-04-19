@@ -50,11 +50,31 @@
       <groupId>org.apache.flink</groupId>
       <artifactId>flink-scala_${scala.binary.version}</artifactId>
       <version>${flink.version}</version>
+      <exclusions>
+        <exclusion>
+          <artifactId>log4j</artifactId>
+          <groupId>log4j</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>slf4j-api</artifactId>
+          <groupId>org.slf4j</groupId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.apache.flink</groupId>
       <artifactId>flink-java</artifactId>
       <version>${flink.version}</version>
+      <exclusions>
+        <exclusion>
+          <artifactId>log4j</artifactId>
+          <groupId>log4j</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>slf4j-api</artifactId>
+          <groupId>org.slf4j</groupId>
+        </exclusion>
+      </exclusions>
       <!--            <scope>provided</scope>-->
     </dependency>
     <dependency>
@@ -89,18 +109,48 @@
       <groupId>org.apache.flink</groupId>
       <artifactId>flink-table-api-scala-bridge_${scala.binary.version}</artifactId>
       <version>${flink.version}</version>
+      <exclusions>
+        <exclusion>
+          <artifactId>log4j</artifactId>
+          <groupId>log4j</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>slf4j-api</artifactId>
+          <groupId>org.slf4j</groupId>
+        </exclusion>
+      </exclusions>
       <!--            <scope>provided</scope>-->
     </dependency>
     <dependency>
       <groupId>org.apache.flink</groupId>
       <artifactId>flink-table-api-java-bridge_${scala.binary.version}</artifactId>
       <version>${flink.version}</version>
+      <exclusions>
+        <exclusion>
+          <artifactId>log4j</artifactId>
+          <groupId>log4j</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>slf4j-api</artifactId>
+          <groupId>org.slf4j</groupId>
+        </exclusion>
+      </exclusions>
       <!--            <scope>provided</scope>-->
     </dependency>
     <dependency>
       <groupId>org.apache.flink</groupId>
       <artifactId>flink-table-planner-blink_${scala.binary.version}</artifactId>
       <version>1.12.1</version>
+      <exclusions>
+        <exclusion>
+          <artifactId>log4j</artifactId>
+          <groupId>log4j</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>slf4j-api</artifactId>
+          <groupId>org.slf4j</groupId>
+        </exclusion>
+      </exclusions>
       <!--            <scope>provided</scope>-->
     </dependency>
     <dependency>
@@ -141,6 +191,16 @@
       <groupId>org.apache.flink</groupId>
       <artifactId>flink-connector-redis_2.11</artifactId>
       <version>1.1.5</version>
+      <exclusions>
+        <exclusion>
+          <artifactId>slf4j-log4j12</artifactId>
+          <groupId>org.slf4j</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>slf4j-api</artifactId>
+          <groupId>org.slf4j</groupId>
+        </exclusion>
+      </exclusions>
       <!--<scope>provided</scope>-->
     </dependency>
     <dependency>
@@ -185,6 +245,12 @@
       <artifactId>mysql-connector-java</artifactId>
       <version>8.0.13</version>
       <scope>runtime</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>protobuf-java</artifactId>
+          <groupId>com.google.protobuf</groupId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.apache.flink</groupId>
@@ -195,11 +261,27 @@
       <groupId>org.apache.flink</groupId>
       <artifactId>flink-shaded-hadoop-2-uber</artifactId>
       <version>${flink-shaded-hadoop.version}</version>
+        <exclusions>
+            <exclusion>
+                <artifactId>slf4j-log4j12</artifactId>
+                <groupId>org.slf4j</groupId>
+            </exclusion>
+        </exclusions>
     </dependency>
     <dependency>
       <groupId>org.apache.hive</groupId>
       <artifactId>hive-exec</artifactId>
       <version>${hive.version}</version>
+      <exclusions>
+        <exclusion>
+          <artifactId>log4j</artifactId>
+          <groupId>log4j</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>slf4j-api</artifactId>
+          <groupId>org.slf4j</groupId>
+        </exclusion>
+      </exclusions>
     </dependency>
 <!--    <dependency>
       <groupId>io.vertx</groupId>
@@ -215,12 +297,28 @@
       <groupId>org.apache.flink</groupId>
       <artifactId>flink-test-utils_2.11</artifactId>
       <version>1.12.0</version>
-<!--      <scope>test</scope>-->
+      <exclusions>
+        <exclusion>
+          <artifactId>force-shading</artifactId>
+          <groupId>org.apache.flink</groupId>
+        </exclusion>
+          <exclusion>
+              <artifactId>slf4j-api</artifactId>
+              <groupId>org.slf4j</groupId>
+          </exclusion>
+      </exclusions>
+      <!--      <scope>test</scope>-->
     </dependency>
     <dependency>
       <groupId>org.apache.flink</groupId>
       <artifactId>flink-connector-elasticsearch6_2.11</artifactId>
       <version>1.11.1</version>
+        <exclusions>
+            <exclusion>
+                <artifactId>force-shading</artifactId>
+                <groupId>org.apache.flink</groupId>
+            </exclusion>
+        </exclusions>
     </dependency>
   </dependencies>
 
