@@ -1,6 +1,8 @@
 package com.luoj.task.learn.outputtag;
 
 import org.apache.flink.api.common.RuntimeExecutionMode;
+import org.apache.flink.api.common.restartstrategy.RestartStrategies;
+import org.apache.flink.api.common.time.Time;
 import org.apache.flink.api.common.typeinfo.TypeInformation;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.datastream.DataStreamSource;
@@ -9,6 +11,8 @@ import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.functions.ProcessFunction;
 import org.apache.flink.streaming.api.scala.OutputTag;
 import org.apache.flink.util.Collector;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author lj.michale
@@ -22,7 +26,11 @@ public class OutPutTagExample002 {
         // 1.env
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         env.setRuntimeMode(RuntimeExecutionMode.AUTOMATIC);
-
+        env.setRestartStrategy(RestartStrategies.failureRateRestart(
+                3, // 每个时间间隔的最大故障次数
+                Time.of(5, TimeUnit.MINUTES), // 测量故障率的时间间隔
+                Time.of(10, TimeUnit.SECONDS) // 延时
+        ));
         DataStreamSource<Integer> ds = env.fromElements(1,2,3,4,5,6,7,8,9,10);
 
         // 分流器-sideoutput

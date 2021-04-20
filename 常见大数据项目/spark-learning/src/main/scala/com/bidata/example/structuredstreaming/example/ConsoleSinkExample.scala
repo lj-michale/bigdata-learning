@@ -31,7 +31,7 @@ object ConsoleSinkExample {
       // 是否压缩显示
       .option("truncate", value = false)
       // 显示条数
-      .option("numRows", 30)
+      .option("numRows", 300)
       .option("checkpointLocation", "/tmp/temporary-" + UUID.randomUUID.toString)
       .start()
 
