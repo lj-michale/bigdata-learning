@@ -48,5 +48,15 @@ object HandleKafkaJSONExample {
       .start()
 
     query.awaitTermination()
+
   }
+
+  def handleJson(json: String): Device = {
+    val gson = new Gson()
+    gson.fromJson(json, classOf[Device])
+  }
+
+  case class Device(deviceId: String, deviceName: String, deviceValue: Double, deviceTime: Long)
+
 }
+

@@ -1,2 +1,16 @@
 {"deviceId":"4d6021db-7483-4911-8025-87494776ba87","deviceName":"风机温度","deviceValue":76.3,"deviceTime":1553140083}
 
+[
+  {
+    "deviceId":"4d6021db-7483-4911-8025-87494776ba87",
+    "deviceName":"风机温度",
+    "deviceValue":76.3,
+    "deviceTime":1553140083
+  },
+  {
+    "deviceId":"89cf0815-9a1e-4dd5-a2d9-ff16c2308ddf",
+    "deviceName":"风机转速",
+    "deviceValue":600,
+    "deviceTime":1553140021
+  }
+]
