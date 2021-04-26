@@ -32,6 +32,6 @@ object TestProcessFunction {
   }
 
 
-  case class Obj1(id:Int, name:String, str3:Long)
+  case class Obj1(id:Int, name:String, time:Long)
 
 }

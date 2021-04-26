@@ -52,7 +52,7 @@ class CustomBroadcastProcessFunction extends BroadcastProcessFunction[Student,Cl
   override def processBroadcastElement(value: Class, ctx: BroadcastProcessFunction[Student, Class, String]#Context, out: Collector[String]): Unit = {
     val classInfo = ctx.getBroadcastState(TestBroadcastProcessFunction.descriptor)
     println("更新状态")
-    classInfo.put(value.id.toInt,value.name)
+    classInfo.put(value.id.toString,value.name)
   }
 
 }
