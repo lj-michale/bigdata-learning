@@ -19,6 +19,7 @@ import org.apache.flink.streaming.api.windowing.time.Time;
  * @create: 2021/03/04 16：12
  */
 public class Window_Demo03 {
+
     public static void main(String[] args) throws Exception {
         // 1.env
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
