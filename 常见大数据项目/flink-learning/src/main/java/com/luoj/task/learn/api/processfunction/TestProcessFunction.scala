@@ -15,7 +15,7 @@ object TestProcessFunction {
     import org.apache.flink.streaming.api.scala._
     stream.map(data => {
       val arr = data.split(",")
-      Obj1(arr(0).toInt, arr(1), arr(2))
+      Obj1(arr(0).toInt, arr(1), arr(2).toLong)
     }).process(new CustomProcessFunction).print()
 
   }
@@ -32,6 +32,6 @@ object TestProcessFunction {
   }
 
 
-  case class Obj1(id:Int, name:String, str3:String)
+  case class Obj1(id:Int, name:String, str3:Long)
 
 }
