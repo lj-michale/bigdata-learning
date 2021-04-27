@@ -38,7 +38,15 @@
 * [Flink-StreamingFileSink-自定义序列化-Parquet批量压缩](https://blog.csdn.net/baichoufei90/article/details/104749504)
 * [Flink-使用rowtime且分窗，Connector读取Kafka写入MySQL例子](https://blog.csdn.net/baichoufei90/article/details/102747748)
 
-
+###### 3.3 Table&Sql API
+###### 3.3.1 概念
+* [Flink学习4-流式SQL](https://blog.csdn.net/baichoufei90/article/details/101054148)
+* [Flink-FilesystemConnector和HiveConnector](https://blog.csdn.net/baichoufei90/article/details/107832306)
+* [Flink-流式SQL源码分析](https://blog.csdn.net/baichoufei90/article/details/105633161)
+* [Flink-时间窗口源码分析](https://blog.csdn.net/baichoufei90/article/details/105603180)
+* [阿里伍翀-flinkSql1.11demo](https://github.com/wuchong/flink-sql-demo)
+补链:https://www.cnblogs.com/dingdangzhijia/p/13360889.html
+    https://ververica.cn/developers/demo-flink-sql/
 
 
 
