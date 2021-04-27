@@ -50,6 +50,11 @@ flink-table-uber：将上面的 API 模块以及旧的 planner 打包到 Table �
 flink-table-uber-blink：将上面的 API 模块以及 Blink 特定的模块打包到 Table 和 SQL API 用例的发行版中。默认情况下，uber JAR文件Flink -table-blink-*. jar 位于Flink发行版的/lib目录中。
 
 
+提交任务
+./bin/flink run -d -e kubernetes-session -Dkubernetes.cluster-id=k test.jar
 
+停止 session cluster
+echo 'stop' | ./bin/kubernetes-session.sh -Dkubernetes.cluster-id=kaibo-test -Dexecution.attached=true
 
-
+手工删除资源：
+kubectl delete service/<ClusterID>
