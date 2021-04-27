@@ -46,6 +46,7 @@ public class Flink_side_output_filter {
             public void cancel() {
                 flag = false;
             }
+
         });
 
         SingleOutputStreamOperator<UserImage> lufei = item.filter((FilterFunction<UserImage>) value -> value.getGroupId() == 1);
@@ -62,14 +63,15 @@ public class Flink_side_output_filter {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class UserImage {
+
         private String orderId;
         private Integer userId;
         private String money;
         private Integer eventtime;
         private Integer groupId;
 
-        public UserImage(String orderId, int userId, int money, long eventtime) {
-        }
+        public UserImage(String orderId, int userId, int money, long eventtime) { }
+
     }
 
 }
