@@ -4,20 +4,22 @@
 <hr></hr>
  
 #### 1 概念
-* Flink学习1-基础概念
-* Flink-水位
-* Flink-作业提交流程
-* 浅析背压（Back Pressure）机制及其在 Spark & Flink中的实现
-* Java-SPI在Flink中的应用
-* 漫画 | flink watermark 一定只能用时间戳衡量？？？
-* 深入解析 Flink 的算子链机制
-* Flink State 误用之痛，竟然 90% 以上的 Flink 开发都不懂
-* Flink1.10系列：状态管理解读
-* Flink 1.11 Unaligned Checkpoint 解析
-* Flink 1.11 新特性详解:【非对齐】Unaligned Checkpoint 优化高反压
-* 深入解读 Flink 资源管理机制
-* Flink 端到端 Exactly-once 机制剖析
-* 一文搞懂 Flink 的 Exactly Once 和 At Least Once
+* [Flink学习1-基础概念](https://blog.csdn.net/baichoufei90/article/details/82875496)
+* [Flink-水位](https://blog.csdn.net/baichoufei90/article/details/108164777)
+* [Flink-作业提交流程](https://blog.csdn.net/baichoufei90/article/details/108274922)
+* [浅析背压（Back Pressure）机制及其在 Spark & Flink中的实现](https://blog.csdn.net/baichoufei90/article/details/103396623)
+* [Java-SPI在Flink中的应用](https://blog.csdn.net/baichoufei90/article/details/101028910)
+* [漫画 | flink watermark 一定只能用时间戳衡量？？？](https://mp.weixin.qq.com/s/WEvKjmKPM3OCog0KKV3skA)
+* [深入解析 Flink 的算子链机制](https://mp.weixin.qq.com/s/mOdq33TfAYZRFgyTciqqXQ)
+* [Flink State 误用之痛，竟然 90% 以上的 Flink 开发都不懂](https://mp.weixin.qq.com/s/0mWNi45_bs2lIC2LsQ_wUA)
+* [Flink1.10系列：状态管理解读](https://mp.weixin.qq.com/s/tReSudyKe8nqB0U5A3WXSQ)
+* [Flink 1.11 Unaligned Checkpoint 解析](https://mp.weixin.qq.com/s/AThpnvtJsAmI8Fhs8wVuLg)
+* [Flink 1.11 新特性详解:【非对齐】Unaligned Checkpoint 优化高反压](https://mp.weixin.qq.com/s/rxxpePoh-Z2fRwQexwsbxg)
+* [深入解读 Flink 资源管理机制](https://mp.weixin.qq.com/s/9RHVaeDJGR0WTrEeBapcNw)
+* [Flink 端到端 Exactly-once 机制剖析](https://mp.weixin.qq.com/s/fhUNuCOVFQUjRB-fo4Rl2g)
+* [一文搞懂 Flink 的 Exactly Once 和 At Least Once](https://ververica.cn/developers/flink-exactly-once-and-at-least-once/)
+![image](https://img-blog.csdnimg.cn/20201208234839891.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2JhaWNob3VmZWk5MA==,size_16,color_FFFFFF,t_70)
+
 
 #### 2 安装和配置
 *  [安装和配置](https://blog.csdn.net/baichoufei90/article/details/82884554)
@@ -105,11 +107,62 @@
 * [Apache Flink 钉钉群直播教程-实时数仓篇](https://ververica.cn/developers/flink-training-course-data-warehouse/)
 * [Flink 社区最全学习渠道汇总](https://mp.weixin.qq.com/s/JpoGfR7nNdUWD9Al6DeJeg)
 
-
-
-
-
-
+###### 11 应用和实践
+###### 11.1 综合
+* [Apache Flink在滴滴的应用与实践](https://mp.weixin.qq.com/s/0-eAVizSHQhYe7f_KSFo9Q)
+* [bilibili 实时平台的架构与实践](https://mp.weixin.qq.com/s/Y7EyLRYA2U29ElBYATKksA)
+* [日均处理万亿数据！Flink在快手的应用实践与技术演进之路](https://mp.weixin.qq.com/s/BghNofoU6cPRn7XfdHR83w)
+* [Flink 在有赞实时计算的实践](https://www.toutiao.com/a6648230916705485315/?tt_from=weixin&utm_campaign=client_share&wxshare_count=1&timestamp=1547970368&app=news_article&utm_source=weixin&iid=58124782371&utm_medium=toutiao_android&group_id=6648230916705485315)
+###### 11.2 实时数仓
+* [实时数据架构，终于有人把他说清楚了！](https://mp.weixin.qq.com/s/CbATFlkjmNvJvarCK9NlgA)
+* [ULTRON — 基于Flink的实时数仓平台](https://mp.weixin.qq.com/s/uZA8eacml5urJoKlwHc6oQ)
+* [Flink1.11+Hive批流一体数仓](https://mp.weixin.qq.com/s/0mO20FDfBNj7VFJxAsRqeA)
+* [生产实践 | Flink 如何建设实时公共画像维表？](https://mp.weixin.qq.com/s/hz8w7fzBzDG73XVwNA_eAA)
+* [网易云音乐基于 Flink + Kafka 的实时数仓建设实践](https://mp.weixin.qq.com/s/-Anw03jmXm8LMx6i3qGPbg)
+* [进击的 Flink：网易云音乐实时数仓建设实践](https://mp.weixin.qq.com/s/n4RUxDu3PuGBNl6QXNlp4Q)
+* [当 TiDB 与 Flink 相结合：高效、易用的实时数仓](https://mp.weixin.qq.com/s/iega5ZItzTChgnIGZhkkjA)
+* [基于 Flink + Hive 构建流批一体准实时数仓](https://mp.weixin.qq.com/s/bK289-tcuX9i8v5ZhkiarA)
+* [王者荣耀背后的实时大数据平台](https://mp.weixin.qq.com/s/KvY_EcGpDla_ShL7arAD9w)
+* [腾讯看点基于 Flink 的实时数仓及多维实时数据分析实践](https://mp.weixin.qq.com/s/k0h2IkAMniHiCJjA1l5Wyg)
+* [滴滴基于 Flink 的实时数仓建设实践](https://mp.weixin.qq.com/s/ECi8C_8yRMWQiM-V9C38Rw)
+* [基于 Flink 的典型 ETL 场景实现方案](https://mp.weixin.qq.com/s/l--W_GUOGXOWhGdwYqsh9A)
+* [字节跳动基于Flink的MQ-Hive实时数据集成](https://mp.weixin.qq.com/s/SDkgYqBZrejObpJ_2bpURw)
+* [美团点评 Flink 实时数仓应用经验分享](https://mp.weixin.qq.com/s/QKl4OAd187_PNUFORpBBXA)
+* [美团点评基于 Flink 的实时数仓平台实践](https://mp.weixin.qq.com/s/JT6BZzsAM8D8p9F99VmeFw)
+* [菜鸟实时数仓技术架构演进](https://mp.weixin.qq.com/s/6Q4zwB1UMl0eAlGQ1LPcPg)
+* [知乎实时数仓架构演进](https://mp.weixin.qq.com/s/IBsi0JpU7mm8EOoxl9iayg)
+* [小米流式平台|实时数仓架构演进与实践](https://mp.weixin.qq.com/s/anAPTfXRMX-VYa_UYFIKGg)
+* [OPPO 数据中台之基石：基于 Flink SQL 构建实数据仓库](https://card.weibo.com/article/m/show/id/2309404371820311672180)
+###### 11.3 实时分析
+* [生产实践 | Flink + 直播（三）| 如何建设当前正在直播 xx 数？](https://mp.weixin.qq.com/s/NsVYDWk892VONV-XfNGrhw)
+* [基于Flink的用户行为日志分析系统](https://mp.weixin.qq.com/s/PDWW3fLbLNESHV6jCIUL6A)
+* [Apache Flink OLAP引擎性能优化及应用](https://mp.weixin.qq.com/s/4_ZsIrFNw7APklay5JcMFg)
+* [Flink在快手实时多维分析场景的应用](https://mp.weixin.qq.com/s/a7-qQXhiQYxea1wngTtsZw)
+* [趣头条基于Flink+ClickHouse的实时数据分析平台](https://mp.weixin.qq.com/s/cF2tDD80Xlto9moUjYtMAw)
+* [基于 Flink 的超大规模在线实时反欺诈系统的建设与实践](https://mp.weixin.qq.com/s/72h33s9A8pB3zm56P2zWZw)
+###### 11.4 实时监控
+* [利用InfluxDB+Grafana搭建Flink on YARN作业监控大屏](https://mp.weixin.qq.com/s/VIzK_VBGI7_sNFe_iL2f3A)
+* [从 0 到 1 搭建一套 Flink 的监控系统](https://mp.weixin.qq.com/s/nSpJksVmlnA_7x59okLOGg)
+* [Flink全链路延迟的测量方式](https://mp.weixin.qq.com/s/A6CIPsGf-aCWXkB7O-toVw)
+###### 11.5 机器学习
+* [Flink 在机器学习领域的生产落地](https://mp.weixin.qq.com/s/nn9Z3Sb-yhBHWGx1Ip_zxg)
+* [如何用一套引擎搞定机器学习全流程？](https://mp.weixin.qq.com/s/c5bZy_v15FtT1oJGW0UAWQ)
+###### 11.6 实时数据湖
+* [基于 Flink+Iceberg 构建企业级实时数据湖](https://mp.weixin.qq.com/s/hLw1mDxMDSiRIZXa-mO3sQ)
+* [网易：Flink + Iceberg 数据湖探索与实践](https://mp.weixin.qq.com/s/KytPn1qjeN24FKe_2QqkMA)
+###### 11.7 实时数据同步
+* [基于Binlog与Flink实时同步数据仓库实践](https://mp.weixin.qq.com/s/-gqYuqLrGE5czQhXyYGecg)
+* [基于Binlog实时同步数据仓库问题总结](https://mp.weixin.qq.com/s/tgUvfsYIpmvM0kc0yF6lUg)
+###### 11.8 优化实践
+* [快手基于 Apache Flink 的优化实践](https://mp.weixin.qq.com/s/X1d_fbQxKpFzy87wIgHFdg)
+* [Flink RocksDB 状态后端参数调优实践](https://mp.weixin.qq.com/s/YpDi3BV8Me3Ay4hzc0nPQA)
+* [如何提高 CPU 利用率？Flink 该如何设定并行度？调大并行度一定会提高 Flink 吞吐吗？](https://mp.weixin.qq.com/s/eUCMc48rX0hyBgV3zhU7mQ)
+* [并行度改变引发的血案](https://mp.weixin.qq.com/s/VLzjPsokQii7BMNhFRJFUw)
+* [Flink SQL CDC 上线！我们总结了 13 条生产实践经验](https://mp.weixin.qq.com/s/Mfn-fFegb5wzI8BIHhNGvQ)
+* [Flink 使用大状态时的一点优化](https://mp.weixin.qq.com/s/mjWGWJVQ_zSVOgZqtjjoLw)
+* [Flink State 最佳实践](https://mp.weixin.qq.com/s/ddEuwu-ioz1KdcVHhpIeUg)
+* [如何在 Flink 中规划 RocksDB 内存容量？](https://mp.weixin.qq.com/s/ylqK9_SuPKBKoaKmcdMYPA)
+* [阿里巴巴大规模应用Flink的踩坑经验：如何大幅降低 HDFS 压力？](https://mp.weixin.qq.com/s/7PAumCJ-RfMcUG7Ean-WnQ)
 
 
 
