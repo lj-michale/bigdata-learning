@@ -101,6 +101,7 @@
 
 ###### 9 博客
 * [Flink官方博客](https://flink.apache.org/blog/)
+
 ###### 10 教程
 * [Apache Flink 钉钉群直播教程-基础篇](https://ververica.cn/developers/flink-training-course-basics/)
 * [Apache Flink 钉钉群直播教程-进阶篇](https://ververica.cn/developers/flink-training-course-advanced/)
@@ -163,8 +164,23 @@
 * [Flink State 最佳实践](https://mp.weixin.qq.com/s/ddEuwu-ioz1KdcVHhpIeUg)
 * [如何在 Flink 中规划 RocksDB 内存容量？](https://mp.weixin.qq.com/s/ylqK9_SuPKBKoaKmcdMYPA)
 * [阿里巴巴大规模应用Flink的踩坑经验：如何大幅降低 HDFS 压力？](https://mp.weixin.qq.com/s/7PAumCJ-RfMcUG7Ean-WnQ)
+###### 11.9 实时推荐
+* [Flink + 强化学习搭建实时推荐系统](https://mp.weixin.qq.com/s/asUh5f0uCp4VikoL1Q7A0A)
+* [基于Flink商品实时推荐系统项目](https://mp.weixin.qq.com/s/xVYCMZArXJ7XfE_5bRPwPw)
+###### 11.10 实时数据采集
+* [基于Flink的日志采集](https://mp.weixin.qq.com/s/QQ1RpSENSRZTORxVUZkbmA)
+* [基于 Apache Flink 的实时 Error 日志告警](https://mp.weixin.qq.com/s/nK41ChQdCE_qd_a1FDLGMA)
+###### 11.11 其他
+* [Flink去重系列，共四篇](https://mp.weixin.qq.com/s/JcC3KUXLekOu5KdyBEPuPQ)
 
-
+###### 12 面试
+* [Flink面试通关手册](https://mp.weixin.qq.com/s/xRqrojjFITuhswtjNJo7OQ)
+* [Flink面试指南 | 终于等到你，Flink PMC葵花宝典正式发布](https://mp.weixin.qq.com/s/t934_ZkrMCoKd5L2rTho9w)
+* [Flink学习面试灵魂40问答案!](https://mp.weixin.qq.com/s/63SsY4gRdYgbxmRTWE9veQ)
+* [Flink 灵魂两百问，这谁顶得住？](https://segmentfault.com/a/1190000019892010?utm_source=tag-newest)
+###### 13 社区
+* [如何从 0 到 1 参与 Flink 社区？](https://mp.weixin.qq.com/s?__biz=MzU3Mzg4OTMyNQ==&mid=2247487280&idx=1&sn=5a7db88a7822e733ef55610e98d51bee&chksm=fd3b8172ca4c086481411a9493bbdf6e2639abecd6ce26c62e2381c80cedce438850d1b6e6a4&mpshare=1&scene=1&srcid=0601gAp1KJO9vdWQb1PYOXPv&sharer_sharetime=1591021659797&sharer_shareid=dbd6fd254b764d5056e8a77e5de0b122&key=46c19dbd461564fe1942bbb10242cad99f2887058b0c18233ba4e06fb9ab4559f57af8c115c265e59c3bc066871a34c3b63b34b8f6ae9d5f2e044ac97c4e139d9c424a401c24f9848b78aab3a57a18c3&ascene=1&uin=MTk3OTE3MDcwMA%3D%3D&devicetype=Windows+10+x64&version=62090070&lang=zh_CN&exportkey=AakzV9Fo5HgCMPW%2BVDlZIJM%3D&pass_ticket=YL5oSHkynmF%2FWrojMNDs3jf8ofIBSpqBhNyBwu1KublfroVQYKR714Bj3pzJa%2FDq)
+* [Flink Contributor 速成指南](https://mp.weixin.qq.com/s/-4kG7VcGRP1q_La6RT0-4g)
 
 
 
