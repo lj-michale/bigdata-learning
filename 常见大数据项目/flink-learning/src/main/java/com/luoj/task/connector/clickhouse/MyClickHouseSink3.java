@@ -69,6 +69,7 @@ public class MyClickHouseSink3 extends RichSinkFunction<List<Row>> {
         connection.commit();
         long endTime = System.currentTimeMillis();
         System.out.println("批量插入完毕用时：" + (endTime - startTime) + " -- 插入数据 = " + ints.length);
+
     }
 
 }

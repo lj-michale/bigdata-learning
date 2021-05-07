@@ -35,6 +35,13 @@ object FlinkJob3 {
     tableEnv.executeSql(datagen)
     val table = tableEnv.sqlQuery("select name,address,abs(age) from datagen")
     val stream = tableEnv.toAppendStream[Row](table)
+    val ports = util.ArrayList[String]
+    val tableCols = util.ArrayList[String]
+    stream.addSink(
+        new ClickHouseJDBCSinkFunction(
+          new ClickHouseJDBCOutputFormat("", "", ports , 3, 500, "report", "t_awake", tableCols)
+        )
+      ).name("clickhouse-sink");
 
     // flink有timeWindow和countWindow 都不满足需求
     // 我既想按照一定时间聚合，又想如果条数达到batchSize就触发计算，只能定义触发器
