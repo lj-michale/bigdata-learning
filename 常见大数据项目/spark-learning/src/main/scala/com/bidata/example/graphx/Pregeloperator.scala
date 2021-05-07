@@ -10,6 +10,7 @@ import org.apache.spark.graphx.util.GraphGenerators
 object Pregeloperator {
 
   def main(args: Array[String]): Unit = {
+
     val conf = new SparkConf().setAppName("CollectingNeighbors").setMaster("local[4]")
     // Assume the SparkContext has already been constructed
     val sc = new SparkContext(conf)
@@ -48,5 +49,6 @@ object Pregeloperator {
     println(sssp.vertices.collect.mkString("\n"))
     println("edges:");
     sssp.edges.collect.foreach(println)
+
   }
 }

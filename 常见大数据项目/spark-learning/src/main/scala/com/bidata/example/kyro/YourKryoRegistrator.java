@@ -13,6 +13,7 @@ public class YourKryoRegistrator implements KryoRegistrator {
 
     @Override
     public void registerClasses(Kryo kryo) {
+        // 在Kyro序列化库中注册自定义的类
         kryo.register(YourClass.class, new FieldSerializer(kryo, YourClass.class));
     }
 
