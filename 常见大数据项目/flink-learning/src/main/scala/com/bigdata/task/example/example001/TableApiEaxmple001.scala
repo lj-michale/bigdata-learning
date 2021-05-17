@@ -37,6 +37,7 @@ object TableApiEaxmple001 {
     val table:TableResult = bsTableEnv.executeSql(querySQL)
     table.print()
 
+
     // TableResult转成DataStream
 //    val result: DataStream[Row] = bsTableEnv.toAppendStream[Row](table)
 //    val resultDataStream:DataStream[Row] = table.toRetractStream[(String,Long)](wordCount).print()

@@ -19,29 +19,38 @@ import org.apache.flink.table.functions.ScalarFunction
 object WordCount {
 
   def main(args: Array[String]): Unit = {
+
     //create stream runtime environment
     val env = StreamExecutionEnvironment.getExecutionEnvironment
+
     //with blink planner setting
     val settings = EnvironmentSettings.newInstance().useBlinkPlanner().build()
+
     //create table environment
     val tableEnv = StreamTableEnvironment.create(env, settings)
+
     //register udf
     registerUDF(tableEnv)
+
     //input datasource
     val inputDataStream = env.socketTextStream("localhost", 8888)
+
     //word count
     val ds: DataStream[(String, Int)] = inputDataStream.filter(_.nonEmpty)
       .flatMap(_.split(" "))
       .map((_, 1))
       .keyBy(_._1)
       .sum(1)
+
     //register table
     tableEnv.createTemporaryView("wordcount_tmp", ds, $("word"), $("grand_total"))
+
     //execute sql and print result
-    tableEnv.executeSql("select flink_udf_test(word) word,grand_total from wordcount_tmp")
-      .print()
+    tableEnv.executeSql("select flink_udf_test(word) word,grand_total from wordcount_tmp").print()
+
     //execute
     env.execute("WordCount")
+
   }
 
   /**
