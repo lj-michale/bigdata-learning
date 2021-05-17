@@ -15,6 +15,7 @@ import org.apache.flink.types.Row;
  * @date 2021-05-07
  */
 public class ClickHouseJDBCSinkFunction extends RichSinkFunction<Row> implements CheckpointedFunction {
+
     final ClickHouseJDBCOutputFormat outputFormat;
 
     public ClickHouseJDBCSinkFunction(ClickHouseJDBCOutputFormat outputFormat) {
