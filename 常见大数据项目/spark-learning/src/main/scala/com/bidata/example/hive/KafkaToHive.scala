@@ -39,11 +39,20 @@ object KafkaToHive{
     val kafkaDStream = KafkaUtils.createDirectStream(ssc, LocationStrategies.PreferConsistent,
         ConsumerStrategies.Subscribe[String, String](topics, kafkaPara))
 
+    //将每条消息的KV取出
+    val valueDStream = kafkaDStream.map(record => record.value())
+    valueDStream.flatMap(_.split(" "))
+      .map((_, 1))
+      .reduceByKey(_ + _)
+      .print()
+
     // 开始处理DStream,其中主要的业务写在里面
     kafkaDStream.foreachRDD(rdd => {
 
         val offsetRanges = rdd.asInstanceOf[HasOffsetRanges].offsetRanges
+
         // TODO 具体业务逻辑
+        val resDF:RDD[(ConsumerRecord[String, String], Int)] = rdd.map((_, 1)).reduceByKey(_ + _)
 
         // 写入Hive ...
         val subRdd:RDD[Int] = rdd.sparkContext.parallelize(Seq(1,2,3,4))
@@ -51,6 +60,10 @@ object KafkaToHive{
         // 提交offset
         kafkaDStream.asInstanceOf[CanCommitOffsets].commitAsync(offsetRanges)
 
-      })
+    })
+
+    ssc.start()
+    ssc.awaitTermination()
+
   }
 }
