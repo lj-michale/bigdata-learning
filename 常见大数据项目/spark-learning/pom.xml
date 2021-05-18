@@ -14,6 +14,7 @@
     <kafka.version>1.0.0</kafka.version>
     <iceberg.version>0.10.0</iceberg.version>
     <scala.binary.version>2.11</scala.binary.version>
+    <zk.client>0.3</zk.client>
   </properties>
 
   <repositories>
@@ -152,6 +153,11 @@
       <groupId>com.mchange</groupId>
       <artifactId>c3p0</artifactId>
       <version>0.9.5.2</version>
+    </dependency>
+    <dependency>
+      <groupId>com.101tec</groupId>
+      <artifactId>zkclient</artifactId>
+      <version>${zk.client}</version>
     </dependency>
   </dependencies>
 
