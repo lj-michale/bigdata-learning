@@ -46,6 +46,20 @@ object KafkaToHive{
       .reduceByKey(_ + _)
       .print()
 
+    val dStream = kafkaDStream.map((_, 1L))
+      /**
+       * updateStateByKey 是有状态计算方法
+       * 第一个参数表示 相同key的value集合
+       * 第二个参数表示 相同key的缓冲区的数据，有可能为空
+       * 这里中间结果需要保存到检查点的位置中，需要设定检查点
+       */
+      .updateStateByKey(
+        (seq: Seq[Long], buffer: Option[Long]) => {
+          val newBufferValue = buffer.getOrElse(0L) + seq.sum
+          Option(newBufferValue)
+        }
+      )
+
     // 开始处理DStream,其中主要的业务写在里面
     kafkaDStream.foreachRDD(rdd => {
 
