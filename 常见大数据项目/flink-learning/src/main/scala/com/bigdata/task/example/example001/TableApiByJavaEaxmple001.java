@@ -3,8 +3,10 @@ package com.bigdata.task.example.example001;
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.flink.api.common.functions.MapFunction;
+import org.apache.flink.api.common.typeinfo.Types;
 import org.apache.flink.streaming.api.CheckpointingMode;
 import org.apache.flink.streaming.api.datastream.DataStream;
+import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.functions.source.SourceFunction;
 import org.apache.flink.table.api.EnvironmentSettings;
@@ -12,7 +14,9 @@ import org.apache.flink.table.api.Table;
 import org.apache.flink.table.api.TableEnvironment;
 import org.apache.flink.table.api.bridge.java.StreamTableEnvironment;
 import org.apache.flink.types.Row;
+import org.apache.flink.util.Collector;
 
+import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -70,6 +74,17 @@ public class TableApiByJavaEaxmple001 {
             }
         });
         resultStream.print();
+
+        DataStream<String> lines = env.fromElements("itcast hadoop spark", "itcast hadoop spark", "itcast hadoop", "itcast");
+        SingleOutputStreamOperator<String> words = lines.flatMap(
+                (String value, Collector<String> out) -> Arrays.stream(value.split(" ")).forEach(out::collect)
+        ).returns(Types.STRING);
+
+
+
+
+
+
         env.execute("TableApiByJavaEaxmple001");
 
     }

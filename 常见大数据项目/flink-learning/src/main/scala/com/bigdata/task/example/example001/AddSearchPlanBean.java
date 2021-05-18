@@ -1,14 +1,13 @@
 package com.bigdata.task.example.example001;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.apache.flink.streaming.api.functions.source.SourceFunction;
 
 @Setter
 @Getter
 @ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class AddSearchPlanBean {
 
     // 筛选方案名称
@@ -28,10 +27,5 @@ public class AddSearchPlanBean {
 
     // 系统初始化方案：1是，0否
     private Byte systemFlag;
-
-
-    public AddSearchPlanBean() {
-
-    }
 
 }
