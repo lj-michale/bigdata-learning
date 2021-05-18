@@ -14,7 +14,7 @@
     <kafka.version>1.0.0</kafka.version>
     <iceberg.version>0.10.0</iceberg.version>
     <scala.binary.version>2.11</scala.binary.version>
-    <zk.client>0.3</zk.client>
+<!--    <zk.client>2.0</zk.client>-->
   </properties>
 
   <repositories>
@@ -154,11 +154,12 @@
       <artifactId>c3p0</artifactId>
       <version>0.9.5.2</version>
     </dependency>
-    <dependency>
-      <groupId>com.101tec</groupId>
-      <artifactId>zkclient</artifactId>
-      <version>${zk.client}</version>
-    </dependency>
+    <!--zkclient包含了0.3版本、2.2.1版本、0.9版本、0.8版本、1.0版本、2.0版本-->
+<!--    <dependency>-->
+<!--      <groupId>com.101tec</groupId>-->
+<!--      <artifactId>zkclient</artifactId>-->
+<!--      <version>${zk.client}</version>-->
+<!--    </dependency>-->
   </dependencies>
 
   <build>
