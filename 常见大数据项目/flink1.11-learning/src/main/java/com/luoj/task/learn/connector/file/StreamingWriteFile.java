@@ -1,4 +1,4 @@
-package com.luoj.task.learn.connector;
+package com.luoj.task.learn.connector.file;
 
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
