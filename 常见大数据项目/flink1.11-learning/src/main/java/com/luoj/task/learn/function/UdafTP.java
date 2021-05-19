@@ -33,7 +33,6 @@ public class UdafTP{
                 " 'fields.response_time.min'='1',\n" +
                 " 'fields.response_time.max'='1000'" +
                 ")";
-
         tenv.executeSql(sql);
 
         String sqlSelect =
@@ -42,7 +41,9 @@ public class UdafTP{
 
         Table table = tenv.sqlQuery(sqlSelect);
         tenv.toAppendStream(table, Row.class).print();
+
         env.execute();
+
     }
 
     public static class TP extends AggregateFunction<Integer,TPAccum>{
