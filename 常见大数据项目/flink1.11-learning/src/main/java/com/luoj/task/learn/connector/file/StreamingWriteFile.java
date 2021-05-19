@@ -14,10 +14,13 @@ import java.util.Date;
  * @date 2021-05-19
  */
 public class StreamingWriteFile{
+
     public static void main(String[] args) throws Exception{
+
         StreamExecutionEnvironment bsEnv = StreamExecutionEnvironment.getExecutionEnvironment();
         bsEnv.enableCheckpointing(10000);
         StreamTableEnvironment tEnv = StreamTableEnvironment.create(bsEnv);
+
         DataStream<UserInfo> dataStream = bsEnv.addSource(new MySource());
         String sql = "CREATE TABLE fs_table (\n" +
                 "  user_id STRING,\n" +
@@ -32,6 +35,7 @@ public class StreamingWriteFile{
                 ")";
         tEnv.executeSql(sql);
         tEnv.createTemporaryView("users", dataStream);
+
         String insertSql = "insert into  fs_table SELECT userId, amount, " +
                 " DATE_FORMAT(ts, 'yyyy-MM-dd'), DATE_FORMAT(ts, 'HH'), DATE_FORMAT(ts, 'mm') FROM users";
 
