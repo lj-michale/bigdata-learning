@@ -14,6 +14,8 @@ import org.apache.flink.types.Row;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.apache.flink.table.api.Expressions.$;
+
 /**
  * @author lj.michale
  * @description
@@ -31,15 +33,13 @@ public class TableFunctionExample001 {
                 .build();
         StreamTableEnvironment tEnv = StreamTableEnvironment.create(env, bsSettings);
 
-        tEnv.registerFunction("split", new Split(" "));
-        tEnv.registerFunction("duplicator", new DuplicatorFunction());
-        tEnv.registerFunction("flatten", new FlattenFunction());
+//        tEnv.registerFunction("split", new Split(" "));
+//        tEnv.registerFunction("duplicator", new DuplicatorFunction());
+//        tEnv.registerFunction("flatten", new FlattenFunction());
 
         tEnv.createTemporaryFunction("split", new Split(" "));
         tEnv.createTemporaryFunction("duplicator", new DuplicatorFunction());
         tEnv.createTemporaryFunction("flatten", new FlattenFunction());
-
-
 
         List<Tuple2<Long,String>> ordersData = new ArrayList<>();
         ordersData.add(Tuple2.of(2L, "Euro"));
@@ -48,8 +48,13 @@ public class TableFunctionExample001 {
         ordersData.add(Tuple2.of(3L, "Euro"));
 
         DataStream<Tuple2<Long,String>> ordersDataStream = env.fromCollection(ordersData);
-        Table orders = tEnv.fromDataStream(ordersDataStream, "amount, currency, proctime.proctime");
+
+        //  基于DataStream创建View
+        tEnv.createTemporaryView("OrdersDataStream", ordersDataStream, $("amount"),$("currency"));
+        Table orders = tEnv.from("OrdersDataStream");
+
         // tEnv.registerTable("Orders", orders);  // Flink1.11中写法
+        // 将table注册成临时View
         tEnv.createTemporaryView("Orders", orders);
 
         // 查询 - left join
