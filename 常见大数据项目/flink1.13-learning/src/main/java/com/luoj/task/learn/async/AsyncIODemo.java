@@ -32,7 +32,8 @@ public class AsyncIODemo {
                 function,
                 timeout,
                 TimeUnit.MILLISECONDS,
-                10).setParallelism(taskNum);
+                10
+        ).setParallelism(taskNum);
 
         result.map(new MapFunction<String, String>() {
             @Override
@@ -46,6 +47,7 @@ public class AsyncIODemo {
     }
 
     private static class SimpleSource implements SourceFunction<Integer> {
+
         private volatile boolean isRunning = true;
         private int counter = 0;
         private int start = 0;

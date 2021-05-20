@@ -11,7 +11,7 @@ import java.util.function.Supplier;
 
 /**
  * @author lj.michale
- * @description
+ * @description flink所谓的异步IO，并不是只要实现了asyncInvoke方法就是异步了，这个方法并不是异步的，而是要依靠这个方法里面所写的查询是异步的才可以
  * @date 2021-05-20
  */
 public class SampleAsyncFunction extends RichAsyncFunction<Integer, String> {
@@ -32,9 +32,15 @@ public class SampleAsyncFunction extends RichAsyncFunction<Integer, String> {
     public void asyncInvoke(final Integer input, final ResultFuture<String> resultFuture) {
         System.out.println(System.currentTimeMillis() + "-input:" + input + " will sleep " + sleep[input] + " ms");
 
-        query(input, resultFuture);
+        // query(input, resultFuture);
+        asyncQuery(input, resultFuture);
     }
 
+    /**
+     * @descr
+     * @param input
+     * @return resultFuture
+     */
     private void query(final Integer input, final ResultFuture<String> resultFuture) {
         try {
             Thread.sleep(sleep[input]);
@@ -44,6 +50,11 @@ public class SampleAsyncFunction extends RichAsyncFunction<Integer, String> {
         }
     }
 
+    /**
+     * @descr asyncQuery
+     * @param input
+     * @return resultFuture
+     */
     private void asyncQuery(final Integer input, final ResultFuture<String> resultFuture) {
         CompletableFuture.supplyAsync(new Supplier<Integer>() {
 
