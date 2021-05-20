@@ -51,6 +51,7 @@ public class UnifiedSavepointGeneratorJob {
                 env.addSource(new Source(totalRecords, numberOfKeys)).uid("source");
 
         KeySelector<Tuple2<MyKey, MyValue>, Integer> keySelector = tuple -> tuple.f0.getValue();
+
         source.keyBy(keySelector)
                 .transform("value state", source.getType(), new ValueStateOperator(totalRecords))
                 .uid("value_state")
