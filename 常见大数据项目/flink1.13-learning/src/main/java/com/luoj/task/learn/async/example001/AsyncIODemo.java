@@ -1,4 +1,4 @@
-package com.luoj.task.learn.async;
+package com.luoj.task.learn.async.example001;
 
 import org.apache.flink.api.common.functions.MapFunction;
 import org.apache.flink.streaming.api.datastream.AsyncDataStream;
@@ -73,7 +73,4 @@ public class AsyncIODemo {
             isRunning = false;
         }
     }
-
-
-
 }

@@ -1,4 +1,4 @@
-package com.luoj.task.learn.async;
+package com.luoj.task.learn.async.example001;
 
 import org.apache.flink.configuration.Configuration;
 import org.apache.flink.streaming.api.functions.async.ResultFuture;
