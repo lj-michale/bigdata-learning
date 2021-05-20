@@ -3,6 +3,8 @@ package com.luoj.task.learn.flinksql;
 import org.apache.flink.api.java.tuple.Tuple2;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
+import org.apache.flink.table.annotation.DataTypeHint;
+import org.apache.flink.table.annotation.FunctionHint;
 import org.apache.flink.table.api.EnvironmentSettings;
 import org.apache.flink.table.api.Table;
 import org.apache.flink.table.api.bridge.java.StreamTableEnvironment;
@@ -115,12 +117,12 @@ public class CustomTableFunction{
     /**
      * 通过注册指定返回值类型，flink 1.11 版本开始支持
      */
-//	@FunctionHint(output = @DataTypeHint("ROW< i INT, s STRING >"))
-//	public static class DuplicatorFunction1 extends TableFunction<Row>{
-//		public void eval(Integer i, String s){
-//			collect(Row.of(i, s));
-//			collect(Row.of(i, s));
-//		}
-//	}
+	@FunctionHint(output = @DataTypeHint("ROW< i INT, s STRING >"))
+	public static class DuplicatorFunction1 extends TableFunction<Row>{
+		public void eval(Integer i, String s){
+			collect(Row.of(i, s));
+			collect(Row.of(i, s));
+		}
+	}
 
 }

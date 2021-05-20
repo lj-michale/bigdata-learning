@@ -8,6 +8,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <flink.version>1.13.0</flink.version>
+<!--    <flink.version>1.13-SNAPSHOT</flink.version>-->
     <hadoop.version>2.6.5</hadoop.version>
     <java.version>1.8</java.version>
     <scala.binary.version>2.11</scala.binary.version>

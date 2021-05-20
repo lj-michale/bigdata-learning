@@ -41,7 +41,7 @@ public class TableFunctionExample001 {
         tEnv.createTemporaryFunction("duplicator", new DuplicatorFunction());
         tEnv.createTemporaryFunction("flatten", new FlattenFunction());
 
-        List<Tuple2<Long,String>> ordersData = new ArrayList<>();
+        List<Tuple2<Long, String>> ordersData = new ArrayList<>();
         ordersData.add(Tuple2.of(2L, "Euro"));
         ordersData.add(Tuple2.of(1L, "US Dollar"));
         ordersData.add(Tuple2.of(50L, "Yen"));
