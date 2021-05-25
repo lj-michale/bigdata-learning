@@ -1,6 +1,5 @@
 package com.luoj.task.learn.operator.example001;
 
-
 import org.apache.flink.api.java.functions.KeySelector;
 import org.apache.flink.api.java.tuple.Tuple2;
 import org.apache.flink.api.java.utils.ParameterTool;
@@ -9,7 +8,6 @@ import org.apache.flink.runtime.state.hashmap.HashMapStateBackend;
 import org.apache.flink.streaming.api.CheckpointingMode;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
-
 
 /**
  * @author lj.michale
@@ -47,9 +45,7 @@ public class UnifiedSavepointGeneratorJob {
         String stateBackendPath = tool.get("state_backend_path");
         env.getCheckpointConfig().setCheckpointStorage(stateBackendPath);
 
-        DataStream<Tuple2<MyKey, MyValue>> source =
-                env.addSource(new Source(totalRecords, numberOfKeys)).uid("source");
-
+        DataStream<Tuple2<MyKey, MyValue>> source = env.addSource(new Source(totalRecords, numberOfKeys)).uid("source");
         KeySelector<Tuple2<MyKey, MyValue>, Integer> keySelector = tuple -> tuple.f0.getValue();
 
         source.keyBy(keySelector)

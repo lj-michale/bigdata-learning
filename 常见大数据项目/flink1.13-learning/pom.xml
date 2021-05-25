@@ -18,6 +18,7 @@
     <iceberg.version>0.11.0</iceberg.version>
     <kubernetes.client.version>4.9.2</kubernetes.client.version>
     <flink-shaded-hadoop.version>2.6.5-10.0</flink-shaded-hadoop.version>
+    <pulsar-flink-connector.version>2.4.0</pulsar-flink-connector.version>
     <!-- Secondary components -->
     <async.client.version>2.10.4</async.client.version>
     <ch.driver.version>0.1.40</ch.driver.version>
@@ -36,6 +37,16 @@
       <snapshots>
         <enabled>true</enabled>
       </snapshots>
+    </repository>
+    <repository>
+      <id>central</id>
+      <layout>default</layout>
+      <url>https://repo1.maven.org/maven2</url>
+    </repository>
+    <repository>
+      <id>bintray-streamnative-maven</id>
+      <name>bintray</name>
+      <url>https://dl.bintray.com/streamnative/maven</url>
     </repository>
   </repositories>
 
@@ -352,6 +363,12 @@
                 <groupId>org.apache.flink</groupId>
             </exclusion>
         </exclusions>
+    </dependency>
+    <!-- flink-pulsar依赖-->
+    <dependency>
+      <groupId>io.streamnative.connectors</groupId>
+      <artifactId>pulsar-flink-connector-2.11-1.12</artifactId>
+      <version>2.7.3</version>
     </dependency>
     <dependency>
       <groupId>com.google.code.gson</groupId>
