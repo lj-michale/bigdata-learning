@@ -178,6 +178,7 @@
       <artifactId>flink-connector-hive_${scala.binary.version}</artifactId>
       <version>${flink.version}</version>
     </dependency>
+    <!--Iceberg-->
     <dependency>
       <groupId>org.apache.iceberg</groupId>
       <artifactId>iceberg-flink-runtime</artifactId>
