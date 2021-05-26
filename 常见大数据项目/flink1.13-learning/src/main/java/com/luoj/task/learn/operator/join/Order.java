@@ -9,12 +9,15 @@ import lombok.NoArgsConstructor;
  * @description
  * @date 2021-05-26
  */
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class User {
-    public long createTime;
+public class Order {
+
     public String userId;
-    public String name;
-    public String age;
+    public String price;
+    public Long timestamp;
+    public String orderId;
+    
 }

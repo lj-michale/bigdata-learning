@@ -60,6 +60,7 @@ public class JoinOperator {
 
         operator1.print();
 
+        // join需要在window内操作。然后在JoinFunction算子，返回join后的内容。
         // 使用的是inner join 具体看测试数据
         operator.join(operator1)
                 .where(new KeySelector<Order, String>() {
