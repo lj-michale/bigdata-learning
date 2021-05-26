@@ -3,12 +3,11 @@ package com.luoj.task.learn.matric.example001
 import java.util.Properties
 
 import org.apache.flink.streaming.api.scala.StreamExecutionEnvironment
-import org.apache.flink.streaming.api.datastream.DataStreamSource
-
 
 /**
  * @author lj.michale
  * @description User-defined Metrics
+ *              自定义metric监控流入量
  * @date 2021-05-26
  */
 object UdefineMatricsByFlinkExample001 {

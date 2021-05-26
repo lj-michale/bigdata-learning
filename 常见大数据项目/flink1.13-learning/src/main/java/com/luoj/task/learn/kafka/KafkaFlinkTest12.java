@@ -27,7 +27,7 @@ import java.util.Properties;
 /**
  * @author lj.michale
  * @description 对两条流监控，确定支付、收据两条数据是否能够匹配
- *              解决迟到数据，采用侧输出
+ *              解决迟到数据，采用旁路侧输出
  * @date 2021-05-26
  */
 public class KafkaFlinkTest12 {
@@ -92,6 +92,7 @@ public class KafkaFlinkTest12 {
          * */
         DataStream<KafkaElement> sideOutput = winstream.getSideOutput(outputTag);
         sideOutput.print();
+
         /**
          * 没有迟到数据处理
          * */
