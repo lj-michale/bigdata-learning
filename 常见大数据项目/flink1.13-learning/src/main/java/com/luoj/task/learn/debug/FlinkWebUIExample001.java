@@ -18,6 +18,7 @@ public class FlinkWebUIExample001 {
 
     public static void main(String[] args) throws Exception {
 
+        // 开启本地界面模式
         final StreamExecutionEnvironment env = StreamExecutionEnvironment.createLocalEnvironmentWithWebUI(new Configuration());
         // final StreamExecutionEnvironment env = StreamExecutionEnvironment.createLocalEnvironment();
         env.setParallelism(1);
