@@ -1,5 +1,8 @@
 package com.luoj.task.learn.kafka;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.apache.flink.api.common.functions.MapFunction;
 import org.apache.flink.api.common.serialization.SimpleStringSchema;
 import org.apache.flink.api.java.tuple.Tuple;
@@ -130,5 +133,12 @@ public class KafkaFlinkTest12 {
             out.collect(new KafkaOut(Integer.valueOf(tuple.getField(0)),new String(stringBuilder)));
         }
     }
+
+    @NoArgsConstructor
+    @Data
+    static class KafkaOut {
+       public KafkaOut(Integer valueOf, String s) { }
+    }
+
 
 }
