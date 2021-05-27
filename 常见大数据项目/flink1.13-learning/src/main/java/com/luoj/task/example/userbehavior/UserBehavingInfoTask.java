@@ -4,12 +4,12 @@ import com.alibaba.fastjson.JSON;
 import org.apache.flink.api.common.functions.FilterFunction;
 import org.apache.flink.api.common.functions.MapFunction;
 import org.apache.flink.api.common.serialization.SimpleStringSchema;
-import org.apache.flink.api.common.typeinfo.Types;
 import org.apache.flink.api.java.tuple.Tuple2;
 import org.apache.flink.hive.reshaded.parquet.org.apache.thrift.annotation.Nullable;
 import org.apache.flink.streaming.api.TimeCharacteristic;
 import org.apache.flink.streaming.api.datastream.AsyncDataStream;
 import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
+import org.apache.flink.streaming.api.environment.CheckpointConfig;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.functions.timestamps.BoundedOutOfOrdernessTimestampExtractor;
 import org.apache.flink.streaming.api.windowing.assigners.SlidingEventTimeWindows;
@@ -50,7 +50,10 @@ public class UserBehavingInfoTask {
 
         final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         //事件时间
-        env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime);
+//        env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime);
+        CheckpointConfig config = env.getCheckpointConfig();
+        config.enableExternalizedCheckpoints(CheckpointConfig.ExternalizedCheckpointCleanup.RETAIN_ON_CANCELLATION);
+        env.getCheckpointConfig().setCheckpointStorage("hdfs:///checkpoints-data/");
 
         FlinkKafkaConsumer010 kafkaConsumer = new FlinkKafkaConsumer010<>(("eventDetails"), new SimpleStringSchema(), properties);
 
