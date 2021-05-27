@@ -6,10 +6,14 @@ import java.util.ArrayList;
 /**
  * @author lj.michale
  * @description
- * 一个aggFunction必须要实现的方法有：
- * createAccumulator创建accumulator
- * accumulate(ACC accumulator, [user defined inputs])
- * getValue返回结果
+ *   一个aggFunction必须要实现的方法有：
+ *   createAccumulator创建accumulator
+ *   accumulate(ACC accumulator, [user defined inputs])
+ *   getValue返回结果
+ *
+ * 1.UDF: 自定义标量函数(User Defined Scalar Function)。一行输入一行输出。
+ * 2.UDAF: 自定义聚合函数。多行输入一行输出。
+ * 3.UDTF: 自定义表函数。一行输入多行输出或一列输入多列输出
  * @date 2021-05-27
  */
 public class FirstNonNull extends AggregateFunction<String[],ArrayList<String>> {
