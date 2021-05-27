@@ -25,7 +25,7 @@ import java.util.Date;
  * 自定义kafka to mysql,继承TwoPhaseCommitSinkFunction,实现两阶段提交
  * @date 2021-05-27
  */
-public class MySqlTwoPhaseCommitSink extends TwoPhaseCommitSinkFunction<ObjectNode,Connection,Void> {
+public class MySqlTwoPhaseCommitSink extends TwoPhaseCommitSinkFunction<ObjectNode, Connection, Void> {
 
     private static final Logger log = LoggerFactory.getLogger(MySqlTwoPhaseCommitSink.class);
 
