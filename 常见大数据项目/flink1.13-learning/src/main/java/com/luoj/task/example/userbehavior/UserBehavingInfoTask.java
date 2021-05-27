@@ -45,7 +45,6 @@ public class UserBehavingInfoTask {
         properties.setProperty("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
     }
 
-
     public static void main(String[] args) throws Exception {
 
         final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
@@ -87,7 +86,7 @@ public class UserBehavingInfoTask {
         final org.apache.flink.util.OutputTag lateOutputUserBehavior = new org.apache.flink.util.OutputTag<String>("late-userBehavior-data"){};
         SingleOutputStreamOperator<Tuple2<String, String>> aggregateUserClick = filterClick
                 .keyBy(new UserBehavingInfoKeyByGood())
-                .window(SlidingEventTimeWindows.of(Time.seconds(10),Time.seconds(5)
+                .window(SlidingEventTimeWindows.of(Time.seconds(10), Time.seconds(5)
                  // Time.hours(1), Time.minutes(5)
                 )).allowedLateness(Time.hours(1))
                 .sideOutputLateData(lateOutputUserBehavior)
@@ -120,8 +119,7 @@ public class UserBehavingInfoTask {
                 FlinkKafkaProducer.Semantic.EXACTLY_ONCE
         );
 
-        // 字符串转小写；
-        // 写入Kafka
+        // 字符串转小写，写入Kafka
         aggregateUserClick.map(new MapFunction<Tuple2<String, String>, String>() {
             @Override
             public String map(Tuple2<String, String> stringStringTuple2) throws Exception {
