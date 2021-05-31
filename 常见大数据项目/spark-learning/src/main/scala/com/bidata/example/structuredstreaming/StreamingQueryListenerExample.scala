@@ -4,10 +4,11 @@ import org.apache.spark.sql.SparkSession
 
 /**
  * @description
+ *             https://app.yinxiang.com/fx/dfb4b313-5273-4581-a9bb-3a4ccd11b9e8
  * 在struct streaming提供了一个类，用来监听流的启动、停止、状态更新
- * onQueryStarted：结构化流启动的时候异步回调
- * onQueryProgress：查询过程中的状态发生更新时候的异步回调
- * onQueryTerminated：查询结束实时的异步回调
+ *     onQueryStarted：结构化流启动的时候异步回调
+ *     onQueryProgress：查询过程中的状态发生更新时候的异步回调
+ *     onQueryTerminated：查询结束实时的异步回调
  * @author lj.michale
  * @date 2021-05-31
  */
@@ -22,8 +23,6 @@ object StreamingQueryListenerExample {
       .enableHiveSupport()
       .getOrCreate()
     spark.sparkContext.setLogLevel("WARN")
-
-
 
     // Save the code as demo-StreamingQueryManager.scala
     // Start it using spark-shell
@@ -124,19 +123,19 @@ object StreamingQueryListenerExample {
     // Stop q4s on a separate thread
     // as we're about to block the current thread awaiting query termination
     import java.util.concurrent.Executors
+
     def queryTerminator(query: StreamingQuery) = new Runnable {
       def run = {
         println(s"Stopping streaming query: ${query.id}")
         query.stop
       }
     }
+
     import java.util.concurrent.TimeUnit.SECONDS
     // Stop the first query after 10 seconds
-    Executors.newSingleThreadScheduledExecutor.
-      scheduleWithFixedDelay(queryTerminator(q4s), 10, 60 * 5, SECONDS)
+    Executors.newSingleThreadScheduledExecutor.scheduleWithFixedDelay(queryTerminator(q4s), 10, 60 * 5, SECONDS)
     // Stop the other query after 20 seconds
-    Executors.newSingleThreadScheduledExecutor.
-      scheduleWithFixedDelay(queryTerminator(q10s), 20, 60 * 5, SECONDS)
+    Executors.newSingleThreadScheduledExecutor.scheduleWithFixedDelay(queryTerminator(q10s), 20, 60 * 5, SECONDS)
 
     // Use StreamingQueryManager to wait for any query termination (either q1 or q2)
     // the current thread will block indefinitely until either streaming query has finished
