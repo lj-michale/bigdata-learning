@@ -32,7 +32,7 @@ public class CustomStreamingQueryListener extends StreamingQueryListener {
      * 初始化KafkaConsumer.
      */
     private static KafkaConsumer kafkaConsumer = null;
-    Properties properties= new Properties();
+    Properties properties = new Properties();
     {
         properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "172.16.10.91:9092,172.16.10.92:9092,172.16.10.93:9092");
         properties.put(ConsumerConfig.GROUP_ID_CONFIG, "sparkStructuredStreaming");
