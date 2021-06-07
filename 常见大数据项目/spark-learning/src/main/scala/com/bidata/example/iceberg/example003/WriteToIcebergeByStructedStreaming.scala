@@ -26,10 +26,12 @@ object WriteToIcebergeByStructedStreaming {
     // 展示表所有的文件和所有的快照信息
     spark.sql("select * from hadoop_prod.default.tb_user.files").show()
     spark.sql("select * from hadoop_prod.default.tb_user.snapshots").show()
+
     // 查询指定快照的数据
     val lines2= spark.read.format("iceberg").option("snapshot-id", 9146975902480919479L).load("hdfs://linux01:8020/doit/iceberg/warehouse/default/tb_user")
     lines2.show()
     lines.show()
+
     spark.close()
 
   }
