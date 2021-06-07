@@ -20,9 +20,9 @@ import com.alibaba.fastjson.JSONObject;
  * @date 2021-06-07
  */
 @SpringBootApplication
-public class App {
+public class SparkComputeApp {
 
-    private static final String BEAN_CONF = "classpath:spring/spring-bean.xml";
+//    private static final String BEAN_CONF = "classpath:spring/spring-bean.xml";
 
     public static void main(String args[]) {
 
