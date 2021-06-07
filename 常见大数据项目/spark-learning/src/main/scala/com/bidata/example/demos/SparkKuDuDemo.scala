@@ -1,4 +1,4 @@
-package com.bidata.demos
+package com.bidata.example.demos
 
 import org.apache.kudu.spark.kudu.KuduContext
 import org.apache.spark.{SparkConf, SparkContext}

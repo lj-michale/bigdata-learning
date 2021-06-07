@@ -4,7 +4,7 @@ import java.sql.{Connection, DriverManager, PreparedStatement, ResultSet, SQLExc
 import java.util.concurrent.LinkedBlockingDeque
 
 import com.bidata.bean.ParamsList
-import com.bidata.demos.PropertiesUtil
+import com.bidata.example.demos.PropertiesUtil
 
 import scala.collection.mutable.ListBuffer
 

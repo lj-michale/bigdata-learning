@@ -1,4 +1,4 @@
-package com.bidata.demos
+package com.bidata.example.demos
 
 import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.apache.kafka.common.TopicPartition

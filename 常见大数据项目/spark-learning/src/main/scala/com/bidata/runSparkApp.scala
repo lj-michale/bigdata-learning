@@ -3,7 +3,7 @@ package com.bidata
 
 import com.typesafe.config.Config
 import org.apache.spark.sql.SparkSession
-import com.bidata.factory.{Dept, Factory}
+import com.bidata.example.factory.{Dept, Factory}
 import com.bidata.common.ConfigReader.readFromLocal
 import com.bidata.common.ConfigParser.parseJsonStringFromLocal
 

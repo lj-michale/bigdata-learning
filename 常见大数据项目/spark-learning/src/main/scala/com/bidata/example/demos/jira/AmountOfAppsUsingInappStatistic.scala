@@ -1,4 +1,4 @@
-package com.bidata.demos.jira
+package com.bidata.example.demos.jira
 
 import org.apache.spark.SparkConf
 import org.apache.spark.sql.{DataFrame, SparkSession}

@@ -1,24 +1,26 @@
-package com.bidata.demos
+package com.bidata.example.demos
 
 import com.alibaba.fastjson.JSONObject
-import com.bidata.matric.SparkMetricsUtils
 import org.apache.kafka.clients.consumer.{ConsumerConfig, ConsumerRecord}
 import org.apache.kafka.common.serialization.StringDeserializer
-import org.apache.spark.{SparkConf, SparkContext}
 import org.apache.spark.streaming.dstream.InputDStream
 import org.apache.spark.streaming.kafka010._
-import org.apache.spark.streaming.{Seconds, StreamingContext}
+import org.apache.spark.streaming.scheduler.{StreamingListener, StreamingListenerBatchCompleted}
+import org.apache.spark.streaming.{Seconds, StreamingContext, Time}
+import org.apache.spark.{SparkConf, SparkContext}
+
 /**
+ * Created by Shi shuai RollerQing on 2019/12/24 19:47
  * 加监控 获取Metrics信息
  */
 
-object Kafka010Demo05 {
+object Kafka010Demo06 {
 
 
   def main(args: Array[String]): Unit = {
     val conf = new SparkConf().setMaster("local[*]").setAppName(s"${this.getClass.getCanonicalName}")
     val ssc = new StreamingContext(conf, Seconds(5))
-    //    ssc.addStreamingListener()
+    ssc.addStreamingListener(new MyStreamingListener) //需要自己实现一个StreamingListener
 
     //读数据
     val groupID = "SparkKafka010"
@@ -37,42 +39,29 @@ object Kafka010Demo05 {
 
       //实时监控
       val recordsCount = rdd.count()
-      monitor(ssc.sparkContext, recordsCount)
+      //monitor(ssc.sparkContext, recordsCount)
     })
     ssc.start()
     ssc.awaitTermination()
   }
 
+  //spark 2.2.0以上版本
+  class MyStreamingListener extends StreamingListener {//有好多方法可以重写 可以看看
+    //Called when processing of a batch of jobs has completed.当一批作业处理完成时调用。
+    override def onBatchCompleted(batchCompleted: StreamingListenerBatchCompleted): Unit = {
+      val schedulingDelay = batchCompleted.batchInfo.schedulingDelay
+      val processingDelay: Option[Long] = batchCompleted.batchInfo.processingDelay
+      val processingStartTime: Long = batchCompleted.batchInfo.processingStartTime.get
+      val numRecords: Long = batchCompleted.batchInfo.numRecords
+      val batchTime: Time = batchCompleted.batchInfo.batchTime
 
-  // 获取json串；解析json串；落地
-  def monitor(sc: SparkContext, recordsCount: Long) = {
-    //准备参数
-    val appName = sc.appName
-    val appId = sc.applicationId
-    //注意这里：如果放到集群运行地址localhost可以换没问题
-    //但是注意放在集群运行的spark程序可能不止一个，所以端口可能会被占用 就是说端口可能为4041 4042
-    // 肯定有这样的情况 所以如果要用 还要再做优化
-    val url = "http://localhost:4040/metrics/json"
-
-    // 获取json串，转为jsonObject
-    val metricsObject: JSONObject = SparkMetricsUtils.getMetricsJson(url).getJSONObject("gauges")
-
-    //开始时间
-    val startTimePath = s"$appId.driver.$appName.StreamingMetrics.streaming.lastCompletedBatch_processingStartTime"
-    val startTime: JSONObject = metricsObject.getJSONObject(startTimePath)
-    val processingStartTime = if(startTime != null)
-      startTime.getLong("value")
-    else -1L
-
-
-    println(s"processingStartTime = $processingStartTime")
-
-    // 每批次执行的时间；开始时间（友好格式）；处理的平均速度（记录数/时间）
-    // lastCompletedBatch_processingDelay + schedulingDelay = 每批次执行的时间
-
-    // 组织数据保存
+      println(s"schedulingDelay = $schedulingDelay")
+      println(s"processingDelay = $processingDelay")
+      println(s"processingStartTime = $processingStartTime")
+      println(s"numRecords = $numRecords")
+      println(s"batchTime = $batchTime")
+    }
   }
-
 
   def getKafkaConsumerParams(grouid: String = "SparkStreaming010", autoCommit: String = "true"): Map[String, String] = {
     val kafkaParams = Map[String, String] (

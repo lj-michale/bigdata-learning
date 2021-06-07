@@ -1,4 +1,4 @@
-package com.bidata.demos
+package com.bidata.example.demos
 
 import com.alibaba.fastjson.{JSON, JSONArray, JSONObject}
 import com.bidata.bean.ParamsList

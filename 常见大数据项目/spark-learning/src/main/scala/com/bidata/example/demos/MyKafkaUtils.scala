@@ -1,4 +1,4 @@
-package com.bidata.demos
+package com.bidata.example.demos
 
 object MyKafkaUtils {
 

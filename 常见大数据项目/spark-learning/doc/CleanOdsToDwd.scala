@@ -1,4 +1,4 @@
-package com.bidata.demos.etl
+package com.bidata.example.demos.etl
 
 import java.io.File
 import java.util.Properties

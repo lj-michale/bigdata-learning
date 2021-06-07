@@ -1,4 +1,4 @@
-package com.bidata.factory
+package com.bidata.example.factory
 
 import com.typesafe.config.Config
 import org.apache.spark.sql.SparkSession
