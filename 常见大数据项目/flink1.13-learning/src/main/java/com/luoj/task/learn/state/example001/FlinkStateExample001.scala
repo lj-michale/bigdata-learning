@@ -85,7 +85,6 @@ object FlinkStateExample001 {
 
   }
 
-
   case class SensorReading( id: String, timestamp: Long, timepreture: Double)
 
   class SensorSource extends RichSourceFunction[SensorReading]{
