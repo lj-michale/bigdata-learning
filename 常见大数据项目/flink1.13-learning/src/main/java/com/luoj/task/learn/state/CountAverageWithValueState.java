@@ -45,8 +45,10 @@ public class CountAverageWithValueState
         // 注册状态
         ValueStateDescriptor<Tuple2<Long, Long>> descriptor =
                 new ValueStateDescriptor<Tuple2<Long, Long>>(
-                        "average",  // 状态的名字
-                        Types.TUPLE(Types.LONG, Types.LONG)); // 状态存储的数据类型
+                        // 状态的名字
+                        "average",
+                        // 状态存储的数据类型
+                        Types.TUPLE(Types.LONG, Types.LONG));
 
         countAndSum = getRuntimeContext().getState(descriptor);
     }
