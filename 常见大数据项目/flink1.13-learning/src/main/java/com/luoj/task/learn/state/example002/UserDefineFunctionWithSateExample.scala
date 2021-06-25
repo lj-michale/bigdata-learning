@@ -109,8 +109,7 @@ object UserDefineFunctionWithSateExample {
     //val alerts: DataStream[(String, Double, Double)] = keyedData
     //  .connect(broadcastThresholds).process(new UpdatableTemperatureAlertFunction())
 
-
-
+    // env.getConfig.setAutoWatermarkInterval(9000) //每9秒发出一个watermark
 
 
     env.execute(this.getClass.getName)
