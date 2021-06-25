@@ -5,11 +5,13 @@ import org.apache.flink.api.common.functions.RichFlatMapFunction
 import org.apache.flink.api.common.restartstrategy.RestartStrategies
 import org.apache.flink.api.common.state.{ValueState, ValueStateDescriptor}
 import org.apache.flink.configuration.Configuration
+import org.apache.flink.streaming.api.checkpoint.ListCheckpointed
 import org.apache.flink.streaming.api.scala.{DataStream, KeyedStream, StreamExecutionEnvironment}
 import org.apache.flink.table.api.EnvironmentSettings
 import org.apache.flink.table.api.bridge.scala.StreamTableEnvironment
 import org.apache.flink.util.Collector
 import org.slf4j.{Logger, LoggerFactory}
+import scala.collection.JavaConverters._
 
 /**
  * @descr Flink状态编程：state
@@ -85,6 +87,14 @@ object UserDefineFunctionWithSateExample {
       }
     alertStream.print(">>>>>>>>>>>>> 连续两次温度相差10度").setParallelism(1)
 
+    // 1.2 使用ListCheckpointed接口来实现操作符的列表状态
+    // 操作符状态会在操作符的每一个并行实例中去维护。一个操作符并行实例上的所有事件都可以访问同一个状态。Flink支持三种操作符状态：list state, list union state, broadcast state。
+
+
+
+
+
+
     env.execute(this.getClass.getName)
 
   }
@@ -116,7 +126,47 @@ object UserDefineFunctionWithSateExample {
 
       this.lastTempState.update(reading.timepreture)
     }
+  }
+
+  // 业务场景为：一个对每一个并行实例的超过阈值的温度的计数程序
+  // 使用ListCheckpointed接口来实现操作符的列表状态
+  class HighTempCounter(val threshold: Double)
+    extends RichFlatMapFunction[SensorReading, (Int, Long)]
+      with ListCheckpointed[java.lang.Long] {
+
+    // index of the subtask
+    private lazy val subtaskIdx = getRuntimeContext.getIndexOfThisSubtask
+
+    // local count variable
+    private var highTempCnt = 0L
+
+    override def flatMap(
+                          in: SensorReading,
+                          out: Collector[(Int, Long)]): Unit = {
+      if (in.timepreture > threshold) {
+        // increment counter if threshold is exceeded
+        highTempCnt += 1
+        // emit update with subtask index and counter
+        out.collect((subtaskIdx, highTempCnt))
+      }
+    }
+
+    override def restoreState(state: java.util.List[java.lang.Long]): Unit = {
+      highTempCnt = 0
+      // restore state by adding all longs of the list
+      for (cnt <- state.asScala) {
+        highTempCnt += cnt
+      }
+    }
+
+    override def snapshotState(chkpntId: Long, ts: Long): java.util.List[java.lang.Long] = {
+      // snapshot state as list with a single count
+      java.util.Collections.singletonList(highTempCnt)
+    }
 
   }
+
+
+
 
 }
