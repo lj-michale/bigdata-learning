@@ -146,12 +146,8 @@ public class ConfigRealTimeChangeByBroadcastState {
         // connect above 2 streams
 //        DataStream<EvaluatedResult> connectedStream = customerUserEventStream
 //                .connect(configBroadcastStream)
-//                .process(new ConnectedBroadcastProcessFuntion(
-//
-//                ));
+//                .process(new ConnectedBroadcastProcessFuntion());
 //        connectedStream.addSink(kafkaProducer);
-
-
 
         bsEnv.execute("ConfigRealTimeChangeByBroadcastState");
 
@@ -174,9 +170,7 @@ public class ConfigRealTimeChangeByBroadcastState {
         public long extractTimestamp(UserEvent element) {
             return element.getEventTimestamp();
         }
-
     }
-
 
     // {"userId":"d8f3368aba5df27a39cbcfd36ce8084f","channel":"APP","eventType":"PURCHASE","eventTime":"2018-06-12_09:30:28","data":{"productId":196,"price":600.00,"amount":600.00}}
     @Data

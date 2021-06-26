@@ -45,7 +45,7 @@ object UserDefineFunctionWithSateExample {
 
     val env: StreamExecutionEnvironment = StreamExecutionEnvironment.getExecutionEnvironment
     env.setRestartStrategy(RestartStrategies.failureRateRestart(5, org.apache.flink.api.common.time.Time.seconds(10), org.apache.flink.api.common.time.Time.seconds(1)))
-    env.getConfig.setAutoWatermarkInterval(5000L)
+    env.getConfig.setAutoWatermarkInterval(5000L)  // 每5秒发出一个watermark
     val settings = EnvironmentSettings.newInstance().useBlinkPlanner().inStreamingMode().build()
     val tableEnv = StreamTableEnvironment.create(env, settings)
 
@@ -109,7 +109,7 @@ object UserDefineFunctionWithSateExample {
     //val alerts: DataStream[(String, Double, Double)] = keyedData
     //  .connect(broadcastThresholds).process(new UpdatableTemperatureAlertFunction())
 
-    // env.getConfig.setAutoWatermarkInterval(9000) //每9秒发出一个watermark
+
 
 
     env.execute(this.getClass.getName)
