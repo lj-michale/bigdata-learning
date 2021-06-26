@@ -110,8 +110,6 @@ object UserDefineFunctionWithSateExample {
     //  .connect(broadcastThresholds).process(new UpdatableTemperatureAlertFunction())
 
 
-
-
     env.execute(this.getClass.getName)
 
   }
