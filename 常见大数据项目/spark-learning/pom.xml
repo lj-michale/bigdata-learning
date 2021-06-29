@@ -21,6 +21,7 @@
     <kafka.version>1.0.0</kafka.version>
     <iceberg.version>0.10.0</iceberg.version>
     <scala.binary.version>2.11</scala.binary.version>
+    <hudi.version>0.7.0</hudi.version>
 <!--    <zk.client>2.0</zk.client>-->
   </properties>
 
@@ -101,6 +102,11 @@
       <groupId>org.apache.kudu</groupId>
       <artifactId>kudu-spark2_2.11</artifactId>
       <version>1.6.0-cdh5.14.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.hudi</groupId>
+      <artifactId>hudi-spark-bundle_${scala.binary.version}</artifactId>
+      <version>0.8.0</version>
     </dependency>
     <dependency>
       <groupId>org.apache.kafka</groupId>

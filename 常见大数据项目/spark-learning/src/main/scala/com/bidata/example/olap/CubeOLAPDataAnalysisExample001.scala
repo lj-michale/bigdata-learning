@@ -5,7 +5,7 @@ import org.apache.spark.sql.{DataFrame, SparkSession}
 
 /**
  * @author lj.michale
- * @description spark的多维分析
+ * @description Spark多维分析cube/rollup/grouping sets/group by
  * @date 2021-06-25
  */
 object CubeOLAPDataAnalysisExample001 {
@@ -84,7 +84,6 @@ object CubeOLAPDataAnalysisExample001 {
     val cubeHonorDF: DataFrame = spark.sql("select area,grade,honor,sum(value) as total_value from temp group by area,grade,honor with cube")
     rollupHonorDFDSL2.show()
     cubeHonorDF.show()
-
 
 
     spark.stop()
