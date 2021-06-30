@@ -19,6 +19,7 @@
     <kubernetes.client.version>4.9.2</kubernetes.client.version>
     <flink-shaded-hadoop.version>2.6.5-10.0</flink-shaded-hadoop.version>
     <pulsar-flink-connector.version>2.4.0</pulsar-flink-connector.version>
+    <hoodie.version>0.8.0</hoodie.version>
     <!-- Secondary components -->
     <async.client.version>2.10.4</async.client.version>
     <ch.driver.version>0.1.40</ch.driver.version>
@@ -59,7 +60,16 @@
   </pluginRepositories>
 
   <dependencies>
-
+    <dependency>
+      <groupId>org.apache.hudi</groupId>
+      <artifactId>hudi-flink-client</artifactId>
+      <version>${hoodie.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.hudi</groupId>
+      <artifactId>hudi-flink-bundle_${scala.binary.version}</artifactId>
+      <version>${hoodie.version}</version>
+    </dependency>
     <dependency>
       <groupId>org.apache.flink</groupId>
       <artifactId>flink-scala_${scala.binary.version}</artifactId>
@@ -393,6 +403,12 @@
       <artifactId>vertx-jdbc-client</artifactId>
       <version>3.8.5</version>
       <scope>compile</scope>
+    </dependency>
+    <!--druid 依赖-->
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>druid</artifactId>
+      <version>1.2.3</version>
     </dependency>
   </dependencies>
 

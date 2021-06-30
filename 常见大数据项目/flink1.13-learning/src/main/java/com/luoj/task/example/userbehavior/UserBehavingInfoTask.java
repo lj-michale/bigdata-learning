@@ -56,7 +56,7 @@ public class UserBehavingInfoTask {
 
         FlinkKafkaConsumer010 kafkaConsumer = new FlinkKafkaConsumer010<>(("eventDetails"), new SimpleStringSchema(), properties);
 
-        //flink会自动保存kafka 偏移量作为状态
+        // flink会自动保存kafka 偏移量作为状态
         // start from the earliest record possible
         kafkaConsumer.setStartFromGroupOffsets();
 
@@ -82,7 +82,7 @@ public class UserBehavingInfoTask {
             }
         });
 
-        //创建迟到数据侧输出流
+        // 创建迟到数据侧输出流
         final org.apache.flink.util.OutputTag lateOutputUserBehavior = new org.apache.flink.util.OutputTag<String>("late-userBehavior-data"){};
         SingleOutputStreamOperator<Tuple2<String, String>> aggregateUserClick = filterClick
                 .keyBy(new UserBehavingInfoKeyByGood())
@@ -98,7 +98,7 @@ public class UserBehavingInfoTask {
         // 迟到数据 迟到数据不会触发窗口 存入数据库
         AsyncDataStream.unorderedWait(aggregateUserClick.getSideOutput(lateOutputUserBehavior), new AsyncInsertUserBehavior2Mysql(), 1000, TimeUnit.MICROSECONDS, 10);
 
-        //输入到redis中 rank:click
+        // 输入到redis中 rank:click
         FlinkJedisPoolConfig redis = new FlinkJedisPoolConfig.Builder().setDatabase(1).setHost("192.168.219.128").setPort(6379).setPassword("redis").build();
         aggregateUserClick.addSink(new RedisSink<>(redis, new UserBehaviorRedisMapper()));
 
@@ -124,11 +124,12 @@ public class UserBehavingInfoTask {
             @Override
             public String map(Tuple2<String, String> stringStringTuple2) throws Exception {
                 String str = stringStringTuple2.f0 + stringStringTuple2.f1;
-                return null;
+                return str;
             }
         }).map(String::toLowerCase).addSink(kafkaProducer);
 
         env.execute("UserBehavingInfoTask");
+
     }
 
     /**
