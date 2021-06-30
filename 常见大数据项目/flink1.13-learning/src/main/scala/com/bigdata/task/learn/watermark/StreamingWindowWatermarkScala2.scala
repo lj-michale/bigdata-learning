@@ -60,7 +60,7 @@ object StreamingWindowWatermarkScala2 {
 
     val window = waterMarkStream.keyBy(0)
       .window(TumblingEventTimeWindows.of(Time.seconds(3))) //按照消息的EventTime分配窗口，和调用TimeWindow效果一样
-      //.allowedLateness(Time.seconds(2))//允许数据迟到2秒
+      .allowedLateness(Time.seconds(2))//允许数据迟到2秒
       .sideOutputLateData(outputTag)
       .apply(new WindowFunction[Tuple2[String, Long], String, Tuple, TimeWindow] {
         override def apply(key: Tuple, window: TimeWindow, input: Iterable[(String, Long)], out: Collector[String]) = {
