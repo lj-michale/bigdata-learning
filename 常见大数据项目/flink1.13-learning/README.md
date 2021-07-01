@@ -58,3 +58,8 @@ echo 'stop' | ./bin/kubernetes-session.sh -Dkubernetes.cluster-id=kaibo-test -De
 
 手工删除资源：
 kubectl delete service/<ClusterID>
+
+官方文档 ： Table DataStream 互转
+https://ci.apache.org/projects/flink/flink-docs-release-1.13/docs/dev/table/common/
+StreamExecutionEnvironment : 流式相关。不能使用SQL的API。如果要在流里面用SQL，使用下面的
+StreamTableEnvironment ： 流式SQL相关。可以使用 SQL的API。如果要用Stream相关的，需要将tableData.toRetractStream[Row]
