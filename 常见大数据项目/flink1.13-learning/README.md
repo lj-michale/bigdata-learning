@@ -63,3 +63,14 @@ kubectl delete service/<ClusterID>
 https://ci.apache.org/projects/flink/flink-docs-release-1.13/docs/dev/table/common/
 StreamExecutionEnvironment : 流式相关。不能使用SQL的API。如果要在流里面用SQL，使用下面的
 StreamTableEnvironment ： 流式SQL相关。可以使用 SQL的API。如果要用Stream相关的，需要将tableData.toRetractStream[Row]
+
+Glossary[注释]
+https://ci.apache.org/projects/flink/flink-docs-master/docs/concepts/glossary/
+
+
+Timely stream processing is an extension of stateful stream processing in which time plays some role in the computation
+
+Flink JIRA
+https://issues.apache.org/jira/login.jsp?os_destination=%2Fprojects%2FFLINK
+
+
