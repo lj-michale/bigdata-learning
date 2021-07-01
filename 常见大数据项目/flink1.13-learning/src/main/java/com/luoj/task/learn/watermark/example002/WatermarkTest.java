@@ -24,6 +24,7 @@ import java.util.UUID;
 /**
  * @author lj.michale
  * @description 新的水印生成器
+ *              内置的水印生成器
  * @date 2021-07-01
  */
 public class WatermarkTest{
