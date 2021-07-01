@@ -17,6 +17,7 @@ import org.apache.flink.streaming.api.functions.ProcessFunction;
 import org.apache.flink.streaming.api.functions.source.SourceFunction;
 import org.apache.flink.util.Collector;
 
+import java.time.Duration;
 import java.util.Date;
 import java.util.UUID;
 
@@ -73,11 +74,11 @@ public class WatermarkTest{
                     }
                 });
 
-//使用内置的水印生成器
-//                DataStream<Tuple2<String,Long>> withTimestampsAndWatermarks = dataStream.assignTimestampsAndWatermarks(
-//                                WatermarkStrategy
-//                                                .<Tuple2<String,Long>>forBoundedOutOfOrderness(Duration.ofSeconds(5))
-//                                                .withTimestampAssigner((event, timestamp)->event.f1));
+                // 使用内置的水印生成器
+                DataStream<Tuple2<String,Long>> withTimestampsAndWatermarks2 = dataStream.assignTimestampsAndWatermarks(
+                                WatermarkStrategy
+                                                .<Tuple2<String,Long>>forBoundedOutOfOrderness(Duration.ofSeconds(5))
+                                                .withTimestampAssigner((event, timestamp)->event.f1));
 
         withTimestampsAndWatermarks.process(new ProcessFunction<Tuple2<String,Long>,Object>(){
 
