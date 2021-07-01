@@ -1,5 +1,6 @@
 package com.luoj.task.example.others.example001;
 
+import org.apache.flink.api.common.eventtime.WatermarkStrategy;
 import org.apache.flink.api.common.functions.FlatMapFunction;
 import org.apache.flink.api.common.functions.MapFunction;
 import org.apache.flink.api.common.functions.ReduceFunction;
@@ -7,10 +8,12 @@ import org.apache.flink.api.java.tuple.Tuple2;
 import org.apache.flink.api.java.tuple.Tuple3;
 import org.apache.flink.api.java.tuple.Tuple5;
 import org.apache.flink.streaming.api.CheckpointingMode;
+import org.apache.flink.streaming.api.TimeCharacteristic;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.CheckpointConfig;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.functions.sink.SinkFunction;
+import org.apache.flink.streaming.api.windowing.assigners.TumblingEventTimeWindows;
 import org.apache.flink.streaming.api.windowing.time.Time;
 import org.apache.flink.util.Collector;
 
@@ -28,6 +31,7 @@ public class TraceSourceData {
     public static void main(String args[]) throws Exception {
 
         final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+        env.setStreamTimeCharacteristic(TimeCharacteristic.ProcessingTime);
         env.enableCheckpointing(60000);
         env.getCheckpointConfig().setCheckpointingMode(CheckpointingMode.EXACTLY_ONCE);
         env.getCheckpointConfig().setMinPauseBetweenCheckpoints(30000);
@@ -44,7 +48,7 @@ public class TraceSourceData {
                                 String ss[] = value.split(",");
                                 out.collect(Tuple5.of(ss[0], Integer.parseInt(ss[1]), Long.parseLong(ss[2]), Integer.parseInt(ss[3]), Integer.parseInt(ss[4])));
                             }
-                        });
+                        }).assignTimestampsAndWatermarks(WatermarkStrategy.noWatermarks());
 
         //5秒窗口统计各状态的次数
         DataStream<Tuple2<Integer, Integer>> statusData = ds
@@ -56,7 +60,7 @@ public class TraceSourceData {
                     }
                 })
                 .keyBy(0)
-                .timeWindow(Time.seconds(5))
+                .window(TumblingEventTimeWindows.of(Time.seconds(5)))
                 .sum(1);
 
         statusData.print().setParallelism(1);
@@ -74,7 +78,8 @@ public class TraceSourceData {
                         }
                     }
                 })//注意这里，没有使用keyBy
-                .timeWindowAll(Time.seconds(5))
+                // https://blog.csdn.net/java_xth/article/details/112886900
+                .windowAll(TumblingEventTimeWindows.of(Time.seconds(5)))
                 .reduce(new ReduceFunction<Tuple3<Integer, Integer, Integer>>() {
                     @Override
                     public Tuple3<Integer, Integer, Integer> reduce(Tuple3<Integer, Integer, Integer> value1, Tuple3<Integer, Integer, Integer> value2) throws Exception {
