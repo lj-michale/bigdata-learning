@@ -50,10 +50,10 @@ public class WatermarkTest{
         DataStream<Tuple2<String,Long>> dataStream = env.addSource(new MySource());
 
         DataStream<Tuple2<String,Long>> withTimestampsAndWatermarks = dataStream.assignTimestampsAndWatermarks(
-                new WatermarkStrategy<Tuple2<String,Long>>(){
+                new WatermarkStrategy<Tuple2<String,Long>>() {
                     @Override
                     public WatermarkGenerator<Tuple2<String,Long>> createWatermarkGenerator(
-                            WatermarkGeneratorSupplier.Context context){
+                            WatermarkGeneratorSupplier.Context context) {
                         return new WatermarkGenerator<Tuple2<String,Long>>() {
                             private long maxTimestamp;
                             private long delay = 3000;
@@ -75,10 +75,10 @@ public class WatermarkTest{
                 });
 
                 // 使用内置的水印生成器
-                DataStream<Tuple2<String,Long>> withTimestampsAndWatermarks2 = dataStream.assignTimestampsAndWatermarks(
-                                WatermarkStrategy
-                                                .<Tuple2<String,Long>>forBoundedOutOfOrderness(Duration.ofSeconds(5))
-                                                .withTimestampAssigner((event, timestamp)->event.f1));
+//                DataStream<Tuple2<String,Long>> withTimestampsAndWatermarks2 = dataStream.assignTimestampsAndWatermarks(
+//                                WatermarkStrategy
+//                                                .<Tuple2<String,Long>>forBoundedOutOfOrderness(Duration.ofSeconds(5))
+//                                                .withTimestampAssigner((event, timestamp)->event.f1));
 
         withTimestampsAndWatermarks.process(new ProcessFunction<Tuple2<String,Long>,Object>(){
 
