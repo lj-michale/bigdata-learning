@@ -43,7 +43,7 @@ public class JCacheSinkExample002 {
                         while (!isCanaled) {
                             long  currentTimeStamp = System.currentTimeMillis();
                             ctx.collect(new Tuple4<>(getRandomUserID(), getRandomProductID(), currentTimeStamp, getRandomPrice().intValue()));
-                            Thread.sleep(1000);
+                            Thread.sleep(100);
                         }
                     }
 

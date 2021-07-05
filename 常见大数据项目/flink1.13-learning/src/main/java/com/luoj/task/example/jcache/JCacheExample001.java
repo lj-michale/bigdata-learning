@@ -47,9 +47,9 @@ public class JCacheExample001 {
         System.out.println("hincrBy响应结果3为：" + jcache.hget("jiguang0003", "lllllll"));
 
         System.out.println("-------------------------------------Flink写入测试测试-------------------------------------");
-        System.out.println("Flink写入JCache之后的查询结果为：" + jcache.hget("JG-97632672", "Good-87652737"));
+        System.out.println(">>>>>>>>>>Flink写入JCache之后的查询结果为：" + jcache.hget("JG-97632672", "Good-3424687624"));
 
-
+        System.out.println(">>>>>>>>>>Flink2写入JCache之后的查询结果为：" + jcache.hgetAll("LLLLLLLLLLLLLLLLLLLLLLLLLL"));
 
 
         jcache.closeIceContext();
