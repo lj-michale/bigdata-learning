@@ -37,6 +37,7 @@ import static com.luoj.common.PropertiesConstants.*;
 /**
  * @author lj.michale
  * @description  Flink写入ES Example
+ * 参考资料：
  * @date 2021-07-02
  */
 @Slf4j
@@ -70,7 +71,7 @@ public class ElasticsearchSinkExample001 {
             public void run(SourceContext<Tuple6<String, String, String, String, Double, Long>> ctx) throws Exception {
                 while (!isCanaled) {
                     long  currentTimeStamp = System.currentTimeMillis();
-                    ctx.collect(Tuple6.of(getRandomUserID(), getRandomUserName(), getRandomProductName(), getRandomProductID(), getRandomPriceName(), currentTimeStamp));
+                    ctx.collect(Tuple6.of(getRandomUserID(), getRandomUserName(), getRandomProductName(), getRandomProductID(), getRandomPrice(), currentTimeStamp));
                     Thread.sleep(1000);
                 }
             }
@@ -111,7 +112,6 @@ public class ElasticsearchSinkExample001 {
         // bulk.flush.max.size.mb: 批量写入时的最大数据量
         // bulk.flush.interval.ms: 批量写入的时间间隔，配置后则会按照该时间间隔严格执行，无视上面的两个批量写入配置
 
-
         List<HttpHost> esAddresses = ESSinkUtil.getEsAddresses(parameterTool.get(ELASTICSEARCH_HOSTS));
         int bulkSize = parameterTool.getInt(ELASTICSEARCH_BULK_FLUSH_MAX_ACTIONS, 40);
         int sinkParallelism = parameterTool.getInt(STREAM_SINK_PARALLELISM, 5);
@@ -125,9 +125,7 @@ public class ElasticsearchSinkExample001 {
                 JSONObject object = JSON.parseObject(s);
                 String id = object.getJSONObject("esConfig").get("id").toString();
                 UpdateRequest updateRequest=new UpdateRequest();
-                updateRequest.index("zjf_2020-05-27")
-                        .type("doc")
-                        .id(id)
+                updateRequest.index("zjf_2020-05-27").type("doc").id(id)
                         .doc(XContentFactory.jsonBuilder().startObject().field("source",s).endObject())
                         .upsert(s, XContentType.JSON);
                 return updateRequest;

@@ -410,6 +410,11 @@
       <artifactId>druid</artifactId>
       <version>1.2.3</version>
     </dependency>
+    <dependency>
+      <groupId>cn.jpush</groupId>
+      <artifactId>jcache-client</artifactId>
+      <version>1.9.4</version>
+    </dependency>
   </dependencies>
 
   <build>

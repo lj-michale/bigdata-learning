@@ -55,7 +55,7 @@ public class GeneratingWatermarksExample001 {
             public void run(SourceContext<Tuple6<String, String, String, String, Double, Long>> ctx) throws Exception {
                 while (!isCanaled) {
                     long  currentTimeStamp = System.currentTimeMillis();
-                    ctx.collect(Tuple6.of(getRandomUserID(), getRandomUserName(), getRandomProductName(), getRandomProductID(), getRandomPriceName(), currentTimeStamp));
+                    ctx.collect(Tuple6.of(getRandomUserID(), getRandomUserName(), getRandomProductName(), getRandomProductID(), getRandomPrice(), currentTimeStamp));
                     Thread.sleep(1000);
                 }
             }

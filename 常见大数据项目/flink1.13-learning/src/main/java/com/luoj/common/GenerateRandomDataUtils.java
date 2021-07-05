@@ -9,7 +9,7 @@ import java.util.Random;
  */
 public class GenerateRandomDataUtils {
 
-    public static Double getRandomPriceName() {
+    public static Double getRandomPrice() {
         Double[] types = {5.67, 2.35, 18.43, 345.32, 67.56, 97.21, 162.78, 1632.89};
         Random random = new Random();
         int i = random.nextInt(types.length);

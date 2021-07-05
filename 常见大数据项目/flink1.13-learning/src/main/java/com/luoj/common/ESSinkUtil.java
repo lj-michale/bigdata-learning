@@ -26,7 +26,7 @@ public class ESSinkUtil {
         ElasticsearchSink.Builder<T> esSinkBuilder = new ElasticsearchSink.Builder<>(hosts, func);
         esSinkBuilder.setBulkFlushMaxActions(bulkFlushMaxActions);
         esSinkBuilder.setFailureHandler(new RetryRequestFailureHandler());
-        //todo:xpack security
+        // todo:xpack security
         data.addSink(esSinkBuilder.build()).setParallelism(parallelism);
     }
 
