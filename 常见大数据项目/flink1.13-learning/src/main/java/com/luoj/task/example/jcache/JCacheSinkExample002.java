@@ -35,9 +35,7 @@ public class JCacheSinkExample002 {
         // Get Data And Do Some ETL
         SingleOutputStreamOperator<Tuple4<String, String, Long, Integer>> dStream =
                 env.addSource(new RichSourceFunction<Tuple4<String, String, Long, Integer>>() {
-
                     private boolean isCanaled = false;
-
                     @Override
                     public void run(SourceContext<Tuple4<String, String, Long, Integer>> ctx) throws Exception {
                         while (!isCanaled) {
@@ -46,7 +44,6 @@ public class JCacheSinkExample002 {
                             Thread.sleep(100);
                         }
                     }
-
                     @Override
                     public void cancel() {
                         isCanaled = true;
@@ -54,9 +51,7 @@ public class JCacheSinkExample002 {
                 }).filter((FilterFunction<Tuple4<String, String, Long, Integer>>) value -> value != null);
 
         dStream.print();
-
-
-
+        // Sink To JCache
         dStream.addSink(new SinkToJCache());
 
         env.execute("JCacheSinkExample002");

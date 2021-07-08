@@ -51,7 +51,6 @@ public class JCacheExample001 {
 
         System.out.println(">>>>>>>>>>Flink2写入JCache之后的查询结果为：" + jcache.hgetAll("LLLLLLLLLLLLLLLLLLLLLLLLLL"));
 
-
         jcache.closeIceContext();
 
     }

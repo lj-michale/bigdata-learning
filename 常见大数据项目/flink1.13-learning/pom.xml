@@ -415,6 +415,11 @@
       <artifactId>jcache-client</artifactId>
       <version>1.9.4</version>
     </dependency>
+    <dependency>
+      <groupId>org.apache.kudu</groupId>
+      <artifactId>kudu-client</artifactId>
+      <version>1.14.0</version>
+    </dependency>
   </dependencies>
 
   <build>
