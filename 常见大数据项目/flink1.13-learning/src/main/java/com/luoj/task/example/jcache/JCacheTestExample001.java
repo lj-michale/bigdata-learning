@@ -5,13 +5,14 @@ import cn.jpush.jcache.client.PipelineTemplate;
 import com.luoj.common.ExampleConstant;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author lj.michale
  * @description
  * @date 2021-07-05
  */
-public class JCacheExample001 {
+public class JCacheTestExample001 {
 
     public static void main(String[] args) {
 
@@ -27,6 +28,7 @@ public class JCacheExample001 {
         System.out.println("-------------------------------------单个key的测试-------------------------------------");
         String result = jcache.get(key);
         System.out.println("expire后响应结果1为：" + result);
+        Map<String, String> results = jcache.hgetAll(key);
 
 
         System.out.println("-------------------------------------pipeline测试-------------------------------------");
