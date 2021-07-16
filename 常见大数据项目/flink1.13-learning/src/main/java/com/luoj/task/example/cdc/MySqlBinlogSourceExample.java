@@ -18,10 +18,10 @@ public class MySqlBinlogSourceExample {
                 .hostname("localhost")
                 .port(3306)
                 // 获取两个数据库的所有表
-                .databaseList("venn", "venn1")
+                .databaseList("nacos", "aurora")
 //                .tableList("user_log")
                 .username("root")
-                .password("123456")
+                .password("abc1314520")
                 // 自定义 解析器，讲数据解析成 json
                 .deserializer(new CommonStringDebeziumDeserializationSchema("localhost", 3306))
                 .build();
