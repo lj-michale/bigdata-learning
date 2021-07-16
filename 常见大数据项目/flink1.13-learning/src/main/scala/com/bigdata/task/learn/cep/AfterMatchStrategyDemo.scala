@@ -44,8 +44,7 @@ object AfterMatchStrategyDemo {
         val id = arr(0)
         val name = arr(1)
         CepDemoEvent(id, 0, name, 0)
-      }).setParallelism(1)
-      .keyBy(_.id) //  Applying your pattern on a non-keyed stream will result in a job with parallelism equal to 1
+    }).setParallelism(1).keyBy(_.id) //  Applying your pattern on a non-keyed stream will result in a job with parallelism equal to 1
 
     /**
       * 模式说明：
@@ -71,28 +70,32 @@ object AfterMatchStrategyDemo {
       .next("third").where(event => {
       event.name.equals("b")
     })
-//      .notNext()
+    //.notNext()
     // always remember add within, it will reduce the state usage
     //      .within(Time.minutes(5 * 60 * 1000))
     val patternStream = CEP.pattern(input, pattern)
+
     val result: DataStream[String] = patternStream.process(
       new PatternProcessFunction[CepDemoEvent, String]() {
-        override def processMatch(
-                                   events: util.Map[String, util.List[CepDemoEvent]],
+        override def processMatch( events: util.Map[String, util.List[CepDemoEvent]],
                                    ctx: PatternProcessFunction.Context,
                                    out: Collector[String] ): Unit = {
           // get the change
           val first = events.get("first").get(0)
           val second = events.get("second").get(0)
           val third = events.get("third").get(0)
-          out.collect("first : " + first + ", first " + second + ", third : " + third)
-        }
 
-      })
+          out.collect("first : " + first + ", first " + second + ", third : " + third)
+
+        }
+      }
+    )
 
     // for convenient, just print
     result.print()
+
     env.execute(this.getClass.getName)
+
   }
 
   case class CepDemoEvent(id: String, volume: Int, name: String, num: Int)
