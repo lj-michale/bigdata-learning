@@ -12,7 +12,8 @@ public class PropertiesConstants {
 
     static {
         // 读取配置文件 application.properties 中的 ykc.profile
-        String profile = PropConfigUtil.getProperties("ykc.profile");
+//        String profile = PropConfigUtil.getProperties("ykc.profile");
+        String profile = "";
 
         if(profile.equals("dev-location")){
             PROPERTIES_FILE_NAME="/application-dev.properties";

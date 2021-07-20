@@ -79,8 +79,7 @@ object DyWindowDemo {
       }
     }).broadcast(commandState)
 
-    val dataStream = env.addSource(new DataSourceFunction)
-      .flatMap(new RichFlatMapFunction[String, DataEntity] {
+    val dataStream = env.addSource(new DataSourceFunction).flatMap(new RichFlatMapFunction[String, DataEntity] {
         var gson: Gson = _
 
         override def open(parameters: Configuration): Unit = {

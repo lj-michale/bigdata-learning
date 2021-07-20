@@ -1,7 +1,7 @@
 package com.bidata.example.hudi.example003
 
 
-import java.time.LocalDateTime
+import java.time.{LocalDate, LocalDateTime}
 
 import org.apache.log4j.Logger
 import org.apache.spark.sql.catalyst.encoders.RowEncoder
@@ -113,5 +113,8 @@ object StructStreamingOnHudiExample {
     query.awaitTermination()
 
   }
+
+
+
 
 }

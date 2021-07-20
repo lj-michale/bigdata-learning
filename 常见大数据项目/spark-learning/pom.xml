@@ -22,6 +22,7 @@
     <iceberg.version>0.10.0</iceberg.version>
     <scala.binary.version>2.11</scala.binary.version>
     <hudi.version>0.7.0</hudi.version>
+    <hoodie.version>0.8.0</hoodie.version>
 <!--    <zk.client>2.0</zk.client>-->
   </properties>
 
@@ -241,4 +242,6 @@
       </plugin>
     </plugins>
   </build>
+
+
 </project>
