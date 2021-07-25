@@ -44,8 +44,7 @@ object FlinkKafkaDDLDemo {
         |    'format.type' = 'json',  -- 数据源格式为 json
         |    'format.derive-schema' = 'true' -- 从 DDL schema 确定 json 解析规则
         |)
-
-            """.stripMargin
+        """.stripMargin
 
     tEnv.sqlUpdate(createTable)
 

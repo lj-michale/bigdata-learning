@@ -1,8 +1,10 @@
 
-flink1.12.1
-
 Flink 1.12 官方文档：
 https://ci.apache.org/projects/flink/flink-docs-release-1.12/
+https://ci.apache.org/projects/flink/flink-docs-release-1.12/zh/dev/table/common.html
+
+Flink1.13 官方文档：
+http://flink.iteblog.com/dev/windows.html
 
 对于Hive兼容的表，需要注意数据类型，具体的数据类型对应关系以及注意点如下:
 Flink数据类型	    Hive数据类型
@@ -37,7 +39,6 @@ FlinkINTERVAL 类型与 Hive INTERVAL 类型不一样
 从Flink1.11.0开始，只要开启了Hive dialect配置，用户就可以使用HiveQL语法，这样我们就可以在Flink中使用Hive的语法使用一些DDL和DML操作。
 Flink目前支持两种SQL方言(SQL dialects),分别为：default和hive。默认的SQL方言是default，如果要使用Hive的语法，需要将SQL方言切换到hive。
 
-
 flink-table-common：通过自定义函数、格式等扩展表生态系统的通用模块。
 flink-table-api-java：使用 Java 开发 Table & SQL API 依赖（早期开发阶段，不推荐使用）
 flink-table-api-scala：使用 Scala 开发 Table & SQL API 依赖（早期开发阶段，不推荐使用）
@@ -48,7 +49,6 @@ flink-table-planner-blink：新的 Blink planner
 flink-table-runtime-blink：新的 Blink runtime
 flink-table-uber：将上面的 API 模块以及旧的 planner 打包到 Table 和 SQL API 用例的发行版中。默认情况下，uber JAR文件Flink -table-*. jar 位于Flink发行版的/lib目录中。
 flink-table-uber-blink：将上面的 API 模块以及 Blink 特定的模块打包到 Table 和 SQL API 用例的发行版中。默认情况下，uber JAR文件Flink -table-blink-*. jar 位于Flink发行版的/lib目录中。
-
 
 提交任务
 ./bin/flink run -d -e kubernetes-session -Dkubernetes.cluster-id=k test.jar
@@ -72,5 +72,9 @@ Timely stream processing is an extension of stateful stream processing in which 
 
 Flink JIRA
 https://issues.apache.org/jira/login.jsp?os_destination=%2Fprojects%2FFLINK
+
+CDH
+http://172.17.9.90:7180/cmf/home
+
 
 

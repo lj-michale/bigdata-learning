@@ -10,6 +10,8 @@ import java.io.IOException;
 /**
  * @author lj.michale
  * @description
+ *   StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+ *   env.getConfig().setGlobalJobParameters(ExecutionEnvUtil.createParameterTool(args));
  * @date 2021-07-02
  */
 public class ExecutionEnvUtil {
@@ -49,5 +51,7 @@ public class ExecutionEnvUtil {
         env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime);
         return env;
     }
+
+
 
 }

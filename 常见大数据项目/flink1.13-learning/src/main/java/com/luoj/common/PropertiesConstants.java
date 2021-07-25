@@ -7,7 +7,6 @@ package com.luoj.common;
  */
 public class PropertiesConstants {
 
-
     public static  String PROPERTIES_FILE_NAME = "/application-dev-location.properties";
 
     static {
