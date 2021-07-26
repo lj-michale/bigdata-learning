@@ -27,6 +27,7 @@ import org.apache.flink.streaming.api.environment.CheckpointConfig;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.functions.source.RichSourceFunction;
 import org.apache.flink.streaming.api.functions.windowing.WindowFunction;
+import org.apache.flink.streaming.api.windowing.assigners.SlidingEventTimeWindows;
 import org.apache.flink.streaming.api.windowing.assigners.TumblingEventTimeWindows;
 import org.apache.flink.streaming.api.windowing.time.Time;
 import org.apache.flink.streaming.api.windowing.windows.Window;
@@ -138,21 +139,40 @@ public class DataStreamUserDefinedFunctionExample {
          *
          *   Allowed Lateness
          */
-        DataStream dataStream = inputOrderDS.assignTimestampsAndWatermarks(
-                WatermarkStrategy.<Order>forBoundedOutOfOrderness(
-                        Duration.ofSeconds(5))
-                        .withTimestampAssigner(
-                                (event, timestamp)->event.createTime))
-                .keyBy(value -> value.userId).window(TumblingEventTimeWindows.of(Time.seconds(5)))
+        DataStream dataStream = inputOrderDS
+                .assignTimestampsAndWatermarks(WatermarkStrategy.<Order>forBoundedOutOfOrderness(Duration.ofSeconds(5))
+                        .withTimestampAssigner((event, timestamp)->event.createTime))
+                .keyBy(value -> value.userId)
+                // Sliding Windows 计算
+                .window(SlidingEventTimeWindows.of(Time.seconds(10), Time.seconds(5)))
+                // Tumbling Windows 计算
+//                .window(TumblingEventTimeWindows.of(Time.seconds(5)))
                 .reduce(new ReduceFunction<Order>() {
-            @Override
-            public Order reduce(Order order1, Order order2) throws Exception {
-                return new Order(order1.getOrderId(), order1.getUserId(), order1.getMoney() + order2.getMoney(), order1.getCreateTime());
-            }
-        });
+                        @Override
+                        public Order reduce(Order order1, Order order2) throws Exception {
+                            return new Order(order1.getOrderId(),
+                                    order1.getUserId(),
+                            order1.getMoney() + order2.getMoney(),
+                                    order1.getCreateTime());
+                        }
+                });
 
         dataStream.print();
 
+
+        /**
+         * Window Join
+         * stream.join(otherStream)
+         *     .where(<KeySelector>)
+         *     .equalTo(<KeySelector>)
+         *     .window(<WindowAssigner>)
+         *     .apply(<JoinFunction>)
+         *
+         * 1. Tumbling Window Join
+         * 2. Sliding Window Join
+         * 3. Session Window Join
+         * 4. Interval Join
+         */
 
 
         env.execute("DataStreamUserDefinedFunctionExample");
