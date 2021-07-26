@@ -34,6 +34,7 @@ import java.util.concurrent.TimeUnit;
  * @date 2021-07-26
  */
 public class ElasticsearchAsyncFunction extends RichAsyncFunction<Tuple4<String, String, String, Integer>, Tuple5<String, String, String, Integer, Integer>> {
+
     private String host;
     private Integer port;
     private String user;
@@ -59,7 +60,6 @@ public class ElasticsearchAsyncFunction extends RichAsyncFunction<Tuple4<String,
      */
     @Override
     public void open(Configuration parameters) {
-
         //ES Client
         CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
         credentialsProvider.setCredentials(AuthScope.ANY, new UsernamePasswordCredentials(user, password));
@@ -81,6 +81,7 @@ public class ElasticsearchAsyncFunction extends RichAsyncFunction<Tuple4<String,
     public void close() throws Exception {
         restHighLevelClient.close();
     }
+
     /**
      * 异步调用
      *
@@ -101,6 +102,7 @@ public class ElasticsearchAsyncFunction extends RichAsyncFunction<Tuple4<String,
             searchFromES(input, resultFuture);
         }
     }
+
     /**
      * 当缓存中没有数据时，从外部存储ES中获取
      *

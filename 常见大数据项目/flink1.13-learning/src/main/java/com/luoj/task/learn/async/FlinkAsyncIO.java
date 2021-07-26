@@ -82,5 +82,7 @@ public class FlinkAsyncIO {
         /**结果输出*/
         result.print().name("PrintToConsole");
         env.execute();
+
     }
+
 }
