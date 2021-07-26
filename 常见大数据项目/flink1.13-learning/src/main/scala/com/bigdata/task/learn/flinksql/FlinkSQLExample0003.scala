@@ -139,6 +139,13 @@ object FlinkSQLExample0003 {
 //      .execute().print()
 
     // https://blog.csdn.net/appleyuchi/article/details/109163654
+//    tableEnv.createTemporaryView("t_order", ds, $("user"), $("product"), $("amount"), $("buy_time"))
+//    tableEnv.sqlQuery("SELECT user,product,amount,buy_time FROM t_order")
+//      .filter(and($("user").isNotNull(), $("product").isNotNull(), $("amount").isNotNull()))
+//      .select($("user"), $("amount"), $("buy_time"))
+//      .execute().print()
+
+
     tableEnv.createTemporaryView("t_order", ds, $("user"), $("product"), $("amount"), $("buy_time"))
     tableEnv.sqlQuery("SELECT user,product,amount,buy_time FROM t_order")
       .filter(and($("user").isNotNull(), $("product").isNotNull(), $("amount").isNotNull()))
