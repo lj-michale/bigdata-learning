@@ -88,6 +88,7 @@ public class DataStreamToWindowsCount {
 
         DataStream<Tuple2<Boolean, Row>> resultDS = tableEnv.toRetractStream(resultTable, Row.class);
         DataStream<Tuple2<Boolean, Row>> resultAPI = tableEnv.toRetractStream(apiTable, Row.class);
+
         //TODO 4. sink
         resultDS.print("sql数据");
         resultAPI.print("API");
