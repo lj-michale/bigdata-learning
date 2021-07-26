@@ -8,13 +8,13 @@ import org.apache.flink.streaming.api.{CheckpointingMode, TimeCharacteristic}
 import org.apache.flink.streaming.api.environment.CheckpointConfig
 import org.apache.flink.streaming.api.functions.source.SourceFunction
 import org.apache.flink.streaming.api.scala.{DataStream, StreamExecutionEnvironment}
-import org.apache.flink.table.api.{EnvironmentSettings, Table}
+import org.apache.flink.table.api.{EnvironmentSettings, GroupWindow, Table, Tumble}
 import org.apache.flink.table.api.bridge.scala.StreamTableEnvironment
 import org.slf4j.{Logger, LoggerFactory}
 import org.apache.flink.api.scala._
 import org.apache.flink.streaming.api.functions.source.SourceFunction
 import org.apache.flink.streaming.api.functions.source.SourceFunction.SourceContext
-import org.apache.flink.table.api.Expressions.$
+//import org.apache.flink.table.api.Expressions.$
 
 /**
  * @author lj.michale
@@ -45,7 +45,7 @@ object FlinkSQLExample0003 {
     val ds: DataStream[(String, String, Double, Long)] = env.addSource(new MyExampleSource)
 
     //DataStream 转成 Table
-    val orders: Table = tableEnv.fromDataStream(ds, $("user"), $("product"), $("amount"), $("timestamp"))
+//    val orders: Table = tableEnv.fromDataStream(ds, $("user"), $("product"), $("amount"), $("timestamp"))
 //    orders.execute().print()
 //    +----+--------------------------------+--------------------------------+--------------------------------+----------------------+
 //    | op |                           user |                        product |                         amount |            timestamp |
@@ -61,7 +61,7 @@ object FlinkSQLExample0003 {
 //      | +I | 1f1301d74bdf4b80a70c83cca68... |                           蜂蜜 |                          46.78 |        1627202028550 |
 
     // 查询2: 先将DataStream转成临时表，然后查询
-    tableEnv.createTemporaryView("t_order", ds, $("user"), $("product"), $("amount"), $("buy_time"))
+//    tableEnv.createTemporaryView("t_order", ds, $("user"), $("product"), $("amount"), $("buy_time"))
 //    val query2: Table = tableEnv.sqlQuery("SELECT user,product,amount,buy_time  FROM t_order WHERE product LIKE '%Rubber%'")
 //    query2.execute().print()
 //    +----+--------------------------------+--------------------------------+--------------------------------+----------------------+
@@ -91,21 +91,69 @@ object FlinkSQLExample0003 {
 //    | +I | 64040d0f533d4f3187810256299... |                       RubberOK |                          46.78 |        1627202772831 |
 //    | +I | 84a3e5cdb1fa492aadf4d41c540... |                       RubberOK |                           5.45 |        1627202772831 |
 
-    // 查询4:
-    val querySQL4:String =
-      """
-        |SELECT user,product,SUM(amount),buy_time
-        |FROM t_order
-        |WHERE product LIKE '%Rubber%'
-        |GROUP BY user,product, buy_time
-        |""".stripMargin
-    val query4: Table = tableEnv.sqlQuery(querySQL4)
-    query4.execute().print()
+//    // 查询4: 加上SUM之后有报错，暂时未能解决
+//    val querySQL4:String =
+//      """
+//        |SELECT user,product,SUM(amount),buy_time
+//        |FROM t_order
+//        |WHERE product LIKE '%Rubber%'
+//        |GROUP BY user,product, buy_time
+//        |""".stripMargin
+//    val query4: Table = tableEnv.sqlQuery(querySQL4)
+//    query4.execute().print()
 
+    // 查询5
+//    tableEnv.sqlQuery("SELECT user,product,amount,buy_time  FROM t_order")
+//      .filter($("user").isNotNull)
+//      .filter($("product").isNotNull)
+//      .filter($("amount").isNotNull).execute().print()
 
+    // 查询6
+//    tableEnv.sqlQuery("SELECT user,product,amount,buy_time FROM t_order")
+//      .filter($("user").isNotNull)
+//      .select($("user").lowerCase() as "user", $("product"), $("amount"), $("buy_time"))
+//      .execute().print()
 
+    // 查询7
+//    tableEnv.sqlQuery("SELECT user,product,amount,buy_time FROM t_order")
+//      .filter($("user").isNotNull)
 
+    /**
+     * Query a Table By Table Api Flink1.13
+     *
+     * https://ci.apache.org/projects/flink/flink-docs-release-1.13/docs/dev/table/common/
+     *
+     * notice:
+     * org.apache.flink.table.api._ -     for implicit expression conversions
+     * org.apache.flink.api.scala._ and org.apache.flink.table.api.bridge.scala._    if you want to convert from/to DataStream.
+     */
+    import org.apache.flink.table.api.bridge.scala._
+    import org.apache.flink.table.api._
+    import org.apache.flink.api.scala._
 
+    // 查询-0001.加上sum有报错
+//    val revenue = tableEnv.sqlQuery("SELECT user,product,amount,buy_time FROM t_order")
+////      .filter($"user" === "RubberOK")
+//      .groupBy($"user", $"product")
+//      .select($"user", $"product", $"amount".sum)
+//      .execute().print()
+
+    // https://blog.csdn.net/appleyuchi/article/details/109163654
+    tableEnv.createTemporaryView("t_order", ds, $("user"), $("product"), $("amount"), $("buy_time"))
+    tableEnv.sqlQuery("SELECT user,product,amount,buy_time FROM t_order")
+      .filter(and($("user").isNotNull(), $("product").isNotNull(), $("amount").isNotNull()))
+      .select($("user"), $("amount"), $("buy_time"))
+      .window(Tumble.over(lit(1).minutes()).on($("rowtime")).as("hourlyWindow"))
+      .groupBy($("hourlyWindow"), $("user"))
+      .select($("user"), $("hourlyWindow").end().as("hour"), $("amount").avg().as("avgBillingAmount"))
+      .execute().print()
+
+    /**
+     * Query a Table By Table SQL Flink1.13
+     *
+     * https://ci.apache.org/projects/flink/flink-docs-release-1.13/docs/dev/table/common/
+     */
+//    tableEnv.sqlQuery("SELECT user,product,amount,buy_time FROM t_order").execute().print()
 
 //    val counts:Table = orders
 //      .groupBy($("user"))
