@@ -386,6 +386,12 @@
       <artifactId>elasticsearch-rest-high-level-client</artifactId>
       <version>6.4.2</version>
     </dependency>
+    <dependency>
+      <groupId>org.apache.flink</groupId>
+      <artifactId>flink-test-utils_2.11</artifactId>
+      <version>1.13.1</version>
+<!--      <scope>test</scope>-->
+    </dependency>
     <!-- flink-pulsar依赖-->
     <dependency>
       <groupId>io.streamnative.connectors</groupId>

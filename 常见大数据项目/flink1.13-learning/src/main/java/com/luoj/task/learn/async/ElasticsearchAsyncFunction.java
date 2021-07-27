@@ -155,7 +155,7 @@ public class ElasticsearchAsyncFunction extends RichAsyncFunction<Tuple4<String,
 
     }
 
-    //超时时处理
+    /**超时时处理*/
     @Override
     public void timeout(Tuple4<String, String, String, Integer> input, ResultFuture<Tuple5<String, String, String, Integer, Integer>> resultFuture) {
         searchFromES(input, resultFuture);

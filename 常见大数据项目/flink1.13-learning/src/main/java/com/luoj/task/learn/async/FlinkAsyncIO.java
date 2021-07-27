@@ -22,6 +22,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author lj.michale
  * @description
+ * https://app.yinxiang.com/fx/fc07f536-69b3-4e89-998a-e68880e5cb72
  * @date 2021-07-26
  */
 public class FlinkAsyncIO {
@@ -81,7 +82,8 @@ public class FlinkAsyncIO {
 
         /**结果输出*/
         result.print().name("PrintToConsole");
-        env.execute();
+
+        env.execute("FlinkAsyncIO");
 
     }
 
