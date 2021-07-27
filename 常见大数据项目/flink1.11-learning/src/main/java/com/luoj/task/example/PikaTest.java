@@ -16,10 +16,10 @@ public class PikaTest {
     public static void main(String[] args) {
 
         /** 构造请求参数对象 */
-        String iceLocator = ExampleConstant.JCACHE_ICE_LOCATOR;
-        String proxyName = ExampleConstant.JCACHE_PROXY_NAME;
+        String iceLocator = "jCacheIceGrid/Locator:tcp -h 172.17.8.17 -p 4061";
+        String proxyName = "jCacheTest";
         String key = "one";
-        String resourceName = "BigDataTest";
+        String resourceName = "segClusterRes";
         JcacheTemplate jcache = new JcacheTemplate(iceLocator, proxyName, resourceName);
         jcache.set(key, "Test_Key_02设置时间为20180427！");
         String result = jcache.get(key);
