@@ -8,7 +8,8 @@ import org.apache.flink.util.Collector;
 
 /**
  * @author lj.michale
- * @description
+ * @description Flink DataSet API计算
+ *              http://flink.iteblog.com/dev/batch/index.html
  * @date 2021-07-27
  */
 public class WordCountExample {
