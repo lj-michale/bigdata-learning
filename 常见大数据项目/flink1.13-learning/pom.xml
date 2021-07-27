@@ -275,11 +275,6 @@
       <version>${kubernetes.client.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.apache.flink</groupId>
-      <artifactId>flink-connector-jdbc_2.11</artifactId>
-      <version>1.11.2</version>
-    </dependency>
-    <dependency>
       <groupId>org.apache.hadoop</groupId>
       <artifactId>hadoop-client</artifactId>
       <version>${hadoop.version}</version>
@@ -391,6 +386,11 @@
       <artifactId>flink-test-utils_2.11</artifactId>
       <version>1.13.1</version>
 <!--      <scope>test</scope>-->
+    </dependency>
+    <dependency>
+      <groupId>org.apache.flink</groupId>
+      <artifactId>flink-jdbc_2.11</artifactId>
+      <version>1.10.3</version>
     </dependency>
     <!-- flink-pulsar依赖-->
     <dependency>

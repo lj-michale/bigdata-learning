@@ -9,7 +9,6 @@ import org.apache.flink.api.java.utils.DataSetUtils;
 
 import java.util.concurrent.TimeUnit;
 
-
 /**
  * @author lj.michale
  * @description
@@ -20,15 +19,15 @@ public class ZippingElementExample {
     public static void main(String[] args) throws Exception {
 
         ExecutionEnvironment env = ExecutionEnvironment.getExecutionEnvironment();
+        env.setParallelism(1);
         env.setRestartStrategy(RestartStrategies.fixedDelayRestart(
                 3,
                 Time.of(10, TimeUnit.SECONDS)
         ));
-        env.setParallelism(1);
 
         DataSet<String> in = env.fromElements("A", "B", "C", "D", "E", "F", "G", "H");
-
         DataSet<Tuple2<Long, String>> result = DataSetUtils.zipWithIndex(in);
+
         result.writeAsCsv("E:\\OpenSource\\GitHub\\bigdata-learning\\常见大数据项目\\flink1.13-learning\\output\\data", "\n", ",");
 
         env.execute();
