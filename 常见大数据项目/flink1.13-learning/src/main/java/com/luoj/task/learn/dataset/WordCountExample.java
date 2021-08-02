@@ -75,10 +75,8 @@ public class WordCountExample {
 //        dataSet.print();
 
 
-
-
-
         env.execute("WordCountExample");
+
     }
 
     public static class LineSplitter implements FlatMapFunction<String, Tuple2<String, Integer>> {
@@ -89,8 +87,5 @@ public class WordCountExample {
             }
         }
     }
-
-
-
 
 }

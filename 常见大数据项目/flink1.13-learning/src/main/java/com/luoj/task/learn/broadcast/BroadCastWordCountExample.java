@@ -49,7 +49,8 @@ public class BroadCastWordCountExample {
         }
 
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
-        env.enableCheckpointing(parameterTool.getInt("checkpoint.interval",60000)); // create a checkpoint every n mill seconds
+        // create a checkpoint every n mill seconds
+        env.enableCheckpointing(parameterTool.getInt("checkpoint.interval",60000));
         // set mode to exactly-once (this is the default)
         env.getCheckpointConfig().setCheckpointingMode(CheckpointingMode.EXACTLY_ONCE);
         // make sure 500 ms of progress happen between checkpoints
