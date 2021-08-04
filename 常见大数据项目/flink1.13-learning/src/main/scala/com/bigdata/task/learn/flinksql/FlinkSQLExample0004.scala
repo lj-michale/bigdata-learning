@@ -94,7 +94,6 @@ object FlinkSQLExample0004 {
 //    bsTableEnv.executeSql("select * from datagen_test_source").print()
 
     /********************************   Look up维表的使用   *********************************************/
-
     // 构造订单数据, 模拟生成用户的数据，这里只生成的用户的id，范围在1-100之间
     val datagen_order_source =
       """
@@ -137,6 +136,9 @@ object FlinkSQLExample0004 {
         |ON datagen_order_source.userid = datagen_dim_source.id
         |""".stripMargin
     bsTableEnv.executeSql(sql_analysis).print()
+
+    /********************************   FlinkSQL的使用   *********************************************/
+
 
 
 
