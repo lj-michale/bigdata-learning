@@ -21,6 +21,9 @@ object SparkSQLExample01 {
       .getOrCreate()
 
     spark.sql("show databases").show()
+    spark.sql("use report")
+    spark.sql("show tables").show()
+    spark.sql("select * from houshuai_test").show()
 
     spark.stop()
 
