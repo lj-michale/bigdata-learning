@@ -2,6 +2,7 @@ package com.bigdata.sql
 
 import org.apache.log4j.Logger
 import org.apache.spark.sql.SparkSession
+import com.bigdata.sql.udf.AuroaUDF._
 
 /**
  * @descr SparkSQLExample01
@@ -19,6 +20,11 @@ object SparkSQLExample01 {
       .master("local[*]")
       .enableHiveSupport()
       .getOrCreate()
+
+    /**
+     * 注册UDF函数
+     */
+    spark.udf.register("getChannel", getChannel _ )
 
     spark.sql("show databases").show()
     spark.sql("use report")
