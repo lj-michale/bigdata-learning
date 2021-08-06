@@ -1,7 +1,7 @@
 package com.bigdata.sql
 
 import org.apache.log4j.Logger
-import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.{DataFrame, Dataset, SparkSession}
 import com.bigdata.sql.udf.AuroaUDF._
 
 /**
@@ -32,8 +32,19 @@ object SparkSQLExample01 {
     spark.sql("show tables").show()
     spark.sql("select * from houshuai_test").show()
 
+    /**
+     * @descr 通过隐式转换，转成DataSet
+     */
+    import spark.implicits._
+
+    val personDS:Dataset[Person] = Seq(Person("Andy", 35)).toDS()
+    personDS.show()
+
+
     spark.stop()
 
   }
+
+  case class Person(name: String, age: Long)
 
 }
