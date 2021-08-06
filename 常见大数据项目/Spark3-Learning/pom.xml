@@ -73,6 +73,11 @@
             </exclusions>
         </dependency>
         <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-streaming-kafka-0-10_${scala.binary.version}</artifactId>
+            <version>2.4.0-cdh6.3.4</version>
+        </dependency>
+        <dependency>
             <groupId>ml.dmlc</groupId>
             <artifactId>xgboost4j-spark</artifactId>
             <version>0.90</version>
@@ -96,6 +101,11 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>${mysql-connector.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.scalikejdbc</groupId>
+            <artifactId>scalikejdbc_2.11</artifactId>
+            <version>3.3.2</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
