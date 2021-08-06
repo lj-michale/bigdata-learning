@@ -36,7 +36,6 @@ object SparkSQLExample01 {
      * @descr 通过隐式转换，转成DataSet
      */
     import spark.implicits._
-
     val personDS:Dataset[Person] = Seq(Person("Andy", 35)).toDS()
     personDS.show()
 

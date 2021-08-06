@@ -15,6 +15,7 @@
         <spark.version>3.1.2</spark.version>
         <hadoop.version>3.3.1</hadoop.version>
         <kafka.version>2.4.5</kafka.version>
+        <mysql-connector.version>8.0.21</mysql-connector.version>
         <scala.version>2.11.12</scala.version>
         <scala.binary.version>2.11</scala.binary.version>
     </properties>
@@ -90,6 +91,11 @@
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
             <version>1.2.47</version>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql-connector.version}</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
