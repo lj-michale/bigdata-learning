@@ -22,6 +22,7 @@ object SparkTraining {
       .master("local[*]")
       .enableHiveSupport()
       .getOrCreate()
+
     val inputPath = "file:///E:\\OpenSource\\GitHub\\bigdata-learning\\常见大数据项目\\Spark3-Learning\\dataset\\iris.csv"
     val schema = new StructType(Array(
       StructField("sepal length", DoubleType, true),
@@ -30,6 +31,7 @@ object SparkTraining {
       StructField("petal width", DoubleType, true),
       StructField("class", StringType, true)))
     val rawInput = spark.read.schema(schema).csv(inputPath)
+
 
     // transform class to index to make xgboost happy
     val stringIndexer = new StringIndexer()

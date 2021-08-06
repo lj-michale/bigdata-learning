@@ -26,6 +26,7 @@ object SparkSQLExample01 {
      */
     spark.udf.register("getChannel", getChannel _ )
 
+    // SparkSQL
     spark.sql("show databases").show()
     spark.sql("use report")
     spark.sql("show tables").show()
