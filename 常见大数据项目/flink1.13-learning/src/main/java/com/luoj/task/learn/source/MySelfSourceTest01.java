@@ -31,7 +31,7 @@ public class MySelfSourceTest01 {
     public static void main(String[] args) {
 
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
-        env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime);
+        env.setStreamTimeCharacteristic(TimeCharacteristic.ProcessingTime);
         env.setParallelism(1);
 
         DataStreamSource<Tuple2<String, String>> redisDS = env.addSource(new SourceFunction<Tuple2<String, String>>() {
