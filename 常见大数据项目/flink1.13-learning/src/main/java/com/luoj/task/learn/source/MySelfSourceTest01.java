@@ -9,7 +9,6 @@ import org.apache.flink.streaming.api.datastream.KeyedStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.functions.source.SourceFunction;
 import org.apache.flink.streaming.api.functions.windowing.WindowFunction;
-import org.apache.flink.streaming.api.windowing.assigners.TumblingEventTimeWindows;
 import org.apache.flink.streaming.api.windowing.time.Time;
 import org.apache.flink.streaming.api.windowing.windows.TimeWindow;
 import org.apache.flink.util.Collector;
@@ -45,8 +44,6 @@ public class MySelfSourceTest01 {
             public void cancel() {
             }
         });
-
-        redisDS.windowAll(TumblingEventTimeWindows.of(Time.seconds(5)));
 
         DataStreamSource<Tuple2<String, String>> redisDSB = env.addSource(new SourceFunction<Tuple2<String, String>>() {
             @Override
@@ -121,11 +118,11 @@ public class MySelfSourceTest01 {
 //            }
 //        });
 
-
         try {
             env.execute("a");
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 }
