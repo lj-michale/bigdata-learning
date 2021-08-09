@@ -46,32 +46,33 @@ public class WindowFunctionExample001 {
 //                       return null;
 //                   }
 //               });
-                // 实现一个计数器，统计有多少个数据
-                .aggregate(new AggregateFunction<Integer, Integer, Integer>() {
-                    // 创建一个累加器，初始值
-                    @Override
-                    public Integer createAccumulator() {
-                        return 0;
-                    }
+        // 增量聚合函数: ResuceFunction、AggregateFunction
+        // 实现一个计数器，统计有多少个数据
+        .aggregate(new AggregateFunction<Integer, Integer, Integer>() {
+            // 创建一个累加器，初始值
+            @Override
+            public Integer createAccumulator() {
+                return 0;
+            }
 
-                    // 累加规则
-                    @Override
-                    public Integer add(Integer value, Integer accumulator) {
-                        return accumulator + 1;
-                    }
+            // 累加规则
+            @Override
+            public Integer add(Integer value, Integer accumulator) {
+                return accumulator + 1;
+            }
 
-                    // 输出结果
-                    @Override
-                    public Integer getResult(Integer accumulator) {
-                        return accumulator;
-                    }
+            // 输出结果
+            @Override
+            public Integer getResult(Integer accumulator) {
+                return accumulator;
+            }
 
-                    // merge一般使用的是 session window 做合并操作
-                    @Override
-                    public Integer merge(Integer a, Integer b) {
-                        return null;
-                    }
-                }).print();
+            // merge一般使用的是 session window 做合并操作
+            @Override
+            public Integer merge(Integer a, Integer b) {
+                return null;
+            }
+        }).print();
 
         // 滑动窗口
         dataStream.map(i -> Integer.valueOf(i)).keyBy(new KeySelector<Integer, Object>() {
@@ -82,6 +83,7 @@ public class WindowFunctionExample001 {
             // 攒齐5s 的数据，求平均值
         }).window(TumblingProcessingTimeWindows.of(Time.seconds(5)))
                 // 参数1 输入类型，2 输出类型，3 key的类型，4 就是个TimeWindow
+                // 全窗口函数: ProcessWindowFunction、WindowFunction
                 .apply(new WindowFunction<Integer, Integer, Object, TimeWindow>() {
                     // 参数1 key的类型，2 就是window，3 所有输入的数据，4 输出收集器
                     @Override
