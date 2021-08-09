@@ -39,13 +39,13 @@ public class WindowFunctionExample001 {
                 return 0;
             }
         }).window(TumblingProcessingTimeWindows.of(Time.seconds(5)))
-//               .reduce(new ReduceFunction<Integer>() {
-//                   // 比较两个数大小等 可以实现 max min sum 等操作
-//                   @Override
-//                   public Integer reduce(Integer value1, Integer value2) throws Exception {
-//                       return null;
-//                   }
-//               });
+//        .reduce(new ReduceFunction<Integer>() {
+//            // 比较两个数大小等 可以实现 max min sum 等操作
+//            @Override
+//            public Integer reduce(Integer value1, Integer value2) throws Exception {
+//                return null;
+//            }
+//        });
         // 增量聚合函数: ResuceFunction、AggregateFunction
         // 实现一个计数器，统计有多少个数据
         .aggregate(new AggregateFunction<Integer, Integer, Integer>() {
@@ -82,18 +82,22 @@ public class WindowFunctionExample001 {
             }
             // 攒齐5s 的数据，求平均值
         }).window(TumblingProcessingTimeWindows.of(Time.seconds(5)))
-                // 参数1 输入类型，2 输出类型，3 key的类型，4 就是个TimeWindow
-                // 全窗口函数: ProcessWindowFunction、WindowFunction
-                .apply(new WindowFunction<Integer, Integer, Object, TimeWindow>() {
-                    // 参数1 key的类型，2 就是window，3 所有输入的数据，4 输出收集器
-                    @Override
-                    public void apply(Object o, TimeWindow window, Iterable<Integer> input, Collector<Integer> out) throws Exception {
-                        List<Integer> list = IteratorUtils.toList(input.iterator());
-                        int count = list.size();
-                        int sum = list.stream().reduce((i,y) -> i+y).get();
-                        out.collect(sum/count);
-                    }
-                }).print();
+        // 参数1 输入类型，2 输出类型，3 key的类型，4 就是个TimeWindow
+        // 全窗口函数: ProcessWindowFunction、WindowFunction
+        .apply(new WindowFunction<Integer, Integer, Object, TimeWindow>() {
+            // 参数1 key的类型，2 就是window，3 所有输入的数据，4 输出收集器
+            @Override
+            public void apply(Object o, TimeWindow window, Iterable<Integer> input, Collector<Integer> out) throws Exception {
+                List<Integer> list = IteratorUtils.toList(input.iterator());
+                // 求个数
+                int count = list.size();
+                // 求和
+                int sum = list.stream().reduce((i,y) -> i+y).get();
+                // 求均值
+                int avg = sum/count;
+                out.collect(avg);
+            }
+        }).print();
 
         env.execute("WindowFunctionExample001");
 
