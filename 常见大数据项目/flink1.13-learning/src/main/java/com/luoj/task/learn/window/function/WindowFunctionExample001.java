@@ -1,14 +1,20 @@
 package com.luoj.task.learn.window.function;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.IteratorUtils;
 import org.apache.flink.api.common.functions.AggregateFunction;
 import org.apache.flink.api.java.functions.KeySelector;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
+import org.apache.flink.streaming.api.functions.windowing.WindowFunction;
 import org.apache.flink.streaming.api.windowing.assigners.TumblingProcessingTimeWindows;
 import org.apache.flink.streaming.api.windowing.time.Time;
+import org.apache.flink.streaming.api.windowing.windows.TimeWindow;
 import org.apache.flink.table.api.EnvironmentSettings;
 import org.apache.flink.table.api.bridge.java.StreamTableEnvironment;
+import org.apache.flink.util.Collector;
+
+import java.util.List;
 
 /**
  * @author lj.michale
@@ -67,7 +73,28 @@ public class WindowFunctionExample001 {
                     }
                 }).print();
 
+        // 滑动窗口
+        dataStream.map(i -> Integer.valueOf(i)).keyBy(new KeySelector<Integer, Object>() {
+            @Override
+            public Object getKey(Integer value) throws Exception {
+                return 0;
+            }
+            // 攒齐5s 的数据，求平均值
+        }).window(TumblingProcessingTimeWindows.of(Time.seconds(5)))
+                // 参数1 输入类型，2 输出类型，3 key的类型，4 就是个TimeWindow
+                .apply(new WindowFunction<Integer, Integer, Object, TimeWindow>() {
+                    // 参数1 key的类型，2 就是window，3 所有输入的数据，4 输出收集器
+                    @Override
+                    public void apply(Object o, TimeWindow window, Iterable<Integer> input, Collector<Integer> out) throws Exception {
+                        List<Integer> list = IteratorUtils.toList(input.iterator());
+                        int count = list.size();
+                        int sum = list.stream().reduce((i,y) -> i+y).get();
+                        out.collect(sum/count);
+                    }
+                }).print();
+
         env.execute("WindowFunctionExample001");
+
     }
 
 }
