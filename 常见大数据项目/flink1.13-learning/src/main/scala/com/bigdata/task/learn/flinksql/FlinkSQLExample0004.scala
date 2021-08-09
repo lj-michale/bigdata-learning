@@ -142,18 +142,18 @@ object FlinkSQLExample0004 {
     val mysql_region_dim_source =
       """
         |CREATE TABLE dim_province (
-        |    province_id BIGINT,  -- 省份id
+        |    province_id INT,  -- 省份id
         |    province_name  VARCHAR, -- 省份名称
         |    region_name VARCHAR -- 区域名称
         |) WITH (
-        |    'connector.type' = 'jdbc',
-        |    'connector.url' = 'jdbc:mysql://localhost:3306/bigdata?characterEncoding=utf8&useSSL=false&serverTimezone=UTC&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true',
-        |    'connector.table' = 'dim_province',
-        |    'connector.driver' = 'com.mysql.cj.jdbc.Driver',
-        |    'connector.username' = 'root',
-        |    'connector.password' = 'abc1314520',
-        |    'connector.lookup.cache.max-rows' = '5000',
-        |    'connector.lookup.cache.ttl' = '10min'
+        |    'connector' = 'jdbc',
+        |    'url' = 'jdbc:mysql://localhost:3306/jiguang?characterEncoding=utf8&useSSL=false&serverTimezone=UTC&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true',
+        |    'table-name' = 'dim_province',
+        |    'driver' = 'com.mysql.cj.jdbc.Driver',
+        |    'username' = 'root',
+        |    'password' = 'abc1314520',
+        |    'lookup.cache.max-rows' = '5000',
+        |    'lookup.cache.ttl' = '10min'
         |)
         |""".stripMargin
     bsTableEnv.executeSql(mysql_region_dim_source)
@@ -172,17 +172,16 @@ object FlinkSQLExample0004 {
         |    eventTime AS TO_TIMESTAMP(FROM_UNIXTIME(ts, 'yyyy-MM-dd HH:mm:ss')), -- 事件时间
         |    WATERMARK FOR eventTime as eventTime - INTERVAL '5' SECOND  -- 在eventTime上定义watermark
         |) WITH (
-        |    'connector.type' = 'kafka',  -- 使用 kafka connector
-        |    'connector.version' = 'universal',  -- kafka 版本，universal 支持 0.11 以上的版本
-        |    'connector.topic' = 'mzpns',  -- kafka主题
-        |    'connector.startup-mode' = 'earliest-offset',  -- 偏移量，从起始 offset 开始读取
-        |    'connector.properties.group.id' = 'group1', -- 消费者组
-        |    'connector.properties.zookeeper.connect' = 'kms-2:2181,kms-3:2181,kms-4:2181',  -- zookeeper 地址
-        |    'connector.properties.bootstrap.servers' = 'kms-2:9092,kms-3:9092,kms-4:9092',  -- kafka broker 地址
-        |    'format.type' = 'json'  -- 数据源格式为 json
+        | 'connector' = 'kafka-0.11',
+        | 'topic' = 'mzpns',
+        | 'properties.bootstrap.servers' = 'localhost:9092',
+        | 'properties.group.id' = 'testGroup',
+        | 'format' = 'json',
+        | 'scan.startup.mode' = 'latest-offset'
         |)
         |""".stripMargin
     bsTableEnv.executeSql(kafka_order_source)
+    bsTableEnv.executeSql("select * from user_behavior").print()
 
     // 创建MySQL的结果表，表示区域销量
     val result_analysis_sink =
@@ -191,13 +190,13 @@ object FlinkSQLExample0004 {
         |    region_name STRING,  -- 区域名称
         |    buy_cnt BIGINT  -- 销量
         |) WITH (
-        |    'connector.type' = 'jdbc',
-        |    'connector.url' = 'jdbc:mysql://localhost:3306/bigdata?characterEncoding=utf8&useSSL=false&serverTimezone=UTC&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true',
-        |    'connector.table' = 'top_region', -- MySQL中的待插入数据的表
-        |    'connector.driver' = 'com.mysql.cj.jdbc.Driver',
-        |    'connector.username' = 'root',
-        |    'connector.password' = 'abc1314520',
-        |    'connector.write.flush.interval' = '1s'
+        |    'connector' = 'jdbc',
+        |    'url' = 'jdbc:mysql://localhost:3306/jiguang?characterEncoding=utf8&useSSL=false&serverTimezone=UTC&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true',
+        |    'table-name' = 'top_region', -- MySQL中的待插入数据的表
+        |    'driver' = 'com.mysql.cj.jdbc.Driver',
+        |    'username' = 'root',
+        |    'password' = 'abc1314520',
+        |    'write.flush.interval' = '1s'
         |)
         |""".stripMargin
     bsTableEnv.executeSql(result_analysis_sink)
