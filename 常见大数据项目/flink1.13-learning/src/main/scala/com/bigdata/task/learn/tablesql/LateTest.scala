@@ -1,7 +1,7 @@
 package com.bigdata.task.learn.tablesql
 
 import java.sql.Timestamp
-import java.time.Duration
+import java.time.{Duration, ZoneId}
 import java.util.Calendar
 
 import org.apache.flink.api.common.eventtime.{SerializableTimestampAssigner, WatermarkStrategy}
@@ -42,15 +42,18 @@ object LateTest {
     env.getCheckpointConfig.setCheckpointTimeout(10000)
     env.getCheckpointConfig.setMaxConcurrentCheckpoints(1)
     env.getCheckpointConfig.enableExternalizedCheckpoints(CheckpointConfig.ExternalizedCheckpointCleanup.RETAIN_ON_CANCELLATION)
+
     env.setRestartStrategy(RestartStrategies.fixedDelayRestart(3, 1000))
+
     // 状态后端-HashMapStateBackend
     env.setStateBackend(new HashMapStateBackend)
     //等价于MemoryStateBackend
     env.getCheckpointConfig.setCheckpointStorage("file:///E:\\OpenSource\\GitHub\\bigdata-learning\\常见大数据项目\\flink1.13-learning\\checkpoint")
-    //等价于FsStateBackend
-    env.getCheckpointConfig.setCheckpointStorage(new FileSystemCheckpointStorage("file:///E:\\OpenSource\\GitHub\\bigdata-learning\\常见大数据项目\\flink1.13-learning\\checkpoint"))
 
-//    //状态后端-EmbeddedRocksDBStateBackend
+//    //等价于FsStateBackend
+//    env.getCheckpointConfig.setCheckpointStorage(new FileSystemCheckpointStorage("file:///E:\\OpenSource\\GitHub\\bigdata-learning\\常见大数据项目\\flink1.13-learning\\checkpoint"))
+
+//    //状态后端-EmbeddedRocksDBStateBackend（）
 //    //等价于RocksDBStateBackend，默认全量检查点
 //    env.setStateBackend(new EmbeddedRocksDBStateBackend());
 //    //开启增量检查点
@@ -58,22 +61,35 @@ object LateTest {
 //    env.getCheckpointConfig.setCheckpointStorage(new FileSystemCheckpointStorage("file:///E:\\OpenSource\\GitHub\\bigdata-learning\\常见大数据项目\\flink1.13-learning\\checkpoint"))
 
     val settings = EnvironmentSettings.newInstance().useBlinkPlanner().inStreamingMode().build()
-    val tEnv = StreamTableEnvironment.create(env, settings)
+    val tableEnv = StreamTableEnvironment.create(env, settings)
+    tableEnv.getConfig.setLocalTimeZone(ZoneId.of("Europe/Berlin"))
 
     // 获取Source
     import org.apache.flink.api.scala._
     val stream: DataStream[SensorReading] = env.addSource(new SensorSource)
+    // stream.keyBy(a => (a.id)).print()
+
+    // 侧流输出
+    stream.getSideOutput(new OutputTag[String]("freezing-alarms")).print()
+
+    //////////////////////////////////// DataStream/DataSet处理方式 /////////////////////////////////////////
+//    stream.assignTimestampsAndWatermarks()
+
+
+
+    //////////////////////////////////// TableApi/SQL处理方式 /////////////////////////////////////////
+    // 注册成临时表
+    tableEnv.createTemporaryView("t_stream", stream)
+    tableEnv.executeSql("select * from t_stream").print()
+
+
+
 
     // WatermarkStrategy
     val watermarkStrategy: WatermarkStrategy[SensorReading] = WatermarkStrategy.forBoundedOutOfOrderness[SensorReading](Duration.ofSeconds(1)) //延迟1秒
         .withTimestampAssigner(new SerializableTimestampAssigner[SensorReading] {
          override def extractTimestamp(element: SensorReading, recordTimestamp: Long): Long = element.timestamp * 1000L   //指定事件时间字段
     })
-
-    stream.keyBy(a => (a.id)).print()
-
-    // 侧流输出
-    stream.getSideOutput(new OutputTag[String]("freezing-alarms")).print()
 
 
     env.execute("DataStream LateTest")
@@ -82,9 +98,6 @@ object LateTest {
 
   // 遥感数据样例类
   case  class SensorReading(id: String, timestamp: Long, temperature: Double)
-
-
-
 
   // 为什么用`ProcessFunction`? 因为没有keyBy分流
   class FreezingMonitor extends ProcessFunction[SensorReading, SensorReading] {
@@ -100,7 +113,6 @@ object LateTest {
       out.collect(value) // 在主流上，将数据继续向下发送
     }
   }
-
 
   class MyKeyedProcessByProccessTime extends KeyedProcessFunction[String, (String, String), String] {
     // 来一条数据调用一次
@@ -130,26 +142,26 @@ object LateTest {
   }
 
   // 编造自定义Source
-  class SensorSource extends RichSourceFunction[SensorReading]{
-    //表示数据源是否运行正常
+  class SensorSource extends RichSourceFunction[SensorReading] {
+    // 表示数据源是否运行正常
     var running: Boolean = true
-    //上下文参数来发送数据
+    // 上下文参数来发送数据
     override def run(sContext:SourceFunction.SourceContext[SensorReading]) {
       val rand = new Random()
-      //使用高斯噪声产生随机温度
+      // 使用高斯噪声产生随机温度
       val curFtemp = (1 to 10).map(
         i => ("sensor_" + i, rand.nextGaussian() * 20)
       )
-      //产生无限流数据
+      // 产生无限流数据
       while(running){
         val mapTemp:immutable.IndexedSeq[(String,Double)] = curFtemp.map(
           t => (t._1,t._2 + (rand.nextGaussian()*10))
         )
-        //产生时间戳
+        // 产生时间戳
         val curTime:Long = Calendar.getInstance().getTimeInMillis
-        //发送出去
+        // 发送出去
         mapTemp.foreach(t => sContext.collect(SensorReading(t._1,curTime,t._2)))
-        //每隔100ms发送一条传感器数据
+        // 每隔100ms发送一条传感器数据
         Thread.sleep(100)
       }
     }
