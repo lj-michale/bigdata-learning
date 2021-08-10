@@ -4,21 +4,21 @@ import java.sql.Timestamp
 import java.time.Duration
 import java.util.Calendar
 
-import org.apache.flink.api.common.eventtime.{SerializableTimestampAssigner, WatermarkGenerator, WatermarkGeneratorSupplier, WatermarkOutput, WatermarkStrategy}
+import org.apache.flink.api.common.eventtime.{SerializableTimestampAssigner, WatermarkStrategy}
+import org.apache.flink.api.common.restartstrategy.RestartStrategies
 import org.apache.flink.api.java.utils.ParameterTool
 import org.apache.flink.contrib.streaming.state.EmbeddedRocksDBStateBackend
-import org.apache.flink.streaming.api.datastream.DataStreamSource
-import org.apache.flink.streaming.api.{CheckpointingMode, TimeCharacteristic}
+import org.apache.flink.runtime.state.storage.FileSystemCheckpointStorage
 import org.apache.flink.streaming.api.environment.CheckpointConfig
 import org.apache.flink.streaming.api.functions.source.{RichSourceFunction, SourceFunction}
-import org.apache.flink.streaming.api.scala.{DataStream, StreamExecutionEnvironment}
-import org.apache.flink.streaming.api.windowing.time.Time
+import org.apache.flink.streaming.api.functions.{KeyedProcessFunction, ProcessFunction}
+import org.apache.flink.streaming.api.scala.{DataStream, StreamExecutionEnvironment, _}
+import org.apache.flink.streaming.api.{CheckpointingMode, TimeCharacteristic}
 import org.apache.flink.table.api.EnvironmentSettings
 import org.apache.flink.table.api.bridge.scala.StreamTableEnvironment
-import org.apache.flink.streaming.api.scala._
-import org.apache.flink.api.common.eventtime.{SerializableTimestampAssigner, WatermarkStrategy}
-import org.apache.flink.streaming.api.functions.{KeyedProcessFunction, ProcessFunction}
 import org.apache.flink.util.Collector
+import org.apache.flink.runtime.state.hashmap.HashMapStateBackend
+import org.apache.flink.runtime.state.storage.FileSystemCheckpointStorage
 
 import scala.collection.immutable
 import scala.util.Random
@@ -42,8 +42,20 @@ object LateTest {
     env.getCheckpointConfig.setCheckpointTimeout(10000)
     env.getCheckpointConfig.setMaxConcurrentCheckpoints(1)
     env.getCheckpointConfig.enableExternalizedCheckpoints(CheckpointConfig.ExternalizedCheckpointCleanup.RETAIN_ON_CANCELLATION)
+    env.setRestartStrategy(RestartStrategies.fixedDelayRestart(3, 1000))
+    // 状态后端-HashMapStateBackend
+    env.setStateBackend(new HashMapStateBackend)
+    //等价于MemoryStateBackend
     env.getCheckpointConfig.setCheckpointStorage("file:///E:\\OpenSource\\GitHub\\bigdata-learning\\常见大数据项目\\flink1.13-learning\\checkpoint")
-    env.setStateBackend(new EmbeddedRocksDBStateBackend)
+    //等价于FsStateBackend
+    env.getCheckpointConfig.setCheckpointStorage(new FileSystemCheckpointStorage("file:///E:\\OpenSource\\GitHub\\bigdata-learning\\常见大数据项目\\flink1.13-learning\\checkpoint"))
+
+//    //状态后端-EmbeddedRocksDBStateBackend
+//    //等价于RocksDBStateBackend，默认全量检查点
+//    env.setStateBackend(new EmbeddedRocksDBStateBackend());
+//    //开启增量检查点
+//    //env.setStateBackend(new EmbeddedRocksDBStateBackend(true))
+//    env.getCheckpointConfig.setCheckpointStorage(new FileSystemCheckpointStorage("file:///E:\\OpenSource\\GitHub\\bigdata-learning\\常见大数据项目\\flink1.13-learning\\checkpoint"))
 
     val settings = EnvironmentSettings.newInstance().useBlinkPlanner().inStreamingMode().build()
     val tEnv = StreamTableEnvironment.create(env, settings)
