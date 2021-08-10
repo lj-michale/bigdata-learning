@@ -29,7 +29,6 @@ public class WindowFunctionExample001 {
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         EnvironmentSettings settings = EnvironmentSettings.newInstance().useBlinkPlanner().inStreamingMode().build();
         StreamTableEnvironment tableEnv = StreamTableEnvironment.create(env,settings);
-
         DataStream<String> dataStream = env.socketTextStream("192.168.200.58",7777);
 
         // 滑动窗口
