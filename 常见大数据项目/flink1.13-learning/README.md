@@ -7,9 +7,12 @@ Flink1.13 官方文档：
 http://flink.iteblog.com/dev/windows.html
 http://flink.iteblog.com/dev/scala_api_extensions.html
 
+Flink1.14 官方文档：
+Apache Flink 1.11.4 Released
+https://flink.apache.org/news/2021/08/09/release-1.11.4.html
+
 DataStream Transformations
 http://flink.iteblog.com/dev/datastream_api.html
-
 
 对于Hive兼容的表，需要注意数据类型，具体的数据类型对应关系以及注意点如下:
 Flink数据类型	    Hive数据类型
