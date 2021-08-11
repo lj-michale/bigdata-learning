@@ -8,11 +8,13 @@ import org.apache.flink.runtime.state.hashmap.HashMapStateBackend
 import org.apache.flink.streaming.api.{CheckpointingMode, TimeCharacteristic}
 import org.apache.flink.streaming.api.environment.CheckpointConfig
 import org.apache.flink.streaming.api.scala.{DataStream, StreamExecutionEnvironment}
+import org.apache.flink.table.api.Schema
 import org.apache.flink.table.api.bridge.scala.StreamTableEnvironment
 
 
 /**
  * @description Converting between DataStream and Table
+ *              Examples for createTemporaryView
  *  https://ci.apache.org/projects/flink/flink-docs-master/zh/docs/dev/table/data_stream_api/
  * @author lj.michale
  * @date 2021-07-16
@@ -44,6 +46,45 @@ object DataStreamAPIIntegrationExample004 {
     val dataStream: DataStream[(Long, String)] = env.fromElements(
       (12L, "Alice"),
       (0L, "Bob"))
+
+    // === EXAMPLE 1 ===
+    // register the DataStream as view "MyView" in the current session
+    // all columns are derived automatically
+    tableEnv.createTemporaryView("MyView", dataStream)
+    tableEnv.from("MyView").printSchema()
+    // prints:
+    // (
+    //  `_1` BIGINT NOT NULL,
+    //  `_2` STRING
+    // )
+
+    // === EXAMPLE 2 ===
+    // register the DataStream as view "MyView" in the current session,
+    // provide a schema to adjust the columns similar to `fromDataStream`
+    // in this example, the derived NOT NULL information has been removed
+    tableEnv.createTemporaryView(
+      "MyView",
+      dataStream,
+      Schema.newBuilder()
+        .column("_1", "BIGINT")
+        .column("_2", "STRING")
+        .build())
+    tableEnv.from("MyView").printSchema()
+    // prints:
+    // (
+    //  `_1` BIGINT,
+    //  `_2` STRING
+    // )
+
+    // === EXAMPLE 3 ===
+    // use the Table API before creating the view if it is only about renaming columns
+    tableEnv.createTemporaryView("MyView", tableEnv.fromDataStream(dataStream).as("id", "name"))
+    tableEnv.from("MyView").printSchema()
+    // prints:
+    // (
+    //  `id` BIGINT NOT NULL,
+    //  `name` STRING
+    // )
 
 
   }
