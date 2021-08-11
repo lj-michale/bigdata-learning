@@ -8,15 +8,18 @@ import org.apache.flink.streaming.api.TimeCharacteristic;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.CheckpointConfig;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
+import org.apache.flink.table.api.DataTypes;
 import org.apache.flink.table.api.Table;
 import org.apache.flink.table.api.bridge.java.StreamTableEnvironment;
 import org.apache.flink.table.functions.TemporalTableFunction;
+import org.apache.flink.table.types.DataType;
 
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.apache.flink.table.api.Expressions.$;
+import static org.apache.flink.table.api.DataTypes.*;
 
 /**
  * @author lj.michale
@@ -67,6 +70,15 @@ public class TemporalTablesDemo001 {
         // 指定 "r_proctime" 为时间属性，指定 "r_currency" 为主键
         TemporalTableFunction rates = ratesHistory.createTemporalTableFunction("r_proctime", "r_currency");
         tableEnv.createTemporaryFunction("Rates", rates);
+
+        DataType t = INTERVAL(DAY(), SECOND(3));
+        // tell the runtime to not produce or consume java.time.LocalDateTime instances
+        // but java.sql.Timestamp
+        DataType t1 = DataTypes.TIMESTAMP(3).bridgedTo(java.sql.Timestamp.class);
+
+        // tell the runtime to not produce or consume boxed integer arrays
+        // but primitive int arrays
+        DataType t2 = DataTypes.ARRAY(DataTypes.INT().notNull()).bridgedTo(int[].class);
 
 
         env.execute("TemporalTablesDemo001");
