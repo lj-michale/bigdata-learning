@@ -27,28 +27,30 @@ object TableAPIExample001 {
         a STRING,
         b INT,
         c INT,
-        rowtime TIMESTAMP_LTZ(3)
+        event_time TIMESTAMP_LTZ(3),
+        rowtime AS PROCTIME(),
+        WATERMARK FOR event_time AS event_time - INTERVAL '10' SECOND
       )
       WITH ('connector'='datagen')
       """
     )
 
     val orders = tableEnv.from("GeneratedTable")
-    val result = orders.groupBy($"a")
-                .select($"a", $"b".count as "cnt")
-                .execute()
-                .print()
+//    val result = orders.groupBy($"a")
+//                .select($"a", $"b".count as "cnt")
+//                .execute()
+//                .print()
 
-//    val result2: Table = orders
-//      .filter($"a".isNotNull && $"b".isNotNull && $"c".isNotNull)
-//      .select($"a".lowerCase() as "a", $"b", $"rowtime")
-//      .window(Tumble over 1.hour on $"rowtime" as "hourlyWindow")
-//      .groupBy($"hourlyWindow", $"a")
-//      .select($"a", $"hourlyWindow".end as "hour", $"b".avg as "avgBillingAmount")
-//
-//    tableEnv.createTemporaryView("t_result", result2)
-//
-//    tableEnv.executeSql("select * from t_result").print()
+    val result2: Table = orders
+      .filter($"a".isNotNull && $"b".isNotNull && $"c".isNotNull)
+      .select($"a".lowerCase() as "a", $"b", $"event_time", $"rowtime")
+      .window(Tumble over 1.hour on $"rowtime" as "hourlyWindow")
+      .groupBy($"hourlyWindow", $"a")
+      .select($"a", $"hourlyWindow".end as "hour", $"b".avg as "avgBillingAmount")
+
+    tableEnv.createTemporaryView("t_result", result2)
+
+    tableEnv.executeSql("select * from t_result").print()
 
     val table2 = tableEnv.fromValues(
       row(1, "ABC"),
@@ -63,8 +65,6 @@ object TableAPIExample001 {
       row(1, "ABC"),
       row(2L, "ABCDE")
     )
-
-
 
   }
 
