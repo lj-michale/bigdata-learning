@@ -3,7 +3,10 @@ package com.bigdata.task.learn.func
 import org.apache.flink.table.api._
 import org.apache.flink.table.functions.ScalarFunction
 import scala.annotation.varargs
-
+import org.apache.flink.table.annotation.DataTypeHint
+import org.apache.flink.table.annotation.InputGroup
+import org.apache.flink.types.Row
+import java.math.BigDecimal
 /**
  * @descr Flink Table Api/SQL 自定义函数
  * https://ci.apache.org/projects/flink/flink-docs-master/zh/docs/dev/table/functions/udfs/
@@ -93,6 +96,33 @@ object FlinkCustomerFuncExample01 {
     def eval(d: Double*): Integer = {
       d.sum.toInt
     }
+  }
+
+  // function with overloaded evaluation methods
+  class OverloadedFunction extends ScalarFunction {
+
+    // no hint required
+    def eval(a: Long, b: Long): Long = {
+      a + b
+    }
+
+    // 定义 decimal 的精度和小数位
+    @DataTypeHint("DECIMAL(12, 3)")
+    def eval(a: Double, b: Double): BigDecimal = {
+      BigDecimal.valueOf(a + b)
+    }
+
+    // 定义嵌套数据类型
+    @DataTypeHint("ROW<s STRING, t TIMESTAMP_LTZ(3)>")
+    def eval(i:Int): Row = {
+      Row.of(java.lang.String.valueOf(i), java.time.Instant.ofEpochSecond(i))
+    }
+
+    // 允许任意类型的符入，并输出定制序列化后的值
+//    @DataTypeHint(value = "RAW", bridgedTo = classOf[java.nio.ByteBuffer])
+//    def eval(@DataTypeHint(inputGroup = InputGroup.ANY) Object o): java.nio.ByteBuffer = {
+//      MyUtils.serializeToByteBuffer(o)
+//    }
   }
 
 }
