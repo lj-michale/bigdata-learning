@@ -11,7 +11,6 @@ import org.apache.flink.table.functions.ScalarFunction
  */
 object FlinkCustomerFuncExample01 {
 
-
   def main(args: Array[String]): Unit = {
 
     val settings = EnvironmentSettings
@@ -42,7 +41,16 @@ object FlinkCustomerFuncExample01 {
      * 函数用于 SQL 查询前要先经过注册；而在用于 Table API 时，函数可以先注册后调用，也可以 内联 后直接使用。
      */
     // 在 Table API 里不经注册直接“内联”调用函数
-    tableEnv.from("GeneratedTable").select(call(classOf[SubstringFunction], $"a", 5, 12)).execute().print()
+    // tableEnv.from("GeneratedTable").select(call(classOf[SubstringFunction], $"a", 5, 12)).execute().print()
+
+    // 注册函数
+    tableEnv.createTemporarySystemFunction("SubstringFunction", classOf[SubstringFunction])
+    // 在 Table API 里调用注册好的函数
+    tableEnv.from("GeneratedTable").select(call("SubstringFunction", $"a", 5, 12)).execute().print()
+
+    // 在 SQL 里调用注册好的函数
+    tableEnv.sqlQuery("SELECT SubstringFunction(a, 5, 12) FROM GeneratedTable")
+
 
 
 
