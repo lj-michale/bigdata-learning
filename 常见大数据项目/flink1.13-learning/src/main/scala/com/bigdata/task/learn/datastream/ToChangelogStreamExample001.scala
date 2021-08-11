@@ -63,20 +63,60 @@ object ToChangelogStreamExample001 {
 
     // === EXAMPLE 1 ===
     // convert to DataStream in the simplest and most general way possible (no event-time)
-    val simpleTable = tableEnv
-      .fromValues(row("Alice", 12), row("Alice", 2), row("Bob", 12))
-      .as("name", "score")
-      .groupBy($"name")
-      .select($"name", $"score".sum())
-    tableEnv
-      .toChangelogStream(simpleTable)
-      .executeAndCollect()
-      .foreach(println)
+//    val simpleTable = tableEnv
+//      .fromValues(row("Alice", 12), row("Alice", 2), row("Bob", 12))
+//      .as("name", "score")
+//      .groupBy($"name")
+//      .select($"name", $"score".sum())
+//    tableEnv
+//      .toChangelogStream(simpleTable)
+//      .executeAndCollect()
+//      .foreach(println)
     // prints:
     // +I[Bob, 12]
     // +I[Alice, 12]
     // -U[Alice, 12]
     // +U[Alice, 14]
+
+    // === EXAMPLE 2 ===
+//    // convert to DataStream in the simplest and most general way possible (with event-time)
+//    val dataStream: DataStream[Row] = tableEnv.toChangelogStream(table)
+//    // since `event_time` is a single time attribute in the schema, it is set as the
+//    // stream record's timestamp by default; however, at the same time, it remains part of the Row
+//    dataStream.process(new ProcessFunction[Row, Unit] {
+//      override def processElement(
+//                                   row: Row,
+//                                   ctx: ProcessFunction[Row, Unit]#Context,
+//                                   out: Collector[Unit]): Unit = {
+//        // prints: [name, score, event_time]
+//        println(row.getFieldNames(true))
+//        // timestamp exists twice
+//        assert(ctx.timestamp() == row.getFieldAs[Instant]("event_time").toEpochMilli)
+//      }
+//    })
+
+    // === EXAMPLE 3 ===
+    // convert to DataStream but write out the time attribute as a metadata column which means
+    // it is not part of the physical schema anymore
+    val dataStream: DataStream[Row] = tableEnv.toChangelogStream(
+      table,
+      Schema.newBuilder()
+        .column("name", "STRING")
+        .column("score", "INT")
+        .columnByMetadata("rowtime", "TIMESTAMP_LTZ(3)")
+        .build())
+    // the stream record's timestamp is defined by the metadata; it is not part of the Row
+    dataStream.process(new ProcessFunction[Row, Unit] {
+      override def processElement(
+                                   row: Row,
+                                   ctx: ProcessFunction[Row, Unit]#Context,
+                                   out: Collector[Unit]): Unit = {
+        // prints: [name, score]
+        println(row.getFieldNames(true))
+        // timestamp exists once
+        println(ctx.timestamp())
+      }
+    })
 
 
 
