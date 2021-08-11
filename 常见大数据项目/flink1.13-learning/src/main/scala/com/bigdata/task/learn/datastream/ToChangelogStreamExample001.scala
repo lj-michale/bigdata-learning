@@ -61,6 +61,20 @@ object ToChangelogStreamExample001 {
 
     val table = tableEnv.from("GeneratedTable")
 
+    tableEnv.executeSql(
+      """
+      CREATE TABLE GeneratedTable2 (
+        name STRING,
+        score INT,
+        event_time TIMESTAMP_LTZ(3),
+        WATERMARK FOR event_time AS event_time - INTERVAL '10' SECOND
+      )
+      WITH ('connector'='datagen')
+      """
+    )
+
+    val table2 = tableEnv.from("GeneratedTable2")
+
     // === EXAMPLE 1 ===
     // convert to DataStream in the simplest and most general way possible (no event-time)
 //    val simpleTable = tableEnv
@@ -96,29 +110,48 @@ object ToChangelogStreamExample001 {
 //    })
 
     // === EXAMPLE 3 ===
-    // convert to DataStream but write out the time attribute as a metadata column which means
-    // it is not part of the physical schema anymore
+//    // convert to DataStream but write out the time attribute as a metadata column which means
+//    // it is not part of the physical schema anymore
+//    val dataStream: DataStream[Row] = tableEnv.toChangelogStream(
+//      table,
+//      Schema.newBuilder()
+//        .column("name", "STRING")
+//        .column("score", "INT")
+//        .columnByMetadata("rowtime", "TIMESTAMP_LTZ(3)")
+//        .build())
+//    // the stream record's timestamp is defined by the metadata; it is not part of the Row
+//    dataStream.process(new ProcessFunction[Row, Unit] {
+//      override def processElement(
+//                                   row: Row,
+//                                   ctx: ProcessFunction[Row, Unit]#Context,
+//                                   out: Collector[Unit]): Unit = {
+//        // prints: [name, score]
+//        println(row.getFieldNames(true))
+//        // timestamp exists once
+//        println(ctx.timestamp())
+//      }
+//    })
+
+    // === EXAMPLE 4 ===
+    // for advanced users, it is also possible to use more internal data structures for better
+    // efficiency
+    // note that this is only mentioned here for completeness because using internal data structures
+    // adds complexity and additional type handling
+    // however, converting a TIMESTAMP_LTZ column to `Long` or STRING to `byte[]` might be convenient,
+    // also structured types can be represented as `Row` if needed
     val dataStream: DataStream[Row] = tableEnv.toChangelogStream(
-      table,
+      table2,
       Schema.newBuilder()
-        .column("name", "STRING")
-        .column("score", "INT")
-        .columnByMetadata("rowtime", "TIMESTAMP_LTZ(3)")
-        .build())
-    // the stream record's timestamp is defined by the metadata; it is not part of the Row
-    dataStream.process(new ProcessFunction[Row, Unit] {
-      override def processElement(
-                                   row: Row,
-                                   ctx: ProcessFunction[Row, Unit]#Context,
-                                   out: Collector[Unit]): Unit = {
-        // prints: [name, score]
-        println(row.getFieldNames(true))
-        // timestamp exists once
-        println(ctx.timestamp())
-      }
-    })
-
-
+        .column(
+          "name",
+          DataTypes.STRING().bridgedTo(classOf[String]))
+        .column(
+          "score",
+          DataTypes.INT())
+        .column(
+          "event_time",
+          DataTypes.TIMESTAMP_LTZ(3).bridgedTo(classOf[Long]))
+    .build())
 
     env.execute(s"${this.getClass.getName}")
 
