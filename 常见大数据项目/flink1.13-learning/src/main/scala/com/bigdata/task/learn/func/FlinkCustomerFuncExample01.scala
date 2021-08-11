@@ -68,6 +68,18 @@ object FlinkCustomerFuncExample01 {
     // 在 SQL 里调用注册好的函数
     // tableEnv.sqlQuery("SELECT SubstringFunction2(a, 5, 12) FROM GeneratedTable").execute().print()
 
+    ///////////////////// 运行时集成
+    // 展示了如何在一个标量函数中通过 FunctionContext 来获取一个全局的任务参数：
+    // 设置任务参数
+    tableEnv.getConfig.addJobParameter("hashcode_factor", "31")
+    // 注册函数
+    tableEnv.createTemporarySystemFunction("hashCode", classOf[HashCodeFunction])
+    // 调用函数
+    tableEnv.sqlQuery("SELECT a, hashCode(a) FROM GeneratedTable").execute().print()
+
+
+
+
 
   }
 
@@ -128,8 +140,6 @@ object FlinkCustomerFuncExample01 {
 //      MyUtils.serializeToByteBuffer(o)
 //    }
   }
-
-
 
 
 
