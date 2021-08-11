@@ -42,7 +42,7 @@ object FlinkCustomerFuncExample01 {
     )
 
     val orders = tableEnv.from("GeneratedTable")
-    orders.select($"*").execute().print()
+//    orders.select($"*").execute().print()
 
     /**
      * 展示了如何创建一个基本的标量函数，以及如何在 Table API 和 SQL 里调用这个函数。
@@ -77,9 +77,36 @@ object FlinkCustomerFuncExample01 {
     // 调用函数
     tableEnv.sqlQuery("SELECT a, hashCode(a) FROM GeneratedTable").execute().print()
 
+    ///////////////////// 标量函数
 
 
+    ///////////////////// 表值函数
+    // 在 Table API 里不经注册直接“内联”调用函数
+    //    tableEnv
+    //      .from("GeneratedTable")
+    //      .joinLateral(call(classOf[SplitFunction], $"myField")
+    // 注册函数
+    tableEnv.createTemporarySystemFunction("SplitFunction", classOf[SplitFunction])
+    // 在 Table API 里调用注册好的函数
+//    tableEnv
+//      .from("GeneratedTable")
+//      .joinLateral(call("SplitFunction", $"a"))
+//      .select($"a", $"b", $"c").execute().print()
 
+    // 在 SQL 里调用注册好的函数
+    // tableEnv.sqlQuery("SELECT a, b, c FROM GeneratedTable, LATERAL TABLE(SplitFunction(a))").execute().print()
+
+    // 聚合函数
+    tableEnv.createTemporaryFunction("wAvg", new WeightedAvg())
+    // 使用函数
+    // tableEnv.sqlQuery("SELECT a, wAvg(points, level) AS avgPoints FROM GeneratedTable GROUP BY a")
+
+    tableEnv.createTemporaryFunction("top2", new Top2())
+    // 使用函数
+//    orders
+//      .groupBy('key)
+//      .flatAggregate(top2('a) as ('v, 'rank))
+//      .select('key, 'v, 'rank)
 
   }
 
@@ -140,7 +167,6 @@ object FlinkCustomerFuncExample01 {
 //      MyUtils.serializeToByteBuffer(o)
 //    }
   }
-
 
 
 
