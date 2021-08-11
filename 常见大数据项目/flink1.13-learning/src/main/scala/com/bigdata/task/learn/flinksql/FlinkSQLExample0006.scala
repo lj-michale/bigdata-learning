@@ -93,6 +93,7 @@ object FlinkSQLExample0006 {
 
 
 
+
     env.execute("FlinkSQLExample0006")
 
   }
