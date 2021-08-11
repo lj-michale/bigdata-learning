@@ -89,6 +89,9 @@ object FlinkSQLExample0006 {
 //    // add a printing sink and execute in DataStream API
 //    resultStream2.print()
 
+    ///////////////////////////////////////////////////////// DataStream3
+
+
 
     env.execute("FlinkSQLExample0006")
 
