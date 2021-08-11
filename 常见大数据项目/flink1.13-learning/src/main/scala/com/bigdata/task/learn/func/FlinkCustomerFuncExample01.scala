@@ -7,6 +7,10 @@ import org.apache.flink.table.annotation.DataTypeHint
 import org.apache.flink.table.annotation.InputGroup
 import org.apache.flink.types.Row
 import java.math.BigDecimal
+
+import org.apache.flink.table.annotation.FunctionHint
+import org.apache.flink.table.functions.TableFunction
+
 /**
  * @descr Flink Table Api/SQL 自定义函数
  * https://ci.apache.org/projects/flink/flink-docs-master/zh/docs/dev/table/functions/udfs/
@@ -124,5 +128,12 @@ object FlinkCustomerFuncExample01 {
 //      MyUtils.serializeToByteBuffer(o)
 //    }
   }
+
+
+
+
+
+
+
 
 }
