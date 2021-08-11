@@ -4,7 +4,7 @@ import org.apache.flink.table.api._
 import org.apache.flink.table.functions.ScalarFunction
 
 /**
- * @descr Flink 自定义函数
+ * @descr Flink Table Api/SQL 自定义函数
  * https://ci.apache.org/projects/flink/flink-docs-master/zh/docs/dev/table/functions/udfs/
  * @author lj.michale
  * @date 2021-08-11
@@ -46,13 +46,15 @@ object FlinkCustomerFuncExample01 {
     // 注册函数
     tableEnv.createTemporarySystemFunction("SubstringFunction", classOf[SubstringFunction])
     // 在 Table API 里调用注册好的函数
-    tableEnv.from("GeneratedTable").select(call("SubstringFunction", $"a", 5, 12)).execute().print()
+    //tableEnv.from("GeneratedTable").select(call("SubstringFunction", $"a", 5, 12)).execute().print()
 
     // 在 SQL 里调用注册好的函数
-    tableEnv.sqlQuery("SELECT SubstringFunction(a, 5, 12) FROM GeneratedTable")
+    //tableEnv.sqlQuery("SELECT SubstringFunction(a, 5, 12) FROM GeneratedTable").execute().print()
 
-
-
+    // 对于交互式会话，还可以在使用或注册函数之前对其进行参数化，这样可以把函数 实例 而不是函数 类 用作临时函数。
+    //为确保函数实例可应用于集群环境，参数必须是可序列化的。
+    // 在 Table API 里不经注册直接“内联”调用函数
+    tableEnv.from("GeneratedTable").select(call(new SubstringFunction2(true), $"a", 5, 12)).execute().print()
 
 
   }
@@ -63,6 +65,16 @@ object FlinkCustomerFuncExample01 {
       s.substring(begin, end)
     }
   }
+
+  // 定义可参数化的函数逻辑
+  class SubstringFunction2(endInclusive:Boolean) extends ScalarFunction {
+    def eval(s: String, begin: Integer, end: Integer): String = {
+      s.substring(begin, end)
+    }
+  }
+
+
+
 
 
 }
