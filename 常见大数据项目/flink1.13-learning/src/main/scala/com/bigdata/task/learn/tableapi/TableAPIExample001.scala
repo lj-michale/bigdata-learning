@@ -296,12 +296,6 @@ object TableAPIExample001 {
     }
   }
 
-
-
-
-
-
-
   case class MyMinMaxAcc(var min: Int, var max: Int)
 
 }
