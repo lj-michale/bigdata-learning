@@ -3,27 +3,22 @@ package com.bigdata.task.learn.window.func
 import java.time.{Duration, ZoneId}
 import java.util.Calendar
 
-import com.bigdata.task.learn.window.watermark.WatermarkExample01.SensorReading
+import org.apache.flink.api.common.eventtime.{SerializableTimestampAssigner, WatermarkStrategy}
 import org.apache.flink.api.common.restartstrategy.RestartStrategies
-import org.apache.flink.api.common.time.Time
 import org.apache.flink.runtime.state.hashmap.HashMapStateBackend
 import org.apache.flink.streaming.api.environment.CheckpointConfig
 import org.apache.flink.streaming.api.functions.source.{RichSourceFunction, SourceFunction}
 import org.apache.flink.streaming.api.scala.function.ProcessWindowFunction
 import org.apache.flink.streaming.api.scala.{DataStream, OutputTag, StreamExecutionEnvironment}
-import org.apache.flink.streaming.api.windowing.assigners.{TumblingEventTimeWindows, TumblingProcessingTimeWindows}
-import org.apache.flink.streaming.api.windowing.time.Time
-import org.apache.flink.api.common.eventtime.{SerializableTimestampAssigner, WatermarkStrategy}
-
-import scala.collection.immutable
-import scala.util.Random
-//import org.apache.flink.streaming.api.windowing.time.Time
+import org.apache.flink.streaming.api.windowing.assigners.TumblingProcessingTimeWindows
 import org.apache.flink.streaming.api.windowing.windows.TimeWindow
 import org.apache.flink.streaming.api.{CheckpointingMode, TimeCharacteristic}
 import org.apache.flink.table.api.EnvironmentSettings
 import org.apache.flink.table.api.bridge.scala.StreamTableEnvironment
 import org.apache.flink.util.Collector
-import org.apache.flink.streaming.api.scala._
+
+import scala.collection.immutable
+import scala.util.Random
 
 /**
  * @description Flink窗口函数计算使用例子
@@ -57,27 +52,27 @@ object WindowFuncDemo01 {
 
     val outputTag = new OutputTag[SensorReading]("late-data") {}
 
-    // WatermarkStrategy
-    val watermarkStrategy = WatermarkStrategy.forBoundedOutOfOrderness[SensorReading](Duration.ofSeconds(1))    //延迟1秒
-      .withTimestampAssigner(new SerializableTimestampAssigner[SensorReading] {
-        override def extractTimestamp(element: SensorReading, recordTimestamp: Long): Long = element.timestamp * 1000L   //指定事件时间字段
-      })
+    // 时间水印生成策略，WatermarkStrategy
+    val watermarkStrategy = WatermarkStrategy.forBoundedOutOfOrderness[SensorReading](Duration.ofSeconds(1))    // 延迟1秒
+        .withTimestampAssigner(new SerializableTimestampAssigner[SensorReading] {
+        override def extractTimestamp(element: SensorReading, recordTimestamp: Long): Long = element.timestamp * 1000L    // 指定事件时间字段
+    })
 
     // 计算5s滚动窗口中的最低和最高的温度。输出的元素包含了(流的Key, 最低温度, 最高温度, 窗口结束时间)
     val minMaxTempPerWindow: DataStream[MinMaxTemp] = sensorData
-      // DataStream 转换计算
-      // .map(data => {SensorReading(data.id, data.timestamp, data.temperature)})
       // assign timestamp & watermarks every event
       .assignTimestampsAndWatermarks(watermarkStrategy)
-      //进行分组
+      // 进行分组
       .keyBy(_.id)
-      //进行窗口计算（基于处理时间ProcessingTime）
+      // 进行窗口计算（基于处理时间ProcessingTime）,
       .window(TumblingProcessingTimeWindows.of(org.apache.flink.streaming.api.windowing.time.Time.seconds(15)))
-      //设置数据延迟容忍时间
+      // trigger 用来判断一个窗口是否需要被触发，每个 WindowAssigner 都自带一个默认的trigger
+
+      // 设置数据延迟容忍时间5s
       .allowedLateness(org.apache.flink.streaming.api.windowing.time.Time.seconds(5))
       // 延迟数据旁路输出
       .sideOutputLateData(outputTag)
-      //使用窗口函数进行对窗口数据进行计算
+      // 使用窗口函数进行对窗口数据进行计算
       .process(new HighAndLowTempProcessFunction)
 
     minMaxTempPerWindow.print()
