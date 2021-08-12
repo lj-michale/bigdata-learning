@@ -79,7 +79,6 @@ object FlinkCustomerFuncExample01 {
 
     ///////////////////// 标量函数
 
-
     ///////////////////// 表值函数
     // 在 Table API 里不经注册直接“内联”调用函数
     //    tableEnv
@@ -97,7 +96,7 @@ object FlinkCustomerFuncExample01 {
     // tableEnv.sqlQuery("SELECT a, b, c FROM GeneratedTable, LATERAL TABLE(SplitFunction(a))").execute().print()
 
     // 聚合函数
-    tableEnv.createTemporaryFunction("wAvg", new WeightedAvg())
+//    tableEnv.createTemporaryFunction("wAvg", new WeightedAvg())
     // 使用函数
     // tableEnv.sqlQuery("SELECT a, wAvg(points, level) AS avgPoints FROM GeneratedTable GROUP BY a")
 
@@ -107,6 +106,8 @@ object FlinkCustomerFuncExample01 {
 //      .groupBy('key)
 //      .flatAggregate(top2('a) as ('v, 'rank))
 //      .select('key, 'v, 'rank)
+
+
 
   }
 
