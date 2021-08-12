@@ -3,6 +3,8 @@ package com.bigdata.task.learn.window.func
 import java.time.{Duration, ZoneId}
 import java.util.Calendar
 
+import com.bigdata.task.learn.window.evictor.MyEvictor
+import com.bigdata.task.learn.window.trigger.CustomTrigger
 import org.apache.flink.api.common.eventtime.{SerializableTimestampAssigner, WatermarkStrategy}
 import org.apache.flink.api.common.restartstrategy.RestartStrategies
 import org.apache.flink.runtime.state.hashmap.HashMapStateBackend
@@ -67,7 +69,9 @@ object WindowFuncDemo01 {
       // 进行窗口计算（基于处理时间ProcessingTime）,
       .window(TumblingProcessingTimeWindows.of(org.apache.flink.streaming.api.windowing.time.Time.seconds(15)))
       // trigger 用来判断一个窗口是否需要被触发，每个 WindowAssigner 都自带一个默认的trigger
-
+      .trigger(new CustomTrigger(10, 1 * 60 * 1000L))
+      // 自定义evictor,用来剔除窗口中的数据
+      .evictor(new MyEvictor)
       // 设置数据延迟容忍时间5s
       .allowedLateness(org.apache.flink.streaming.api.windowing.time.Time.seconds(5))
       // 延迟数据旁路输出
@@ -118,7 +122,7 @@ object WindowFuncDemo01 {
         //发送出去
         mapTemp.foreach(t => sContext.collect(SensorReading(t._1,curTime,t._2)))
         //每隔100ms发送一条传感器数据
-        Thread.sleep(100)
+        Thread.sleep(1000)
       }
     }
     override def cancel(): Unit = running =false

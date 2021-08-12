@@ -3,21 +3,34 @@ package com.bigdata.task.learn.window.trigger
 import java.text.SimpleDateFormat
 
 import com.bigdata.task.learn.bean.eventInputDT
+import com.bigdata.task.learn.window.func.WindowFuncDemo01.SensorReading
 import org.apache.flink.api.common.functions.ReduceFunction
 import org.apache.flink.api.common.state.ReducingStateDescriptor
 import org.apache.flink.streaming.api.windowing.triggers.{Trigger, TriggerResult}
 import org.apache.flink.streaming.api.windowing.windows.TimeWindow
 
 
-class CustomTrigger extends Trigger[eventInputDT, TimeWindow] {
+/**
+ * @description 定义触发器 定时或达到数量触发
+ *
+ * https://www.jianshu.com/p/e32e04a1d6c4
+ * @author lj.michale
+ * @date 2021-07-16
+ */
+class CustomTrigger extends Trigger[SensorReading, TimeWindow] {
+
   //触发计算的最大数量
   private var maxCount: Long = _
+
   //定时触发间隔时长 (ms)
   private var interval: Long = 60 * 1000
+
   //记录当前数量的状态
   private lazy val countStateDescriptor: ReducingStateDescriptor[Long] = new ReducingStateDescriptor[Long]("counter", new Sum, classOf[Long])
+
   //记录执行时间定时触发时间的状态
   private lazy val processTimerStateDescriptor: ReducingStateDescriptor[Long] = new ReducingStateDescriptor[Long]("processTimer", new Update, classOf[Long])
+
   //记录事件时间定时器的状态
   private lazy val eventTimerStateDescriptor: ReducingStateDescriptor[Long] = new ReducingStateDescriptor[Long]("eventTimer", new Update, classOf[Long])
 
@@ -31,7 +44,7 @@ class CustomTrigger extends Trigger[eventInputDT, TimeWindow] {
     this.interval = interval
   }
 
-  override def onElement(element: eventInputDT, timestamp: Long, window: TimeWindow, ctx: Trigger.TriggerContext): TriggerResult = {
+  override def onElement(element: SensorReading, timestamp: Long, window: TimeWindow, ctx: Trigger.TriggerContext): TriggerResult = {
     val countState = ctx.getPartitionedState(countStateDescriptor)
     //计数状态加1
     countState.add(1L)
