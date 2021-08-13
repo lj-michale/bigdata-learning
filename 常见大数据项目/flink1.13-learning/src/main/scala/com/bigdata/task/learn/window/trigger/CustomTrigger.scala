@@ -1,14 +1,10 @@
 package com.bigdata.task.learn.window.trigger
 
-import java.text.SimpleDateFormat
-
-import com.bigdata.task.learn.bean.eventInputDT
 import com.bigdata.task.learn.window.func.WindowFuncDemo01.SensorReading
 import org.apache.flink.api.common.functions.ReduceFunction
 import org.apache.flink.api.common.state.ReducingStateDescriptor
 import org.apache.flink.streaming.api.windowing.triggers.{Trigger, TriggerResult}
 import org.apache.flink.streaming.api.windowing.windows.TimeWindow
-
 
 /**
  * @description 定义触发器 定时或达到数量触发

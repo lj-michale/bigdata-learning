@@ -12,12 +12,13 @@ import org.apache.flink.streaming.api.environment.CheckpointConfig
 import org.apache.flink.streaming.api.functions.source.{RichSourceFunction, SourceFunction}
 import org.apache.flink.streaming.api.scala.function.ProcessWindowFunction
 import org.apache.flink.streaming.api.scala.{DataStream, OutputTag, StreamExecutionEnvironment}
-import org.apache.flink.streaming.api.windowing.assigners.TumblingProcessingTimeWindows
+import org.apache.flink.streaming.api.windowing.assigners.{TumblingEventTimeWindows, TumblingProcessingTimeWindows}
 import org.apache.flink.streaming.api.windowing.windows.TimeWindow
 import org.apache.flink.streaming.api.{CheckpointingMode, TimeCharacteristic}
 import org.apache.flink.table.api.EnvironmentSettings
 import org.apache.flink.table.api.bridge.scala.StreamTableEnvironment
 import org.apache.flink.util.Collector
+import org.apache.flink.streaming.api.windowing.time.Time
 
 import scala.collection.immutable
 import scala.util.Random
@@ -42,7 +43,7 @@ object WindowFuncDemo01 {
     env.setRestartStrategy(RestartStrategies.fixedDelayRestart(3, 1000))
     // 状态后端-HashMapStateBackend
     env.setStateBackend(new HashMapStateBackend)
-    //等价于MemoryStateBackend
+    // 等价于MemoryStateBackend
     env.getCheckpointConfig.setCheckpointStorage("file:///E:\\OpenSource\\GitHub\\bigdata-learning\\常见大数据项目\\flink1.13-learning\\checkpoint")
 
     val settings = EnvironmentSettings.newInstance().useBlinkPlanner().inStreamingMode().build()
@@ -67,13 +68,14 @@ object WindowFuncDemo01 {
       // 进行分组
       .keyBy(_.id)
       // 进行窗口计算（基于处理时间ProcessingTime）,
-      .window(TumblingProcessingTimeWindows.of(org.apache.flink.streaming.api.windowing.time.Time.seconds(15)))
+//      .window(TumblingEventTimeWindows.of(org.apache.flink.streaming.api.windowing.time.Time.seconds(15)))
+      .window(TumblingProcessingTimeWindows.of(Time.seconds(15)))
       // trigger 用来判断一个窗口是否需要被触发，每个 WindowAssigner 都自带一个默认的trigger
       .trigger(new CustomTrigger(10, 1 * 60 * 1000L))
       // 自定义evictor,用来剔除窗口中的数据
       .evictor(new MyEvictor)
       // 设置数据延迟容忍时间5s
-      .allowedLateness(org.apache.flink.streaming.api.windowing.time.Time.seconds(5))
+      .allowedLateness(Time.seconds(5))
       // 延迟数据旁路输出
       .sideOutputLateData(outputTag)
       // 使用窗口函数进行对窗口数据进行计算
@@ -97,7 +99,9 @@ object WindowFuncDemo01 {
                          out: Collector[MinMaxTemp]): Unit = {
       val temps = vals.map(_.temperature)
       val windowEnd = ctx.window.getEnd
-      out.collect(MinMaxTemp(key, temps.min, temps.max, windowEnd))
+      if(temps.min != null && temps.max != null) {
+        out.collect(MinMaxTemp(key, temps.min, temps.max, windowEnd))
+      }
     }
   }
 
@@ -122,7 +126,7 @@ object WindowFuncDemo01 {
         //发送出去
         mapTemp.foreach(t => sContext.collect(SensorReading(t._1,curTime,t._2)))
         //每隔100ms发送一条传感器数据
-        Thread.sleep(1000)
+        Thread.sleep(100)
       }
     }
     override def cancel(): Unit = running =false
