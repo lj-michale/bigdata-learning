@@ -7,7 +7,6 @@ import org.apache.spark.ml.feature.{PCA, StandardScaler, VectorAssembler}
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.types.{DoubleType, StringType, StructField, StructType}
 
-
 /**
  * @descr KMeans聚类计算
  *
@@ -37,7 +36,6 @@ object IRISKmeans {
 
     val schema = StructType(fieldTypes)
     val featureCols = Array("SepalLength","SepalWidth","PetalLength","PetalWidth")
-
     val data = spark.read.schema(schema).option("header", true).csv("file:///E:\\company\\myself\\datasets\\Iris.csv")
 //    +---+-----------+----------+-----------+----------+-----------+
 //    | id|SepalLength|SepalWidth|PetalLength|PetalWidth|    Species|
@@ -50,7 +48,6 @@ object IRISKmeans {
 //    |  6|        5.4|       3.9|        1.7|       0.4|Iris-setosa|
 
     val vectorAssembler = new VectorAssembler().setInputCols(featureCols).setOutputCol("features")
-
     val pca = new PCA().setInputCol("features")
       .setOutputCol("pcaFeatures")
       // 主成分个数
