@@ -17,6 +17,7 @@
         <kafka.version>2.4.5</kafka.version>
         <mysql-connector.version>8.0.21</mysql-connector.version>
         <scala.version>2.11.12</scala.version>
+        <nd4j.version>1.0.0-beta3</nd4j.version>
         <scala.binary.version>2.11</scala.binary.version>
     </properties>
 
@@ -77,6 +78,11 @@
             <artifactId>spark-streaming-kafka-0-10_${scala.binary.version}</artifactId>
             <version>2.4.0-cdh6.3.4</version>
         </dependency>
+<!--        <dependency>
+            <groupId>org.nd4j</groupId>
+            <artifactId>nd4j-kryo_${scala.binary.version}</artifactId>
+            <version>${nd4j.version}</version>
+        </dependency>-->
         <dependency>
             <groupId>ml.dmlc</groupId>
             <artifactId>xgboost4j-spark</artifactId>
