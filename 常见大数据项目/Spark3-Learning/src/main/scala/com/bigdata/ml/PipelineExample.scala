@@ -60,7 +60,6 @@ object PipelineExample {
 //    (5, l n m) ----> prob=[0.8378325685476612,0.16216743145233875], prediction=0.0
 //    (6, Spark hadoop spark) ----> prob=[0.06926633132976273,0.9307336686702373], prediction=1.0
 //    (7, apache hadoop) ----> prob=[0.9821575333444208,0.01784246665557917], prediction=0.0
-
   }
 
 }
