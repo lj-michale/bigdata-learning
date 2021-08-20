@@ -18,7 +18,7 @@ object StreamingRegressionExample001 {
   def main(args: Array[String]): Unit = {
 
     val ssc = new StreamingContext("local[2]", "StreamingRegressionExample001", Seconds(10))
-    val stream = ssc.socketTextStream("localhost", 9999)
+    val stream = ssc.socketTextStream("192.168.10.128", 9999)
 
     val numFeatures = 100
 

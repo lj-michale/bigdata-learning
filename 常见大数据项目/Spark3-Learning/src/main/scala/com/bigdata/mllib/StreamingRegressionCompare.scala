@@ -19,7 +19,7 @@ object StreamingRegressionCompare {
   def main(args: Array[String]): Unit = {
 
     val ssc = new StreamingContext("local[2]", "StreamingRegressionExample001", Seconds(10))
-    val stream = ssc.socketTextStream("localhost", 9999)
+    val stream = ssc.socketTextStream("192.168.10.128", 9999)
 
     val numFeatures = 100
 
@@ -34,10 +34,10 @@ object StreamingRegressionCompare {
 
     // 将是数据源处理成回归需要的格式
     val labeledStream:DStream[LabeledPoint] = stream.map(event => {
-      val split = event.split("\t")
-      val y = split(0).toDouble
-      val feature = split(1).split(",").map(_.toDouble)
-      LabeledPoint(label = y, features = Vectors.dense(feature))
+        val split = event.split("\t")
+        val y = split(0).toDouble
+        val feature = split(1).split(",").map(_.toDouble)
+        LabeledPoint(label = y, features = Vectors.dense(feature))
     })
 
     model.trainOn(labeledStream)
@@ -50,7 +50,7 @@ object StreamingRegressionCompare {
         rdd.map( point => {
           val pred1 = latest1.predict(point.features)
           val pred2 = latest2.predict(point.features)
-          (pred1 - point.label, pred1 - point.label)
+          (pred1 - point.label, pred2 - point.label)
         })
       }
     })
@@ -67,6 +67,7 @@ object StreamingRegressionCompare {
       println(s"MSE current batch: Model 1: $mse1; Model2: $mse2")
       println(s"RMSE current batch: Model 1: $rmse1; Model 2: $rmse2")
     })
+
 
     ssc.start()
     ssc.awaitTermination()
