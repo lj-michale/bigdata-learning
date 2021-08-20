@@ -88,6 +88,7 @@ object ExactlyOnceExample {
 
     ssc.start()
     ssc.awaitTermination()
+
   }
 
   def processLogs(messages: RDD[ConsumerRecord[String, String]]): RDD[(LocalDateTime, Int)] = {

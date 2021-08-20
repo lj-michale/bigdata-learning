@@ -39,7 +39,6 @@ object SparkSQLExample01 {
     val personDS:Dataset[Person] = Seq(Person("Andy", 35)).toDS()
     personDS.show()
 
-
     spark.stop()
 
   }
