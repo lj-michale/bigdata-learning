@@ -111,7 +111,6 @@ object FlinkMetricDemo001 {
     val kafkaStreaam = env.addSource(consumerSource)
     kafkaStreaam.print()
 
-
     env.execute(s"${this.getClass.getName}")
 
   }
