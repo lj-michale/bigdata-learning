@@ -79,24 +79,24 @@ object FlinkMetricDemo001 {
 
     // DataStream[Tuple7[String, String, String, String, String, Double, String]] -> DataStream[String]
     val orderDS:DataStream[String] = orderStreaam.map(row => {
-      row.f0 + "," + row.f1 + "," + row.f2 + "," + row.f3 + "," + row.f4 + "," + row.f5.toString + "," + row.f6
+        row.f0 + "," + row.f1 + "," + row.f2 + "," + row.f3 + "," + row.f4 + "," + row.f5.toString + "," + row.f6
     }).name("getOrderDS")
       .map(row => {
-        val array = row.split(",")
-        val oredrId:String = array(0)
-        val customerId:String = array(1)
-        val productId:String = array(2)
-        val productName:String = array(3)
-        val price:String = array(4)
-        val buyMoney:Double = array(5).toDouble
-        val buyCount:Int = (buyMoney / price.toDouble).toInt
-        val buyTime:String = array(6)
-        // println(s" >>>>>>> ${oredrId}, ${customerId}, ${productId}, ${productName}, ${price}, ${buyMoney}, ${buyCount}, ${buyTime}")
-        val rawData = RawData(oredrId, customerId, productId, productName, price, buyMoney, buyCount, buyTime)
-        rawData
+          val array = row.split(",")
+          val oredrId:String = array(0)
+          val customerId:String = array(1)
+          val productId:String = array(2)
+          val productName:String = array(3)
+          val price:String = array(4)
+          val buyMoney:Double = array(5).toDouble
+          val buyCount:Int = (buyMoney / price.toDouble).toInt
+          val buyTime:String = array(6)
+          // println(s" >>>>>>> ${oredrId}, ${customerId}, ${productId}, ${productName}, ${price}, ${buyMoney}, ${buyCount}, ${buyTime}")
+          val rawData = RawData(oredrId, customerId, productId, productName, price, buyMoney, buyCount, buyTime)
+          rawData
       }).name("addBuyCount")
         .map(row => {
-          row.oredrId + "|" + row.customerId + "|" + row.productId + "|" + row.productName + "|" + row.price + "|" + row.buyMoney + "|" + row.buyCount + "|" + row.buyTime
+             row.oredrId + "|" + row.customerId + "|" + row.productId + "|" + row.productName + "|" + row.price + "|" + row.buyMoney + "|" + row.buyCount + "|" + row.buyTime
         }).name("toStringDataStream")
 
     // 将自定义Source产生的data转发到Kafka
@@ -104,7 +104,8 @@ object FlinkMetricDemo001 {
       "mzpns",
       // 使用先前实现的消息序列化类
       new MyKafkaSerializationSchema("mzpns"),
-      producerProp, Semantic.EXACTLY_ONCE)).name("sinkToKafka")
+      producerProp, Semantic.EXACTLY_ONCE
+    )).name("sinkToKafka")
 
     // 自定义metric监控流入量
     val consumerSource:CustomerKafkaConsumer[RawData] = new CustomerKafkaConsumer[RawData]("mzpns", new ParseDeserialization, consumerProp)
@@ -120,6 +121,7 @@ object FlinkMetricDemo001 {
    */
   class MyCusRawDataSource() extends SourceFunction[RawData] {
     var isRunning = true
+
     override def run(sourceContext: SourceFunction.SourceContext[RawData]): Unit = {
       val rand = new Random()
       //产生无限流数据

@@ -1,7 +1,6 @@
 package com.aurora.source;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.flink.api.java.tuple.Tuple5;
 import org.apache.flink.api.java.tuple.Tuple7;
 import org.apache.flink.streaming.api.functions.source.SourceFunction;
 
