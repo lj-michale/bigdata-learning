@@ -1,7 +1,7 @@
 package com.bigdata.metric
 
 import java.lang
-import java.time.ZoneId
+import java.time.{Duration, ZoneId}
 import java.util.{Calendar, Properties}
 
 import akka.serialization.Serialization
@@ -15,22 +15,27 @@ import org.apache.flink.contrib.streaming.state.EmbeddedRocksDBStateBackend
 import org.apache.flink.streaming.api.datastream.DataStreamSource
 import org.apache.flink.streaming.api.environment.CheckpointConfig
 import org.apache.flink.streaming.api.functions.source.SourceFunction
-import org.apache.flink.streaming.api.scala.{DataStream, StreamExecutionEnvironment}
+import org.apache.flink.streaming.api.scala.{DataStream, OutputTag, StreamExecutionEnvironment}
 import org.apache.flink.streaming.api.{CheckpointingMode, TimeCharacteristic}
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaProducer.Semantic
 import org.apache.flink.streaming.connectors.kafka.{FlinkKafkaProducer, KafkaDeserializationSchema, KafkaSerializationSchema}
 import org.apache.flink.table.api.EnvironmentSettings
 import org.apache.flink.table.api.bridge.scala.StreamTableEnvironment
 import org.apache.kafka.clients.producer.ProducerRecord
+import org.apache.flink.api.common.typeinfo.{TypeHint, TypeInformation}
 import org.slf4j.{Logger, LoggerFactory}
+import org.apache.flink.api.common.eventtime.{SerializableTimestampAssigner, WatermarkStrategy}
 
 import scala.collection.JavaConversions._
 import scala.util.Random
 import com.alibaba.fastjson.JSON
-import java.util
-
 import com.alibaba.fastjson.serializer.SerializeFilter
-import org.apache.flink.api.common.typeinfo.{TypeHint, TypeInformation}
+import com.bigdata.window.evictor.MyEvictor
+import com.bigdata.window.trigger.CustomTrigger
+import org.apache.flink.api.common.eventtime.{SerializableTimestampAssigner, WatermarkStrategy}
+import org.apache.flink.streaming.api.windowing.assigners.TumblingProcessingTimeWindows
+import org.apache.flink.streaming.api.windowing.evictors.Evictor
+import org.apache.flink.streaming.api.windowing.time.Time
 import org.apache.kafka.clients.consumer.ConsumerRecord
 
 import scala.beans.BeanProperty
@@ -75,7 +80,6 @@ object FlinkMetricDemo001 {
 
     import org.apache.flink.api.scala._
     val orderStreaam = env.addSource(new GenerateCustomOrderSource)
-//    orderStreaam.print()
 
     // DataStream[Tuple7[String, String, String, String, String, Double, String]] -> DataStream[String]
     val orderDS:DataStream[String] = orderStreaam.map(row => {
@@ -109,7 +113,32 @@ object FlinkMetricDemo001 {
 
     // 自定义metric监控流入量
     val consumerSource:CustomerKafkaConsumer[RawData] = new CustomerKafkaConsumer[RawData]("mzpns", new ParseDeserialization, consumerProp)
-    val kafkaStreaam = env.addSource(consumerSource)
+    val kafkaStreaam:DataStream[RawData] = env.addSource(consumerSource)
+
+    // 时间水印生成策略，WatermarkStrategy
+    val watermarkStrategy = WatermarkStrategy.forBoundedOutOfOrderness[RawData](Duration.ofSeconds(1))
+      // 延迟1秒
+      .withTimestampAssigner(new SerializableTimestampAssigner[RawData] {
+        override def extractTimestamp(element: RawData, recordTimestamp: Long): Long = {
+          // 指定事件时间字段
+          element.buyTime.toLong * 1000L
+        }
+    })
+
+    val outputTag = new OutputTag[RawData]("late-data") {}
+
+    /**
+     * 进行窗口计算，设置水位线、延迟数据容忍值，旁路输出以及各种窗口内，外(自定)计算函数
+     */
+    kafkaStreaam
+      .assignTimestampsAndWatermarks(watermarkStrategy)
+      .keyBy(_.oredrId)
+      .window(TumblingProcessingTimeWindows.of(Time.seconds(15)))
+      .trigger(new CustomTrigger(10, 1 * 60 * 1000L))
+      .evictor(new MyEvictor())
+      .allowedLateness(Time.seconds(5))
+      .sideOutputLateData(outputTag)
+
     kafkaStreaam.print()
 
     env.execute(s"${this.getClass.getName}")
