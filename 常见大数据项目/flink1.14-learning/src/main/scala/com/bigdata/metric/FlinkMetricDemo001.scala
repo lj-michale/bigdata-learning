@@ -2,17 +2,14 @@ package com.bigdata.metric
 
 import java.lang
 import java.time.{Duration, ZoneId}
-import java.util.{Calendar, Properties}
+import java.util.{Properties}
 
-import akka.serialization.Serialization
 import com.aurora.mq.kafka.CustomerKafkaConsumer
 import com.aurora.source.GenerateCustomOrderSource
 import com.bigdata.bean.RawData
 import com.bigdata.common.ParseDeserialization
-import org.apache.flink.api.java.tuple.Tuple7
 import org.apache.flink.api.java.utils.ParameterTool
 import org.apache.flink.contrib.streaming.state.EmbeddedRocksDBStateBackend
-import org.apache.flink.streaming.api.datastream.DataStreamSource
 import org.apache.flink.streaming.api.environment.CheckpointConfig
 import org.apache.flink.streaming.api.functions.source.SourceFunction
 import org.apache.flink.streaming.api.scala.{DataStream, OutputTag, StreamExecutionEnvironment}
@@ -37,9 +34,6 @@ import org.apache.flink.streaming.api.windowing.assigners.TumblingProcessingTime
 import org.apache.flink.streaming.api.windowing.evictors.Evictor
 import org.apache.flink.streaming.api.windowing.time.Time
 import org.apache.kafka.clients.consumer.ConsumerRecord
-
-import scala.beans.BeanProperty
-
 
 /**
  * @author lj.michale
