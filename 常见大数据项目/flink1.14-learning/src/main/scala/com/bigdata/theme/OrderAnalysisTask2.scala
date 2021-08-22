@@ -123,6 +123,7 @@ object OrderAnalysisTask2 {
     val windowDataStream = orderDataStream.assignTimestampsAndWatermarks(watermarkStrategy)
       .keyBy(_.oredrId)
       .window(TumblingProcessingTimeWindows.of(Time.seconds(15)))
+      // 用增量ReduceFunction与WindowFunction组合以返回窗口中的最小事件以及窗口的开始时间
       .reduce(
         (r1: RawData, r2: RawData) => { if (r1.buyMoney > r2.buyMoney) r2 else r1 },
         ( key: String,
@@ -130,8 +131,7 @@ object OrderAnalysisTask2 {
           minReadings: Iterable[RawData],
           out: Collector[(Long, RawData)] ) => {
           val min = minReadings.iterator.next()
-          out.collect((window.getStart, min))}
-      )
+          out.collect((window.getStart, min))})
       //.trigger(new CustomTrigger(10, 1 * 60 * 1000L))
       //.evictor(new MyEvictor())
       //.allowedLateness(Time.seconds(5))
