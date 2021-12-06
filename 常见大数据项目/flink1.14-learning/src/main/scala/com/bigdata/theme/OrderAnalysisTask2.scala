@@ -25,6 +25,7 @@ import org.apache.flink.table.api.bridge.scala.StreamTableEnvironment
 import org.apache.flink.util.Collector
 import org.slf4j.{Logger, LoggerFactory}
 
+
 object OrderAnalysisTask2 {
 
   val logger:Logger = LoggerFactory.getLogger(this.getClass)
@@ -34,7 +35,7 @@ object OrderAnalysisTask2 {
     logger.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
     val paramTool = ParameterTool.fromArgs(args)
 
-    val env = StreamExecutionEnvironment.getExecutionEnvironment
+    val env:StreamExecutionEnvironment = StreamExecutionEnvironment.getExecutionEnvironment
     env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime)
     env.enableCheckpointing(200, CheckpointingMode.EXACTLY_ONCE)
     env.getCheckpointConfig.setMinPauseBetweenCheckpoints(30000)
@@ -68,23 +69,23 @@ object OrderAnalysisTask2 {
     import org.apache.flink.api.scala._
     val orderStream = env.addSource(new GenerateCustomOrderSource)
     val orderDS:DataStream[String] = orderStream.map(row => {
-      val oredrId:String =  row.f0
-      val customerId:String = row.f1
-      val productId:String =  row.f2
-      val productName:String =  row.f3
-      val price:String =  row.f4
-      val buyMoney:Double =  row.f5.toDouble
-      val buyCount:Int = (buyMoney / price.toDouble).toInt
-      val buyTime:String =  row.f6
-      val rawData = RawData(oredrId, customerId, productId, productName, price, buyMoney, buyCount, buyTime)
-      rawData
+        val oredrId:String =  row.f0
+        val customerId:String = row.f1
+        val productId:String =  row.f2
+        val productName:String =  row.f3
+        val price:String =  row.f4
+        val buyMoney:Double =  row.f5.toDouble
+        val buyCount:Int = (buyMoney / price.toDouble).toInt
+        val buyTime:String =  row.f6
+        val rawData = RawData(oredrId, customerId, productId, productName, price, buyMoney, buyCount, buyTime)
+        rawData
     }).name("getBuyCount")
       .map(row => {
         row.oredrId + "," + row.customerId + "," + row.productId + "," + row.productName + "," + row.price + "," + row.buyMoney + "," + row.buyCount + "," + row.buyTime
       }).name("toStringDataStream")
 
     // 将自定义Source产生的data转发到Kafka
-    val kafkaSink = new FlinkKafkaProducer[String]("mzpns", new SimpleStringSchema(), producerProp)
+    val kafkaSink:FlinkKafkaProducer[String] = new FlinkKafkaProducer[String]("mzpns", new SimpleStringSchema(), producerProp)
     orderDS.addSink(kafkaSink)
 
     // consumer data from kafka
