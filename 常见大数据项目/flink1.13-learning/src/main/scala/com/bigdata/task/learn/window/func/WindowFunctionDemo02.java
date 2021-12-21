@@ -33,10 +33,7 @@ public class WindowFunctionDemo02 {
         }).keyBy("id").timeWindow(Time.milliseconds(100), Time.milliseconds(10))
                 .aggregate(new CountStudentAgg(), new WindowStudentResultFunction());
 
-
-
     }
-
 
     private static List<Student> getCollection() {
         return Lists.newArrayList(

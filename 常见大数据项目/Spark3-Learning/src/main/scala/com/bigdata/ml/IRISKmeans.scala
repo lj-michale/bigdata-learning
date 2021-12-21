@@ -44,9 +44,6 @@ object IRISKmeans {
 //    |  2|        4.9|       3.0|        1.4|       0.2|Iris-setosa|
 //    |  3|        4.7|       3.2|        1.3|       0.2|Iris-setosa|
 //    |  4|        4.6|       3.1|        1.5|       0.2|Iris-setosa|
-//    |  5|        5.0|       3.6|        1.4|       0.2|Iris-setosa|
-//    |  6|        5.4|       3.9|        1.7|       0.4|Iris-setosa|
-
     val vectorAssembler = new VectorAssembler().setInputCols(featureCols).setOutputCol("features")
     val pca = new PCA().setInputCol("features")
       .setOutputCol("pcaFeatures")

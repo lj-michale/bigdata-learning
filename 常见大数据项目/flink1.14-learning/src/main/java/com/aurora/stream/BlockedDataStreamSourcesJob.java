@@ -1,5 +1,4 @@
-package com.aurora.datastream;
-
+package com.aurora.stream;
 
 import com.aurora.source.Order;
 import com.aurora.source.OrderSource;
@@ -30,13 +29,15 @@ import java.time.ZoneOffset;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * @descr
+ *
  * @author lj.michale
- * @description
  * @date 2021-12-06
  */
 public class BlockedDataStreamSourcesJob {
 
     public static void main(String[] args) throws Exception {
+
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         StreamTableEnvironment tableEnv = StreamTableEnvironment.create(env, EnvironmentSettings.inBatchMode());
 

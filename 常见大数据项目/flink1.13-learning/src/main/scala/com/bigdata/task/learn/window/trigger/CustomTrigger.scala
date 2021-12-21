@@ -94,7 +94,6 @@ class CustomTrigger extends Trigger[SensorReading, TimeWindow] {
       TriggerResult.PURGE
     } else {
       TriggerResult.CONTINUE
-
     }
   }
 

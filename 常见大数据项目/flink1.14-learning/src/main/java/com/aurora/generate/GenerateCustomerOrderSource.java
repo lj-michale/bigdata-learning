@@ -1,4 +1,4 @@
-package com.aurora.dataset;
+package com.aurora.generate;
 
 /**
  * @author lj.michale

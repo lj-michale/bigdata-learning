@@ -1,4 +1,4 @@
-package com.aurora.datastream;
+package com.aurora.stream;
 
 import com.aurora.source.GenerateCustomOrderSource;
 import lombok.extern.slf4j.Slf4j;

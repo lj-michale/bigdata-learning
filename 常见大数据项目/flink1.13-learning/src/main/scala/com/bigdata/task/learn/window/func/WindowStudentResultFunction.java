@@ -15,11 +15,11 @@ import org.apache.flink.util.Collector;
  */
 public class WindowStudentResultFunction implements WindowFunction<Long, StudentViewCount, Tuple, TimeWindow> {
 
-
     @Override
     public void apply(Tuple tuple, TimeWindow window, Iterable<Long> input, Collector<StudentViewCount> out) throws Exception {
         int id = ((Tuple1<Integer>) tuple).f0;
         long count = input.iterator().next();
         out.collect(StudentViewCount.of(id, window.getEnd(), count));
     }
+
 }

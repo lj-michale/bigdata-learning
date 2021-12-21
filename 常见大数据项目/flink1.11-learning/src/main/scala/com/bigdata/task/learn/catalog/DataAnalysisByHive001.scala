@@ -10,6 +10,10 @@ import org.slf4j.{Logger, LoggerFactory}
 /**
  * @author lj.michale
  * @description DataAnalysisByHive001
+ *
+ *             StreamTableEnvironment用于流计算场景，流计算的对象是DataStream。
+ *             相比 TableEnvironment，StreamTableEnvironment 提供了 DataStream 和 Table 之间相互转换的接口，
+ *             如果用户的程序除了使用 Table API & SQL 编写外，还需要使用到 DataStream API，则需要使用 StreamTableEnvironment。
  * @date 2021-05-20
  */
 object DataAnalysisByHive001 {

@@ -1,4 +1,4 @@
-package com.aurora.datastream;
+package com.aurora.stream;
 
 import com.aurora.source.TypeStat;
 import com.aurora.source.TypeStatSource;

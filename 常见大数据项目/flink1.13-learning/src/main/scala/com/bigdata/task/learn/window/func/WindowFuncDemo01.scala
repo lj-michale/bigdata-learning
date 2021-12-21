@@ -68,7 +68,7 @@ object WindowFuncDemo01 {
       // 进行分组
       .keyBy(_.id)
       // 进行窗口计算（基于处理时间ProcessingTime）,
-//      .window(TumblingEventTimeWindows.of(org.apache.flink.streaming.api.windowing.time.Time.seconds(15)))
+//      .window(TumblingEventTimeWindows.of(Time.seconds(15)))
       .window(TumblingProcessingTimeWindows.of(Time.seconds(15)))
       // trigger 用来判断一个窗口是否需要被触发，每个 WindowAssigner 都自带一个默认的trigger
       .trigger(new CustomTrigger(10, 1 * 60 * 1000L))

@@ -1,4 +1,4 @@
-package com.aurora.datastream;
+package com.aurora.stream;
 
 import org.apache.flink.api.common.eventtime.WatermarkStrategy;
 import org.apache.flink.api.common.functions.JoinFunction;

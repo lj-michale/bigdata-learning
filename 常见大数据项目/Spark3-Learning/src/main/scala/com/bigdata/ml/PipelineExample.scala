@@ -24,7 +24,8 @@ object PipelineExample {
       Seq((0L, "a b c d e spark", 1.0),
       (1L, "b d", 0.0),
       (2L, "spark f g h", 1.0),
-      (3L, "hadoop mapreduce", 0.0))).toDF("id","text","label")
+      (3L, "hadoop mapreduce", 0.0))
+    ).toDF("id","text","label")
 
     // Pipeline
     val tokennizer = new Tokenizer().setInputCol("text").setOutputCol("words")
@@ -32,16 +33,12 @@ object PipelineExample {
     val lr = new LogisticRegression().setMaxIter(10).setRegParam(0.001)
 
     val pipeline = new Pipeline().setStages(Array(tokennizer, hashingTF, lr))
-
     // 拟合模型
     val model = pipeline.fit(traning)
-
     // 将模型持久化
     model.write.overwrite().save("file:///E:\\OpenSource\\GitHub\\bigdata-learning\\常见大数据项目\\Spark3-Learning\\model")
-
     // 将Pipeline持久化
     pipeline.write.overwrite().save("file:///E:\\OpenSource\\GitHub\\bigdata-learning\\常见大数据项目\\Spark3-Learning\\pipeline")
-
     // 加载模型
     val sameModel = PipelineModel.load("file:///E:\\OpenSource\\GitHub\\bigdata-learning\\常见大数据项目\\Spark3-Learning\\model")
 

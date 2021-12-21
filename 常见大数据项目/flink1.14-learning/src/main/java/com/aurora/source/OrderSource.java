@@ -39,7 +39,7 @@ public class OrderSource extends RichParallelSourceFunction<Order> {
         for (int i = 0; i < count; ++i) {
             Order order = new Order();
             order.setOrderNumber(Math.abs(random.nextLong()));
-            order.setPrice(new BigDecimal("2.52"));
+            order.setPrice(new BigDecimal(new Random().nextInt(50 - 30) + 30));
             order.setName("name_" + i);
             order.setType(1 + random.nextInt(5));
             long now = System.currentTimeMillis();
