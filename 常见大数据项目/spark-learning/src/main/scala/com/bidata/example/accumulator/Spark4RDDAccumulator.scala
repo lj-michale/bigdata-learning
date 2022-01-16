@@ -54,7 +54,6 @@ object Spark4RDDAccumulator {
     // 重置
     override def reset(): Unit = wcMap.clear()
 
-
     // 累加
     override def add(word: String): Unit = {
       val newCount = wcMap.getOrElse(word, 0l) + 1
