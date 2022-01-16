@@ -45,10 +45,8 @@ public class FraudDetector extends KeyedProcessFunction<Long, Transaction, Alert
         Boolean lastTransactionWasSmall = flagState.value();
         if (lastTransactionWasSmall != null) {
             if (transaction.getAmount() > LARGE_AMOUNT) {
-
                 Alert alert = new Alert();
                 alert.setId(transaction.getAccountId());
-
                 collector.collect(alert);
             }
 
@@ -58,7 +56,6 @@ public class FraudDetector extends KeyedProcessFunction<Long, Transaction, Alert
 
         if (transaction.getAmount() < SMALL_AMOUNT) {
             flagState.update(true);
-
             // 更新时间计数器
             long timer = context.timerService().currentProcessingTime() + ONE_MINUTE;
             context.timerService().registerEventTimeTimer(timer);
