@@ -8,6 +8,7 @@ import org.apache.spark.sql.SparkSession
 
 /**
  * @descr 初始化One Id
+ *
  * @date 2022/1/23 9:35
  */
 object IdMapFirst {
