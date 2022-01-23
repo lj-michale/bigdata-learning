@@ -26,11 +26,9 @@ object IdMapFirst {
     val data: RDD[Array[String]] = rawData.rdd.map(line => {
       //将每行数据解析成json对象
       val jsonObj = JSON.parseObject(line)
-
       // 从json对象中取user对象
       //      val userObj = jsonObj.getJSONObject("user")
       val uid = jsonObj.getString("uid")
-
       // 从user对象中取phone对象
       val phoneObj = jsonObj.getJSONObject("phone")
       val imei = phoneObj.getOrDefault("imei","").toString
@@ -46,6 +44,7 @@ object IdMapFirst {
     val vertices: RDD[(Long, String)] = data.flatMap(arr => {
       for (id <- arr) yield (id.hashCode.toLong, id)
     })
+
     vertices.foreach(ele => println(ele._1 + " : " + ele._2))
 
     val edges: RDD[Edge[String]] = data.flatMap(arr => {
@@ -56,7 +55,6 @@ object IdMapFirst {
 
     //用 点集合 和 边集合 构造一张图  使用Graph算法
     val graph = Graph(vertices,edges)
-
     //并调用最大连同子图算法VertexRDD[VertexId] ==>rdd 里面装的元组(Long值,组中最小值)
     val res: VertexRDD[VertexId] = graph.connectedComponents().vertices
     val firstIds =   res.toDF("id","guid")
