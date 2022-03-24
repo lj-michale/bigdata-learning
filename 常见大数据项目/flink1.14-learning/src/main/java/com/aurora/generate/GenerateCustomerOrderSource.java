@@ -1,8 +1,9 @@
 package com.aurora.generate;
 
 /**
+ * @descri
+ *
  * @author lj.michale
- * @description
  * @date 2021-08-22
  */
 import com.aurora.bean.LngLat;
@@ -33,7 +34,7 @@ class GenerateCustomerOrderSource implements SourceFunction<String> {
         this.isRunning = false;
     }
 
-    //随机产生订单数据
+    // 随机产生订单数据
     public String getDriverData() {
         Properties p = LoadResourcesUtils.getProperties("content.properties");
 

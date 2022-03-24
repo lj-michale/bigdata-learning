@@ -77,7 +77,7 @@ public class BroadCastWordCountExample {
                 BasicTypeInfo.STRING_TYPE_INFO, new MapTypeInfo<>(String.class, Object.class));
 
         // e.g. {"length":5}
-        BroadcastStream<Map<String,Object>> broadcastStream = env.addSource(consumerBroadcast).
+        BroadcastStream<Map<String, Object>> broadcastStream = env.addSource(consumerBroadcast).
                 flatMap(new FlatMapFunction<String, Map<String, Object>>() {
                             // 解析 json 数据
                             private final ObjectMapper mapper = new ObjectMapper();

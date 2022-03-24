@@ -6,7 +6,6 @@ import org.apache.spark.graphx.{Edge, Graph, VertexId, VertexRDD}
 import org.apache.spark.rdd.RDD
 import org.apache.spark.sql.{Row, SparkSession}
 
-
 object IdMapSecond {
 
   def main(args: Array[String]): Unit = {
