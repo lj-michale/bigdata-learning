@@ -24,6 +24,7 @@ public class FlinkTableApiDemo1 {
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         // Flink1.14不需要设置Planner
         EnvironmentSettings settings = EnvironmentSettings.newInstance()
+                // .useBlinkPlanner()已过期
                 .inStreamingMode()
                 .build();
         StreamTableEnvironment tableEnv = StreamTableEnvironment.create(env, settings);
