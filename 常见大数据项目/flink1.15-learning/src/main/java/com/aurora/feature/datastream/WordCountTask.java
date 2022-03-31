@@ -31,6 +31,7 @@ public class WordCountTask {
 
         // 加载自定义数据源
         DataStreamSource<String> sentenceDataSource = env.addSource(new SentenceUDSource());
+
         // 设置水印
         SingleOutputStreamOperator<String> sentenceWithWatermarkStream =
                 sentenceDataSource.assignTimestampsAndWatermarks(WatermarkStrategy
@@ -52,6 +53,7 @@ public class WordCountTask {
 
         // 打印sink输出
         resultDataStream.print();
+
 
         env.execute("WordCount for Unit Testing!");
     }
