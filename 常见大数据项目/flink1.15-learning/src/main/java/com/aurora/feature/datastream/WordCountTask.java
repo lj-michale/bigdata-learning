@@ -54,7 +54,6 @@ public class WordCountTask {
         // 打印sink输出
         resultDataStream.print();
 
-
         env.execute("WordCount for Unit Testing!");
     }
 }
