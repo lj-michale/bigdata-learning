@@ -29,12 +29,12 @@ class ParseDeserialization extends AbsDeserialization[RawData] {
         //正常数据指标
         normalDataNum.inc()
         rawData
-  } catch {
+    } catch {
       case e:Exception=>{
         //脏数据指标
         dirtyDataNum.inc()
         null
       }
-  }
+    }
 
 }
