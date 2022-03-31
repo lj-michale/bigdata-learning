@@ -7,7 +7,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * @descri
+ * @descri flink 单元测试
  *
  * @author lj.michale
  * @date 2022-03-31
@@ -20,7 +20,7 @@ public class MyStatelessMapUnitTest extends TestCase {
             MyStatelessMap statelessMap = new MyStatelessMap();
             String out = statelessMap.map("world");
             System.out.println(out);
-            Assert.assertEquals("hello world1", out);
+            Assert.assertEquals("hello world", out);
         }
 
 }
