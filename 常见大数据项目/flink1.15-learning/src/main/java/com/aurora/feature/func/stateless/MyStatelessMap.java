@@ -1,9 +1,9 @@
-package com.aurora.feature.func;
+package com.aurora.feature.func.stateless;
 
 import org.apache.flink.api.common.functions.MapFunction;
 
 /**
- * @descri
+ * @descri  无状态算子
  *
  * @author lj.michale
  * @date 2022-03-31

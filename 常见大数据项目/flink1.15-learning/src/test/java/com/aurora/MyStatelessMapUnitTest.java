@@ -1,6 +1,6 @@
 package com.aurora;
 
-import com.aurora.feature.func.MyStatelessMap;
+import com.aurora.feature.func.stateless.MyStatelessMap;
 import lombok.extern.slf4j.Slf4j;
 import junit.framework.TestCase;
 import org.junit.Assert;
