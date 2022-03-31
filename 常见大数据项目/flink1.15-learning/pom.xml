@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.aurora</groupId>
-    <artifactId>flink-learning</artifactId>
+    <artifactId>flink1.15-learning</artifactId>
     <version>1.0.1-SNAPSHOT</version>
 
     <!-- 主版本控制 -->
