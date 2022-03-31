@@ -34,26 +34,6 @@
         <puppycrawl.version>9.2</puppycrawl.version>
     </properties>
 
-    <repositories>
-        <repository>
-            <id>scala-tools.org</id>
-            <name>Scala-Tools Maven2 Repository</name>
-            <url>http://scala-tools.org/repo-releases</url>
-        </repository>
-        <repository>
-            <id>cloudera</id>
-            <url>https://repository.cloudera.com/artifactory/cloudera-repos/</url>
-        </repository>
-    </repositories>
-
-    <pluginRepositories>
-        <pluginRepository>
-            <id>scala-tools.org</id>
-            <name>Scala-Tools Maven2 Repository</name>
-            <url>http://scala-tools.org/repo-releases</url>
-        </pluginRepository>
-    </pluginRepositories>
-
     <!-- 项目依赖 -->
     <dependencies>
         <dependency>
@@ -153,6 +133,11 @@
             <groupId>org.apache.flink</groupId>
             <artifactId>flink-statebackend-rocksdb_2.11</artifactId>
             <version>${flink.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-test-utils_2.11</artifactId>
+            <version>1.14.3</version>
         </dependency>
         <!-- Flink CDC -->
         <dependency>
