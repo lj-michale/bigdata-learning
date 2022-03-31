@@ -24,17 +24,14 @@ public class SentenceToWordsUDF extends RichFlatMapFunction<String, String> {
                     // 继续判断单词是否为空
                     if(StringUtils.isNotEmpty(word)) {
                         out.collect(word);
-                    }
-                    else {
+                    } else {
                         log.warn("Word is empty!");
                     }
                 }
-            }
-            else {
+            } else {
                 log.error("The sentence is invalid!\nThe sentence is:" + sentence);
             }
-        }
-        else {
+        } else {
             log.warn("Sentence is empty!");
         }
     }
