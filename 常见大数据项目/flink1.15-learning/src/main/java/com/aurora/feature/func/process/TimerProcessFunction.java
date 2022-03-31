@@ -4,7 +4,7 @@ import org.apache.flink.streaming.api.functions.KeyedProcessFunction;
 import org.apache.flink.util.Collector;
 
 /**
- * @descri
+ * @descri 定时处理算子
  *
  * @author lj.michale
  * @date 2022-03-31
@@ -23,4 +23,5 @@ public class TimerProcessFunction extends KeyedProcessFunction<String, String, S
           // 到达时间点触发事件操作
         out.collect(String.format("Timer triggered at timestamp %d", timestamp));
     }
+
 }

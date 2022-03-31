@@ -1,6 +1,6 @@
 package com.aurora;
 
-import com.aurora.common.generate.FakeTrafficRecordSource;
+import com.aurora.generate.FakeTrafficRecordSource;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 
 /**

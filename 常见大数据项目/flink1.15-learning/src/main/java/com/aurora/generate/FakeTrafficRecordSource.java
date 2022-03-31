@@ -1,4 +1,4 @@
-package com.aurora.common.generate;
+package com.aurora.generate;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.flink.streaming.api.functions.source.SourceFunction;
