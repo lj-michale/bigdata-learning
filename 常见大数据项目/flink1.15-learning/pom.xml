@@ -176,6 +176,7 @@
             <artifactId>logback-classic</artifactId>
             <version>${logback.version}</version>
         </dependency>
+        <!-- 日志框架 -->
     </dependencies>
 
     <!-- 项目构建插件 -->
