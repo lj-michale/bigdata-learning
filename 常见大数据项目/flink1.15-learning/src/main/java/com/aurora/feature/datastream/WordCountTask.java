@@ -18,7 +18,7 @@ import org.apache.flink.streaming.api.windowing.windows.TimeWindow;
 import java.time.Duration;
 
 /**
- * @descri
+ * @descri 单词计算
  *
  * @author lj.michale
  * @date 2022-03-31
