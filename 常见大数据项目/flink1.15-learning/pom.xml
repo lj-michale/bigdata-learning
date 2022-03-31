@@ -16,11 +16,11 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <flink.version>1.15.0</flink.version>
         <hadoop.version>3.0.0</hadoop.version>
-        <hive.version>1.1.0</hive.version>
+        <hive.version>2.1.0</hive.version>
         <iceberg.version>0.11.0</iceberg.version>
         <kubernetes.client.version>4.9.2</kubernetes.client.version>
         <flink.cdc.version>2.2.0</flink.cdc.version>
-<!--        <flink-shaded-hadoop.version>2.6.5-10.0</flink-shaded-hadoop.version>-->
+        <!-- <flink-shaded-hadoop.version>2.6.5-10.0</flink-shaded-hadoop.version> -->
         <pulsar-flink-connector.version>2.4.0</pulsar-flink-connector.version>
         <hoodie.version>0.8.0</hoodie.version>
         <async.client.version>2.10.4</async.client.version>
@@ -58,19 +58,12 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.16.20</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.13</version>
             <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
-            <version>1.7.25</version>
-            <scope>compile</scope>
         </dependency>
     </dependencies>
 
