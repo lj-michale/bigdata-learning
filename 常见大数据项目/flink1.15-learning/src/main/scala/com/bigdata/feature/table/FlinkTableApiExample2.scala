@@ -31,6 +31,19 @@ object FlinkTableApiExample2 {
     val tableEnv: StreamTableEnvironment = StreamTableEnvironment.create(env)
     tableEnv.getConfig.setLocalTimeZone(ZoneId.of("Europe/Berlin"))
 
+    /**
+     * DataGen Connector用于在Table和SQL API中生成数据。底层实现就用到了上面的DataGenerator。
+     * 连接器参数
+     * 参数	是否必选	默认参数	数据类型	描述
+     * connector	必须	(none)	String	指定要使用的连接器，这里是 ‘datagen’。
+     * rows-per-second	可选	10000	Long	每秒生成的行数，用以控制数据发出速率。
+     * fields.#.kind	可选	random	String	指定 ‘#’ 字段的生成器。可以是 ‘sequence’ 或 ‘random’。
+     * fields.#.min	可选	(Minimum value of type)	(Type of field)	随机生成器的最小值，适用于数字类型。
+     * fields.#.max	可选	(Maximum value of type)	(Type of field)	随机生成器的最大值，适用于数字类型。
+     * fields.#.length	可选	100	Integer	随机生成器生成字符的长度，适用于 char、varchar、string。
+     * fields.#.start	可选	(none)	(Type of field)	序列生成器的起始值。
+     * fields.#.end	可选	(none)	(Type of field)	序列生成器的结束值。
+     */
     // 随机生产100条随机数据
     tableEnv.executeSql(
       s"""
