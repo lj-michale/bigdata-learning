@@ -1,4 +1,4 @@
-package com.aurora.feature.func.state;
+package com.aurora.feature.func.stateful;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.flink.api.common.functions.RichFlatMapFunction;
