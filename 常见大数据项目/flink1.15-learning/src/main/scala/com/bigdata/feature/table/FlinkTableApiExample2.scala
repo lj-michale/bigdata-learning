@@ -33,6 +33,7 @@ object FlinkTableApiExample2 {
 
     /**
      * DataGen Connector用于在Table和SQL API中生成数据。底层实现就用到了上面的DataGenerator。
+     *
      * 连接器参数
      * 参数	是否必选	默认参数	数据类型	描述
      * connector	必须	(none)	String	指定要使用的连接器，这里是 ‘datagen’。
