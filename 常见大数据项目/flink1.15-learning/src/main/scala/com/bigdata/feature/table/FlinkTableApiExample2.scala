@@ -66,9 +66,10 @@ object FlinkTableApiExample2 {
 
     // 查询source_table表,各种sql操作
     val queryTable = tableEnv.sqlQuery("select * from source_table")
+    val query2Table = tableEnv.sqlQuery("select id, address, SUM(score) as sumScore from source_table GROUP BY id, address")
 
     // table转成datastream
-    val resultStream:DataStream[Row] = tableEnv.toChangelogStream(queryTable)
+    val resultStream:DataStream[Row] = tableEnv.toChangelogStream(query2Table)
     resultStream.print()
 
     env.execute("FlinkTableApiExample2")
