@@ -7,6 +7,9 @@ import org.apache.flink.util.Collector
 
 /**
  * @descri 用侧输出流实现一个分流操作
+ *
+ * @author lj.michale
+ * @date 2022-04-01
  */
 object SideOutputTest {
 
