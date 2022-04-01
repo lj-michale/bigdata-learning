@@ -2,11 +2,12 @@ package com.bigdata.feature.table
 
 import java.math.BigDecimal
 import java.time.ZoneId
+
 import org.apache.flink.table.api._
 import org.apache.flink.api.common.restartstrategy.RestartStrategies
 import org.apache.flink.runtime.state.hashmap.HashMapStateBackend
 import org.apache.flink.streaming.api.{CheckpointingMode, TimeCharacteristic}
-import org.apache.flink.streaming.api.scala.StreamExecutionEnvironment
+import org.apache.flink.streaming.api.scala.{DataStream, StreamExecutionEnvironment}
 import org.apache.flink.table.annotation.DataTypeHint
 import org.apache.flink.table.api.bridge.scala.StreamTableEnvironment
 import org.apache.flink.table.functions.ScalarFunction
@@ -22,7 +23,7 @@ object FlinkTableApiExample3 {
     env.setParallelism(1)
     // 开启事件时间语义
     env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime)
-    env.enableCheckpointing(200, CheckpointingMode.EXACTLY_ONCE)
+    env.enableCheckpointing(600, CheckpointingMode.EXACTLY_ONCE)
     env.getCheckpointConfig.setMinPauseBetweenCheckpoints(30000)
     env.getCheckpointConfig.setCheckpointTimeout(10000)
     env.getCheckpointConfig.setMaxConcurrentCheckpoints(1)
@@ -49,12 +50,19 @@ object FlinkTableApiExample3 {
       """
     )
 
+    ////////////  测试数据显示
+    //+I[4ea6bf31494643a6cccc32579a88f3040b2bf424ffb0f8e09c8c2f0e9098144abeadd10b6aefc7e367d0d4411d3f40591bf9, 1038502074, -1460631226, 2022-04-01T15:20:14.580Z, 2022-04-01T15:20:14.580Z]
+//    val generatedTable: Table = tableEnv.from("GeneratedTable")
+//    val queryTable = tableEnv.sqlQuery("select * from GeneratedTable")
+//    val resultStream:DataStream[Row] = tableEnv.toChangelogStream(queryTable)
+//    resultStream.print()
+
     ////////////////////////////////  UDF函数测试  //////////////////////////////////////////////////
     // 注册函数
     tableEnv.createTemporarySystemFunction("SubstringFunction", classOf[SubstringFunction])
-    // 在 Table API 里调用注册好的函数
-//    tableEnv.from("GeneratedTable").select(call("SubstringFunction", $"a", 5, 12)).execute().print()
-    // 在 SQL 里调用注册好的函数
+//    // 在 Table API 里调用注册好的函数
+////    tableEnv.from("GeneratedTable").select(call("SubstringFunction", $"a", 5, 12)).execute().print()
+//    // 在 SQL 里调用注册好的函数
     tableEnv.sqlQuery("SELECT SubstringFunction(a, 5, 12) FROM GeneratedTable").execute().print()
 
 
