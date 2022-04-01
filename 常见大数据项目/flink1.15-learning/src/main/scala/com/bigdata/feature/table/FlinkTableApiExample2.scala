@@ -8,6 +8,7 @@ import org.apache.flink.streaming.api.{CheckpointingMode, TimeCharacteristic}
 import org.apache.flink.streaming.api.scala.{DataStream, StreamExecutionEnvironment}
 import org.apache.flink.table.api.Table
 import org.apache.flink.table.api.bridge.scala.StreamTableEnvironment
+import org.apache.flink.table.functions.AggregateFunction
 import org.apache.flink.types.Row
 
 object FlinkTableApiExample2 {
@@ -78,15 +79,49 @@ object FlinkTableApiExample2 {
         .build())
     dataStream.print()*/
 
+    /////////////////// 测试Flink Table-SQL 中的自定义UDF函数使用功能
+    // 先创建一个UDF对象
+    val avgTemp: AvgTempFunc = AvgTempFunc()
+    // 注册函数
+//    tableEnv.createFunction("avgTemp", avgTemp)  // 已过时的udf注册方法
+//    tableEnv.createTemporarySystemFunction("avgTemp", avgTemp)
+    tableEnv.createTemporaryFunction("avgTemp", avgTemp)
+
     // 查询source_table表,各种sql操作
     val queryTable = tableEnv.sqlQuery("select * from source_table")
     val query2Table = tableEnv.sqlQuery("select id, address, SUM(score) as sumScore from source_table GROUP BY id, address")
+    val query3Table = tableEnv.sqlQuery(
+      s"""
+        |select id, avgTemp(score)
+        |from source_table
+        |group by id
+        |""".stripMargin)
 
     // table转成datastream
-    val resultStream:DataStream[Row] = tableEnv.toChangelogStream(query2Table)
+    val resultStream:DataStream[Row] = tableEnv.toChangelogStream(query3Table)
     resultStream.print()
 
     env.execute("FlinkTableApiExample2")
+
+  }
+
+  // 专门定义一个聚合函数的状态类，用于保存聚合状态（sum，count）
+  case class AvgTempAcc() {
+    var sum: Double = 0.0
+    var count: Int = 0
+  }
+
+  // 自定义一个聚合函数 求相同id的score平均值
+  case class AvgTempFunc() extends AggregateFunction[Double, AvgTempAcc]{
+
+    override def getValue(accumulator: AvgTempAcc): Double = accumulator.sum / accumulator.count
+
+    override def createAccumulator(): AvgTempAcc =  AvgTempAcc()
+
+    def accumulate(acc: AvgTempAcc, score: Int): Unit ={
+      acc.sum += score
+      acc.count += 1
+    }
 
   }
 
