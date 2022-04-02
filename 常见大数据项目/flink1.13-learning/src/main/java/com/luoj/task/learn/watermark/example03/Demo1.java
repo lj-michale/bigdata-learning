@@ -45,6 +45,7 @@ public class Demo1 {
                 return Tuple2.of(split[0], Long.valueOf(split[1]));
             }
         });
+
         //周期性 发射watermark
         SingleOutputStreamOperator<Tuple2<String, Long>> watermarks = mapDs.assignTimestampsAndWatermarks(new WatermarkStrategy<Tuple2<String, Long>>() {
             @Override
@@ -65,6 +66,7 @@ public class Demo1 {
                 };
             }
         }.withTimestampAssigner(((element, recordTimestamp) -> element.f1)));
+
         watermarks.keyBy(x -> x.f0).window(TumblingEventTimeWindows.of(Time.seconds(4)))
                 .apply(new WindowFunction<Tuple2<String, Long>, String, String, TimeWindow>() {
                     @Override
@@ -78,6 +80,8 @@ public class Demo1 {
                         out.collect(window.getStart() + "->" + window.getEnd() + " " + s + ":" + count);
                     }
                 }).print();
+
         env.execute();
+
     }
 }
