@@ -48,7 +48,11 @@ public class FlinkByKafkaExample01 {
 
         String regex = "topic.*";
         Pattern pattern = Pattern.compile(regex);
-        final HashSet<TopicPartition> partitionSet = new HashSet<>(Arrays.asList( new TopicPartition("topic-a", 0), new TopicPartition("topic-b", 5)));
+
+        final HashSet<TopicPartition> partitionSet = new HashSet<>(
+                Arrays.asList(
+                        new TopicPartition("topic-a", 0),
+                        new TopicPartition("topic-b", 5)));
 
         //////////////////////////////////////  消费Kafka数据
         KafkaSource<String> kafkaSource = KafkaSource.<String>builder()
