@@ -53,4 +53,5 @@ public class MyKafkaDeserialization implements KafkaDeserializationSchema<Jason>
         }
         return null;
     }
+    
 }
