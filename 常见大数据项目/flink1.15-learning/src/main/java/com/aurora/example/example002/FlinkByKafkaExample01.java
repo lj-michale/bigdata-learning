@@ -26,7 +26,7 @@ import java.util.Properties;
 import java.util.regex.Pattern;
 
 /**
- * @descri
+ * @descri  Flink
  *
  * @author lj.michale
  * @date 2022-04-02
