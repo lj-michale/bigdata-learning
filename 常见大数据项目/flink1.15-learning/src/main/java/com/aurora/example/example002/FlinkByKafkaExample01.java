@@ -6,6 +6,7 @@ import org.apache.flink.api.common.eventtime.WatermarkStrategy;
 import org.apache.flink.api.common.functions.MapFunction;
 import org.apache.flink.api.common.serialization.SimpleStringSchema;
 import org.apache.flink.api.common.typeinfo.TypeInformation;
+import org.apache.flink.connector.base.DeliveryGuarantee;
 import org.apache.flink.connector.kafka.sink.KafkaRecordSerializationSchema;
 import org.apache.flink.connector.kafka.sink.KafkaSink;
 import org.apache.flink.connector.kafka.source.KafkaSource;
@@ -86,7 +87,7 @@ public class FlinkByKafkaExample01 {
 
                 .build();
 
-        // 设置水印策略、序列化...
+        // 设置水印策略、序列化, TypeInformation类型系统...
         DataStreamSource<String> dataStreamSource = env.fromSource(kafkaSource,
                 WatermarkStrategy.noWatermarks(), "Kafka-Source");
 
@@ -106,7 +107,8 @@ public class FlinkByKafkaExample01 {
                                 .setTopic("topic-sink-name")
                                 .setValueSerializationSchema(new SimpleStringSchema())
                                 .build()
-                ).build();
+                )
+                .build();
 
         dataStream.sinkTo(kafkaSink);
 
