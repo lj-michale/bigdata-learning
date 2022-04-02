@@ -21,6 +21,8 @@ import java.util.Properties;
 
 /**
  * @descri  Flink1.14.4新版KafkaSource消费kafka数据并存入kafka示例
+ *          1. KafkaSource
+ *          2. KafkaSink
  *
  * @author lj.michale
  * @date 2022-04-02
