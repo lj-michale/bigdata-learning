@@ -23,7 +23,7 @@ object FlinkTableApiExample3 {
     env.setParallelism(1)
     // 开启事件时间语义
     env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime)
-    env.enableCheckpointing(600, CheckpointingMode.EXACTLY_ONCE)
+    env.enableCheckpointing(60000, CheckpointingMode.EXACTLY_ONCE)
     env.getCheckpointConfig.setMinPauseBetweenCheckpoints(30000)
     env.getCheckpointConfig.setCheckpointTimeout(10000)
     env.getCheckpointConfig.setMaxConcurrentCheckpoints(1)
@@ -64,7 +64,6 @@ object FlinkTableApiExample3 {
 ////    tableEnv.from("GeneratedTable").select(call("SubstringFunction", $"a", 5, 12)).execute().print()
 //    // 在 SQL 里调用注册好的函数
     tableEnv.sqlQuery("SELECT SubstringFunction(a, 5, 12) FROM GeneratedTable").execute().print()
-
 
     env.execute("FlinkTableApiExample3")
 
