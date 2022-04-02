@@ -63,9 +63,9 @@ public class FlinkByKafkaExample2 {
                         .setValueSerializationSchema(new SimpleStringSchema())
 //                        .setDeliveryGuarantee(DeliveryGuarantee.AT_LEAST_ONCE)
                         .build()
-                )
-                .build();
+                ).build();
 
+        // 将stream中数据写入Kafka
         stream.sinkTo(sink);
 
     }
