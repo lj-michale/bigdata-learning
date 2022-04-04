@@ -91,6 +91,7 @@ public class FlinkByKafkaExample01 {
 
                 .build();
 
+        //////////////////////////////////////  数据转换操作
         // 设置水印策略、序列化, TypeInformation类型系统...
         DataStreamSource<String> dataStreamSource = env.fromSource(kafkaSource,
                 WatermarkStrategy.noWatermarks(), "Kafka-Source");

@@ -1,0 +1,13 @@
+----------------------------------------------------------------
+Fri Aug 06 15:55:02 CST 2021:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.1.0 - (1808820): instance a816c00e-017b-1a75-55e7-0000098fee88 
+on database directory E:\OpenSource\GitHub\bigdata-learning\常见大数据项目\Spark3-Learning\metastore_db with class loader org.apache.spark.sql.hive.client.IsolatedClientLoader$$anon$1@7d66e544 
+Loaded from file:/D:/software/ServerTool/maven/jiguang-repository/org/apache/derby/derby/10.14.1.0/derby-10.14.1.0.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_77-b03
+user.dir=E:\OpenSource\GitHub\bigdata-learning\常见大数据项目\Spark3-Learning
+os.name=Windows 10
+os.arch=amd64
+os.version=10.0
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''

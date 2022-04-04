@@ -46,7 +46,7 @@ public class Demo1 {
             }
         });
 
-        //周期性 发射watermark
+        // 周期性 发射watermark
         SingleOutputStreamOperator<Tuple2<String, Long>> watermarks = mapDs.assignTimestampsAndWatermarks(new WatermarkStrategy<Tuple2<String, Long>>() {
             @Override
             public WatermarkGenerator<Tuple2<String, Long>> createWatermarkGenerator(WatermarkGeneratorSupplier.Context context) {
