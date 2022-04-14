@@ -6,8 +6,9 @@ import java.math.BigDecimal;
 import java.util.Random;
 
 /**
+ * @descri
+ *
  * @author lj.michale
- * @description
  * @date 2022-04-10
  */
 public class UserDefinedSource implements SourceFunction<Jason> {
