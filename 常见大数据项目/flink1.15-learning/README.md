@@ -5,5 +5,5 @@
 
 - flink1.14.4中文文档
 https://nightlies.apache.org/flink/flink-docs-release-1.14/zh/docs/dev/table/sql/overview/
-
-
+https://nightlies.apache.org/flink/flink-docs-release-1.14/docs/dev/table/tableapi/
+https://nightlies.apache.org/flink/flink-docs-release-1.14/docs/dev/table/overview/

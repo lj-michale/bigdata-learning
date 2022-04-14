@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.flink.api.common.eventtime.WatermarkStrategy;
 import org.apache.flink.api.java.tuple.Tuple2;
-import org.apache.flink.streaming.api.datastream.AllWindowedStream;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.datastream.DataStreamSource;
 import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
@@ -30,7 +29,7 @@ import static org.apache.flink.table.api.Expressions.*;
  * @author lj.michale
  * @date 2022-04-14
  */
-public class DataStreamConvertTableByFlink003 {
+public class DataStreamConvertTableByFlink004 {
 
     public static void main(String[] args) throws Exception {
 
@@ -49,7 +48,7 @@ public class DataStreamConvertTableByFlink003 {
             public void run(SourceContext<Order> ctx) throws Exception {
                 Random random=new Random();
                 while(isRunning) {
-                    Order order = new Order(UUID.randomUUID().toString(), UUID.randomUUID().toString(),random.nextInt(101),System.currentTimeMillis());
+                    Order order = new Order(UUID.randomUUID().toString(),random.nextInt(3),random.nextInt(101),System.currentTimeMillis());
                     TimeUnit.SECONDS.sleep(1);
                     ctx.collect(order);
                 }
@@ -62,26 +61,18 @@ public class DataStreamConvertTableByFlink003 {
 
         });
 
-        tableEnv.createTemporaryView("Orders", dataStreamSource);
-        // schema (a, b, c, rowtime)
-        Table orders = tableEnv.from("Orders");
-        orders.printSchema();
-        Table result = orders.filter(and(
-                            $("a").isNotNull(),
-                            $("b").isNotNull(),
-                            $("c").isNotNull()
-                        ))
-                .select($("a").lowerCase().as("a"), $("b"), $("rowtime"))
-                .window(Tumble.over(lit(1).hours()).on($("rowtime")).as("hourlyWindow"))
-                .groupBy($("hourlyWindow"), $("a"))
-                .select($("a"), $("hourlyWindow").end().as("hour"), $("b").avg().as("avgBillingAmount"));
+        // Option 1:
+        // extract timestamp and assign watermarks based on knowledge of the stream  在流转table之前  流要已经设置好watermark
+        SingleOutputStreamOperator<Order> outputStream = dataStreamSource.assignTimestampsAndWatermarks(WatermarkStrategy.<Order>forBoundedOutOfOrderness(Duration.ofSeconds(5))
+                .withTimestampAssigner( (order,recordTimestamp) -> order.getCreateTime())
+        );
 
-//        DataStream<Tuple2<Boolean, Row>> resultDS = tableEnv.toRetractStream(table, Row.class);
-        DataStream<Tuple2<Boolean, Row>> resultDS2 = tableEnv.toRetractStream(result, Row.class);
-//        resultDS.print();
-        resultDS2.print();
+        // declare an additional logical field as an event time attribute   "user_action_time" 为table中字段名，可以随意起名
+        Table table = tableEnv.fromDataStream(outputStream, $("orderId"),$("userId"),$("money"),$("createTime").rowtime());
+        DataStream<Tuple2<Boolean, Row>> resultDS = tableEnv.toRetractStream(table, Row.class);
+        resultDS.print();
 
-        env.execute("DataStreamConvertTableByFlink003");
+        env.execute("DataStreamConvertTableByFlink001");
 
     }
 
@@ -89,9 +80,9 @@ public class DataStreamConvertTableByFlink003 {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Order{
-        public String a;
-        public String b;
-        public Integer c;
-        public Long rowtime;
+        public String orderId;
+        public Integer userId;
+        public Integer money;
+        public Long createTime;
     }
 }
