@@ -30,6 +30,19 @@ public class FlinkTriggerUnit extends TestCase {
 
     /**
      * @descr 自定义触发器
+     * 输入：
+     * a
+     * a
+     * bb
+     * bb
+     * bb
+     * cc
+     * cc
+     * cc
+     * a
+     * cc
+     * bb
+     *
      */
     @Test
     public void  test1() throws Exception {
