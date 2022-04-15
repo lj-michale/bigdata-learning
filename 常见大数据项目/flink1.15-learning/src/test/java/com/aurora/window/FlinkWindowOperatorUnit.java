@@ -273,6 +273,4 @@ public class FlinkWindowOperatorUnit extends TestCase {
         env.execute();
     }
 
-
-
 }
