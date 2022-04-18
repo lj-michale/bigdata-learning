@@ -208,7 +208,6 @@ public class FlinkWindowOperatorUnit extends TestCase {
 
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 基于元素个数的窗口
-
     /**
      * @descr
      * 基于元素个数的窗口
@@ -217,8 +216,6 @@ public class FlinkWindowOperatorUnit extends TestCase {
      * 若有N个元素
      * a、b、c、b、a、c、a、c、b、a、a、b、c
      * 那么会划为三个窗口，不同元素划分为一个窗口(a窗口，b窗口，c窗口)。
-     *
-     *
      *
      */
 
