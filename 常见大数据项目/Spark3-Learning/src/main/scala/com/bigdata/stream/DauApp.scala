@@ -16,6 +16,12 @@ import org.apache.spark.streaming.{Seconds, StreamingContext}
 
 import scala.collection.mutable.ListBuffer
 
+/**
+ * @descr SparkStreaming从Redis中读取偏移量,实现exactly-once
+ *
+ * @author lj.michale
+ * @date 2022-04-21
+ */
 object DauApp {
 
   case class DauInfo(mid:String, uid:String, ar:String, ch:String, vc:String,dt:String, hr:String, mi:String, ts:Long)
