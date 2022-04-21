@@ -58,14 +58,16 @@ object DauApp {
     }
 
     // 将数据转换为标准JSON格式, {"mid":"mid_7","uid":"297","ar":"42000","ch":"Xiaomi","vc":"v2.1.134","dt":"2020-05-13","hr":"09","mi":"48","ts":1650509224238}
-    val startJsonObjDstream: DStream[JSONObject] = startupInputGetOffsetDstream.map { record =>
+    val startJsonObjDstream: DStream[JSONObject] = startupInputGetOffsetDstream
+      .map { record =>
       val jsonString: String = record.value()
       val jSONObject: JSONObject = JSON.parseObject(jsonString)
       jSONObject
     }
 
     // Redis去重
-    val startJsonObjWithDauDstream: DStream[JSONObject] = startJsonObjDstream.mapPartitions { jsonObjItr =>
+    val startJsonObjWithDauDstream: DStream[JSONObject] = startJsonObjDstream
+      .mapPartitions { jsonObjItr =>
       val jedis = RedisUtils.getJedisClient
       // 转换成一个JSONObject List
       val jsonObjList: List[JSONObject] = jsonObjItr.toList
