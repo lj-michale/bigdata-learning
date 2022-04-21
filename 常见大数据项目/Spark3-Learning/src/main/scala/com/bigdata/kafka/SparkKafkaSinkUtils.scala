@@ -14,7 +14,7 @@ import org.apache.kafka.clients.producer.{KafkaProducer, ProducerRecord}
 object SparkKafkaSinkUtils {
 
   private val properties: Properties = PropertiesUtils.getProperties("common-test.properties")
-  val brokerUrl:String = properties.getProperty("kafka.broker.list")
+  val brokerUrl: String = properties.getProperty("kafka.broker.list")
 
   var kafkaProducer: KafkaProducer[String, String] = null
 
