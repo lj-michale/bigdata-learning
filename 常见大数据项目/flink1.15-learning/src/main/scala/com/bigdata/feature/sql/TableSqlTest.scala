@@ -1,11 +1,9 @@
 package com.bigdata.feature.sql
 
-import org.apache.flink.table.api.Expressions.{$, lit, row}
 import org.apache.flink.table.api.{EnvironmentSettings, TableEnvironment}
 
 /**
- * @descri 聚合查询-聚合方式为迭代聚合，其中-U为更新前的值，+U为更新后的值
- *
+ * @descri
  * @author lj.michale
  * @date 2022-04-28
  */
@@ -20,23 +18,38 @@ object TableSqlTest {
       .build()
     val tEnv = TableEnvironment.create(settings)
 
-    val table = tEnv.fromValues(
-      row(10, "A"),
-      row(20, "A"),
-      row(100, "B"),
-      row(200, "B")
-    ).as("amount", "name")
-    tEnv.createTemporaryView("tmp_table", table)
+    // 表定义了primary key，则以upsert(更新插入)方式插入数据
+    val table_str =
+      """
+        |create temporary table %s(
+        |  id bigint,
+        |  name string,
+        |  age int,
+        |  primary key (id) not enforced
+        |) with (
+        |   'connector' = 'jdbc',
+        |   'url' = 'jdbc:mysql://localhost:3306/zengame?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=GMT',
+        |   'driver' = 'com.mysql.cj.jdbc.Driver',
+        |   'table-name' = '%s',
+        |   'username' = 'root',
+        |   'password' = 'abc1314520'
+        |)
+        |""".stripMargin
+    // 在catalog注册表
+    tEnv.executeSql(table_str.format("user1", "user1"))
+    tEnv.executeSql(table_str.format("user2", "user2"))
 
-    val table_result = table
-      .filter($("amount").isGreater(lit(0)))
-      .groupBy($("name"))
-      .select($("name"), $("amount").sum().as("amount"))
+    // =====================读取源表数据=====================
+    val user1 = tEnv.from("user1")   // 方式一
+//    user1.execute().print()
+    // val user1 = tEnv.sqlQuery("select * from user1 limit 2")   // 方式二
 
-    table_result.execute().print()
-
-    val sql_result = tEnv.sqlQuery("select name, sum(amount) as amount from tmp_table where amount > 0 group by name")
-    sql_result.execute().print()
+    // =====================向目标表插入数据=====================
+    // user1.executeInsert("user2")     // 方式一
+    val stmtSet = tEnv.createStatementSet()
+    stmtSet.addInsert("user2", user1)    // 方式二
+    // stmtSet.addInsertSql("insert into user2 select * from user1 limit 2")   // 方式三
+    stmtSet.execute()
 
   }
 
