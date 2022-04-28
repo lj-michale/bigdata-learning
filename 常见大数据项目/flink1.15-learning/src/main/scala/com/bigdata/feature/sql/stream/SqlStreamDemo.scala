@@ -16,8 +16,10 @@ object SqlStreamDemo {
   def main(args: Array[String]): Unit = {
 
     val senv = StreamExecutionEnvironment.getExecutionEnvironment
-    val bsSettings = EnvironmentSettings.newInstance()
-      .inStreamingMode().build()
+    val bsSettings = EnvironmentSettings
+      .newInstance()
+      .inStreamingMode()
+      .build()
     val tEnv = StreamTableEnvironment.create(senv,bsSettings)
 
     val stream:DataStream[String] = senv.addSource(new RandomWordSource())
@@ -28,7 +30,6 @@ object SqlStreamDemo {
 
     println(senv.getExecutionPlan)
     senv.execute()
-
 
   }
 
