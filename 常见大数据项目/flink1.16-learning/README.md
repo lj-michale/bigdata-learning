@@ -3,5 +3,5 @@
 <p align="left"> <img src="https://komarev.com/ghpvc/?username=ajauntor&label=Profile%20views&color=0e75b6&style=flat" alt="ajauntor" /> </p>
 
 
-- flink1.15.0中文文档
+- flink1.15.0文档
 https://nightlies.apache.org/flink/flink-docs-release-1.15/docs/dev/table/common/
