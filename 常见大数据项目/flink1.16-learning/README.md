@@ -4,4 +4,5 @@
 
 
 - flink1.15.0文档
-https://nightlies.apache.org/flink/flink-docs-release-1.15/docs/dev/table/common/
+* https://nightlies.apache.org/flink/flink-docs-release-1.15/docs/dev/table/common/
+* https://cwiki.apache.org/confluence/display/FLINK/1.15+Release
