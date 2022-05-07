@@ -18,6 +18,7 @@
         <flink.version>1.14.4</flink.version>
         <hadoop.version>3.0.0</hadoop.version>
         <hive.version>2.1.0</hive.version>
+        <phoenix.version>5.0.0-HBase-2.0</phoenix.version>
         <iceberg.version>0.11.0</iceberg.version>
         <kubernetes.client.version>4.9.2</kubernetes.client.version>
         <flink.cdc.version>2.2.0</flink.cdc.version>
@@ -108,6 +109,7 @@
             <artifactId>flink-connector-kafka_2.11</artifactId>
             <version>${flink.version}</version>
         </dependency>
+        <!--引入flink与hadoop兼容性依赖-->
         <dependency>
             <groupId>org.apache.flink</groupId>
             <artifactId>flink-hadoop-compatibility_2.11</artifactId>
@@ -144,11 +146,27 @@
             <artifactId>flink-test-utils_2.11</artifactId>
             <version>1.14.3</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.hive</groupId>
+            <artifactId>hive-exec</artifactId>
+            <version>${hive.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>hadoop-hdfs</artifactId>
+                    <groupId>org.apache.hadoop</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
 <!--        <dependency>
-            <groupId>org.apache.flink</groupId>
-            <artifactId>flink-ml-core_2.12</artifactId>
-            <version>2.0.0</version>
+            <groupId>org.apache.phoenix</groupId>
+            <artifactId>phoenix-core</artifactId>
+            <version>${phoenix.version}</version>
         </dependency>-->
+        <!--        <dependency>
+                    <groupId>org.apache.flink</groupId>
+                    <artifactId>flink-ml-core_2.12</artifactId>
+                    <version>2.0.0</version>
+                </dependency>-->
         <!-- Flink CDC -->
         <dependency>
             <groupId>com.ververica</groupId>
@@ -186,6 +204,7 @@
             <artifactId>logback-classic</artifactId>
             <version>${logback.version}</version>
         </dependency>
+
         <!-- 引入mock -->
         <dependency>
             <groupId>org.mockito</groupId>

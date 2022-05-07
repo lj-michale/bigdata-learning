@@ -20,6 +20,7 @@ object SqlStreamDemo {
       .newInstance()
       .inStreamingMode()
       .build()
+
     val tEnv = StreamTableEnvironment.create(senv,bsSettings)
 
     val stream:DataStream[String] = senv.addSource(new RandomWordSource())

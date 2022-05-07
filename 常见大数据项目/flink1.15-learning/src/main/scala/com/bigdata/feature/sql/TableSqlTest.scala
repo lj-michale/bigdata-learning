@@ -4,6 +4,7 @@ import org.apache.flink.table.api.{EnvironmentSettings, TableEnvironment}
 
 /**
  * @descri
+ *
  * @author lj.michale
  * @date 2022-04-28
  */
@@ -35,6 +36,7 @@ object TableSqlTest {
         |   'password' = 'abc1314520'
         |)
         |""".stripMargin
+
     // 在catalog注册表
     tEnv.executeSql(table_str.format("user1", "user1"))
     tEnv.executeSql(table_str.format("user2", "user2"))

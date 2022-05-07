@@ -1,4 +1,4 @@
-package com.bigdata.feature.table
+package com.bigdata.feature.table.batch
 
 import org.apache.flink.table.api.DataTypes.{ROW, FIELD, BIGINT, STRING, INT}
 import org.apache.flink.table.api.{$, EnvironmentSettings, TableEnvironment, row}

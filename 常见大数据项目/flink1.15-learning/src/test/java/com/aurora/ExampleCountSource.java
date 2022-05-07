@@ -13,7 +13,8 @@ import org.apache.flink.streaming.api.functions.source.SourceFunction;
  * @author lj.michale
  * @date 2022-04-28
  */
-public class ExampleCountSource implements SourceFunction<Long>, CheckpointedFunction {
+public class ExampleCountSource
+        implements SourceFunction<Long>, CheckpointedFunction {
 
     private long count = 0L;
     private volatile boolean isRunning = true;

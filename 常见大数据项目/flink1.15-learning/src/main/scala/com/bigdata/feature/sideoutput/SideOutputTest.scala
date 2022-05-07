@@ -20,8 +20,8 @@ object SideOutputTest {
 
     val inputDStream: DataStream[String] = env.socketTextStream("hadoop102", 7777)
 
-    val dataDstream: DataStream[SensorReading] = inputDStream.map(
-      data => {
+    val dataDstream: DataStream[SensorReading] = inputDStream
+      .map( data => {
         val dataArray: Array[String] = data.split(",")
         SensorReading(dataArray(0), dataArray(1).toLong, dataArray(2).toDouble)
       })

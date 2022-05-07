@@ -18,19 +18,22 @@ object SqlBatchDemo {
       .newInstance()
       .inBatchMode()
       .build()
-    val tEnv = TableEnvironment.create(settings)
+    val tEnv = TableEnvironment.create(settings
 
-    val MyOrder = ROW(FIELD("id", BIGINT()),
+    val MyOrder = ROW(
+      FIELD("id", BIGINT()),
       FIELD("product", STRING()),
       FIELD("amount", INT())
     )
 
-    val input = tEnv.fromValues(MyOrder, row(1L, "BMW", 1),
+    val input = tEnv.fromValues(MyOrder,
+      row(1L, "BMW", 1),
       row(2L, "Tesla", 8),
       row(2L, "Tesla", 8),
-      row(3L, "BYD", 20))
+      row(3L, "BYD", 20)
+    )
 
-    tEnv.createTemporaryView("myOrder",input)
+    tEnv.createTemporaryView("myOrder", input)
     val table = tEnv.sqlQuery("select product, sum(amount) as amount from myOrder group by product")
 
     table.execute().print()
