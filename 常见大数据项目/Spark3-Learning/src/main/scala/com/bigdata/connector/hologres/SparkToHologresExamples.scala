@@ -15,7 +15,7 @@ object SparkToHologresExamples {
   def main(args: Array[String]): Unit = {
 
     val sparkConf = new SparkConf()
-      .setAppName("DauApp")
+      .setAppName("SparkToHologresExamples")
       .setMaster("local[*]")
     val spark = SparkSession.builder()
       .config(sparkConf)
