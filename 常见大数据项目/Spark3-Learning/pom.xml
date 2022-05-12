@@ -135,6 +135,11 @@
             <version>1.0.1</version>
             <classifier>jar-with-dependencies</classifier>
         </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.2.2</version>
+        </dependency>
     </dependencies>
 
 
