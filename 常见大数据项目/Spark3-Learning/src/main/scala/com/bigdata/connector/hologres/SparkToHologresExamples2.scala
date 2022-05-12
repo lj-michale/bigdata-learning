@@ -79,7 +79,6 @@ object SparkToHologresExamples2 {
       StructField("stringa", ArrayType(StringType))
     ))
 
-
     val df = spark.createDataFrame(
       spark.sparkContext.parallelize(data),
       schema
