@@ -5,7 +5,7 @@ import org.apache.spark.SparkConf
 import org.apache.spark.sql.SparkSession
 
 /**
- * @descri SparkToHologresExamples
+ * @descri SparkToHologresExamples 示例
  *
  * @author lj.michale
  * @date 2022-05-12
@@ -21,6 +21,7 @@ object SparkToHologresExamples {
       .config(sparkConf)
       .getOrCreate()
 
+    // Hologres兼容PostgreSQL，因为Spark可以用读取PostgreSQL的方式读取Hologres中的数据
     val readDf = spark.read
       // 使用postgresql jdbc driver读取holo
       .format("jdbc")
