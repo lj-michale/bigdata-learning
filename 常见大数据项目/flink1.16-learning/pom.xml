@@ -108,6 +108,15 @@
             <artifactId>flink-csv</artifactId>
             <version>${flink.version}</version>
         </dependency>
+        <!-- flink-doris-connector -->
+        <dependency>
+            <groupId>org.apache.doris</groupId>
+            <artifactId>flink-doris-connector-1.14_2.12</artifactId>
+            <!--artifactId>flink-doris-connector-1.13_2.12</artifactId-->
+            <!--artifactId>flink-doris-connector-1.12_2.12</artifactId-->
+            <!--artifactId>flink-doris-connector-1.11_2.12</artifactId-->
+            <version>1.0.3</version>
+        </dependency>
 <!--        <dependency>-->
 <!--            <groupId>org.apache.flink</groupId>-->
 <!--            <artifactId>flink-ml-core_${scala.binary.version}</artifactId>-->
