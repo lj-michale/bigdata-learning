@@ -140,6 +140,13 @@
             <artifactId>postgresql</artifactId>
             <version>42.2.2</version>
         </dependency>
+        <!-- Spark Doris Connector -->
+        <dependency>
+            <groupId>org.apache.doris</groupId>
+            <artifactId>spark-doris-connector-3.1_2.12</artifactId>
+            <!--artifactId>spark-doris-connector-2.3_2.11</artifactId-->
+            <version>1.0.1</version>
+        </dependency>
     </dependencies>
 
 
