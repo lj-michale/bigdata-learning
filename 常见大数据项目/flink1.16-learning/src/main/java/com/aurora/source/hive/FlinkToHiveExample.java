@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * @descri
+ * @descri  Flink - Hive
  *
  * @author lj.michale
  * @date 2022-05-17
