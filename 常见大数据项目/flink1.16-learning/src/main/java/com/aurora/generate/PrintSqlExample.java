@@ -45,8 +45,10 @@ public class PrintSqlExample {
         tEnv.executeSql(sql);
 
         tEnv.executeSql(sinkSql);
+
         // 执行查询
         Table table = tEnv.sqlQuery("select user_id,cost from source_table");
         table.executeInsert("print_table");
+
     }
 }
