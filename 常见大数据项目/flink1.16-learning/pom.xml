@@ -170,13 +170,28 @@
             <artifactId>flink-ml-lib_${scala.binary.version}</artifactId>
             <version>2.0.0</version>
         </dependency>
-        <!-- Flink CDC -->
+        <!-- Flink CDC系列 -->
         <dependency>
             <groupId>com.ververica</groupId>
             <artifactId>flink-connector-mysql-cdc</artifactId>
             <version>2.2.1</version>
         </dependency>
-        <!-- flink-doris-connector -->
+        <dependency>
+            <groupId>com.ververica</groupId>
+            <artifactId>flink-connector-mongodb-cdc</artifactId>
+            <version>2.2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.ververica</groupId>
+            <artifactId>flink-connector-postgres-cdc</artifactId>
+            <version>2.2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.ververica</groupId>
+            <artifactId>flink-connector-tidb-cdc</artifactId>
+            <version>2.2.1</version>
+        </dependency>
+        <!-- flink connector系列 -->
         <dependency>
             <groupId>org.apache.doris</groupId>
             <artifactId>flink-doris-connector-1.14_2.12</artifactId>
