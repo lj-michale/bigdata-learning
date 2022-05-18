@@ -20,6 +20,12 @@
         "top":2
       }
     ]
-  }
+  },
+
+  {"user_id": "543462", "item_id":"1715", "category_id": "1464116", "behavior": "pv", "ts":"2021-02-01 01:00:00"},
+  {"user_id": "662867", "item_id":"2244074","category_id":"1575622","behavior": "pv", "ts":"2021-02-01 01:00:00"},
+  {"user_id": "662867", "item_id":"2244074","category_id":"1575622","behavior": "pv", "ts":"2021-02-01 01:00:00"},
+  {"user_id": "662867", "item_id":"2244074","category_id":"1575622","behavior": "learning flink", "ts":"2021-02-01 01:00:00"}
+
 
 ]
