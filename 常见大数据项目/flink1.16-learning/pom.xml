@@ -208,6 +208,11 @@
 <!--            <scope>provided</scope>-->
         </dependency>
         <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-connector-elasticsearch7_${scala.binary.version}</artifactId>
+            <version>1.14.4</version>
+        </dependency>
+        <dependency>
             <groupId>org.apache.hive</groupId>
             <artifactId>hive-exec</artifactId>
             <version>${hive.version}</version>
