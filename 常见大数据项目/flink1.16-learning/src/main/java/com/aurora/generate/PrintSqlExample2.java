@@ -56,19 +56,19 @@ public class PrintSqlExample2 {
         tEnv.executeSql(sinkSql);
 
         // 执行查询
-//        Table table = tEnv.sqlQuery("select * from kafka_table");
-//        table.execute().print();
+        Table table = tEnv.sqlQuery("select * from kafka_table");
+        table.execute().print();
 
-        Table table = tEnv.sqlQuery("insert into print_table\n" +
-                "select\n" +
-                "  window_start,\n" +
-                "  window_end,\n" +
-                "  count(name),\n" +
-                "  name\n" +
-                "from table(HOP(table kafka_table,descriptor(proctime),interval '30' second, interval '1' HOUR))\n" +
-                "group by window_start,\n" +
-                "  window_end,\n" +
-                "  name");
+//        Table table = tEnv.sqlQuery("insert into print_table\n" +
+//                "select\n" +
+//                "  window_start,\n" +
+//                "  window_end,\n" +
+//                "  count(name),\n" +
+//                "  name\n" +
+//                "from table(HOP(table kafka_table,descriptor(proctime),interval '30' second, interval '1' HOUR))\n" +
+//                "group by window_start,\n" +
+//                "  window_end,\n" +
+//                "  name");
         table.executeInsert("print_table");
 
     }

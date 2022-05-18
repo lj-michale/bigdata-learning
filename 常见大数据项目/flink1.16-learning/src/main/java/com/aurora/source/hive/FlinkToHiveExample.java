@@ -9,6 +9,7 @@ import org.apache.flink.table.module.hive.HiveModule;
 import java.util.Map;
 import java.util.Objects;
 
+
 /**
  * @descri  Flink - Hive
  *
@@ -36,6 +37,7 @@ public class FlinkToHiveExample {
                                             Map<String, String> catalogMap,
                                             Map<String, String> setMap) {
         if (catalogMap.size() > 0) {
+
             HiveCatalog hiveCatalog = new HiveCatalog(
                     catalogMap.get("CATALOG_NAME"),
                     "DEFAULT_HIVE_DATABASE",

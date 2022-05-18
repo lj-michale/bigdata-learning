@@ -1,0 +1,25 @@
+[
+  {
+    "cid":"nbilibili",
+    "crawl_time":1652058821090,
+    "toplist":[
+      {
+        "author":"二二酸酸",
+        "comments":19103,
+        "hot_value":"5254670",
+        "hot_word":"只要5分钟，请为你的妈妈看完这个视频吧",
+        "search_url":"https://www.bilibili.com/video/BV1KF411M77B",
+        "top":1
+      },
+      {
+        "author":"",
+        "comments":7368,
+        "hot_value":"4132821",
+        "hot_word":"你这一辈子，有没有为别人拼过命！！！",
+        "search_url":"https://www.bilibili.com/video/BV1AT4y167mt",
+        "top":2
+      }
+    ]
+  }
+
+]
