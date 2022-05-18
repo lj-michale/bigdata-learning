@@ -154,32 +154,28 @@
             <artifactId>flink-cep-scala_${scala.binary.version}</artifactId>
             <version>${flink.version}</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.apache.flink</groupId>-->
-<!--            <artifactId>flink-ml-core_${scala.binary.version}</artifactId>-->
-<!--            <version>2.0.0</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.apache.flink</groupId>-->
-<!--            <artifactId>flink-ml-iteration_${scala.binary.version}</artifactId>-->
-<!--            <version>2.0.0</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.apache.flink</groupId>-->
-<!--            <artifactId>flink-ml-lib_${scala.binary.version}</artifactId>-->
-<!--            <version>2.0.0</version>-->
-<!--        </dependency>-->
-<!--        &lt;!&ndash; Flink CDC &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>com.ververica</groupId>-->
-<!--            <artifactId>flink-connector-mysql-cdc</artifactId>-->
-<!--            <version>2.2.0</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>com.alibaba</groupId>-->
-<!--            <artifactId>fastjson</artifactId>-->
-<!--            <version>1.2.59</version>-->
-<!--        </dependency>-->
+        <!-- ml -->
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-ml-core_${scala.binary.version}</artifactId>
+            <version>2.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-ml-iteration_${scala.binary.version}</artifactId>
+            <version>2.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-ml-lib_${scala.binary.version}</artifactId>
+            <version>2.0.0</version>
+        </dependency>
+        <!-- Flink CDC -->
+        <dependency>
+            <groupId>com.ververica</groupId>
+            <artifactId>flink-connector-mysql-cdc</artifactId>
+            <version>2.2.0</version>
+        </dependency>
         <!-- flink-doris-connector -->
         <dependency>
             <groupId>org.apache.doris</groupId>
@@ -211,6 +207,7 @@
             <groupId>org.apache.flink</groupId>
             <artifactId>flink-connector-elasticsearch7_${scala.binary.version}</artifactId>
             <version>1.14.4</version>
+<!--            <scope>provided</scope>-->
         </dependency>
         <dependency>
             <groupId>org.apache.hive</groupId>
@@ -233,36 +230,41 @@
             <artifactId>lombok</artifactId>
             <version>1.16.20</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>redis.clients</groupId>-->
-<!--            <artifactId>jedis</artifactId>-->
-<!--            <version>2.9.0</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>mysql</groupId>-->
-<!--            <artifactId>mysql-connector-java</artifactId>-->
-<!--            <version>8.0.13</version>-->
-<!--            <scope>runtime</scope>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>io.swagger</groupId>-->
-<!--            <artifactId>swagger-annotations</artifactId>-->
-<!--            <version>${swagger-annotations.version}</version>-->
-<!--        </dependency>-->
-<!--        &lt;!&ndash; 引入mock &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>org.mockito</groupId>-->
-<!--            <artifactId>mockito-core</artifactId>-->
-<!--            <version>2.7.22</version>-->
-<!--            <scope>test</scope>-->
-<!--        </dependency>-->
-        <!-- 日志框架 -->
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
-            <version>1.7.25</version>
-            <!-- <scope>test</scope> -->
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.59</version>
         </dependency>
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>2.9.0</version>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.13</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>${swagger-annotations.version}</version>
+        </dependency>
+        <!-- 引入mock -->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>2.7.22</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- 日志框架 -->
+<!--        <dependency>-->
+<!--            <groupId>org.slf4j</groupId>-->
+<!--            <artifactId>slf4j-simple</artifactId>-->
+<!--            <version>1.7.25</version>-->
+<!--            &lt;!&ndash; <scope>test</scope> &ndash;&gt;-->
+<!--        </dependency>-->
     </dependencies>
 
     <!-- 项目构建插件 -->
