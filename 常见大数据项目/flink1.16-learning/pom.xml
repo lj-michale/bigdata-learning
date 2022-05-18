@@ -154,21 +154,6 @@
             <artifactId>flink-cep-scala_${scala.binary.version}</artifactId>
             <version>${flink.version}</version>
         </dependency>
-        <!-- flink-doris-connector -->
-        <dependency>
-            <groupId>org.apache.doris</groupId>
-            <artifactId>flink-doris-connector-1.14_2.12</artifactId>
-            <!--artifactId>flink-doris-connector-1.13_2.12</artifactId-->
-            <!--artifactId>flink-doris-connector-1.12_2.12</artifactId-->
-            <!--artifactId>flink-doris-connector-1.11_2.12</artifactId-->
-            <version>1.0.3</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>slf4j-api</artifactId>
-                    <groupId>org.slf4j</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
 <!--        <dependency>-->
 <!--            <groupId>org.apache.flink</groupId>-->
 <!--            <artifactId>flink-ml-core_${scala.binary.version}</artifactId>-->
@@ -195,6 +180,27 @@
 <!--            <artifactId>fastjson</artifactId>-->
 <!--            <version>1.2.59</version>-->
 <!--        </dependency>-->
+        <!-- flink-doris-connector -->
+        <dependency>
+            <groupId>org.apache.doris</groupId>
+            <artifactId>flink-doris-connector-1.14_2.12</artifactId>
+            <!--artifactId>flink-doris-connector-1.13_2.12</artifactId-->
+            <!--artifactId>flink-doris-connector-1.12_2.12</artifactId-->
+            <!--artifactId>flink-doris-connector-1.11_2.12</artifactId-->
+            <version>1.0.3</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>slf4j-api</artifactId>
+                    <groupId>org.slf4j</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-connector-pulsar_${scala.binary.version}</artifactId>
+            <version>1.14.4</version>
+<!--            <scope>provided</scope>-->
+        </dependency>
         <dependency>
             <groupId>org.apache.flink</groupId>
             <artifactId>flink-connector-hive_${scala.binary.version}</artifactId>
