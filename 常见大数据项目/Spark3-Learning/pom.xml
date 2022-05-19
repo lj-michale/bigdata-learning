@@ -31,6 +31,11 @@
             <name>GitHub Repo</name>
             <url>https://raw.githubusercontent.com/CodingCat/xgboost/maven-repo/</url>
         </repository>
+        <repository>
+            <id>sonatype-oss-snapshots</id>
+            <name>Sonatype OSS Snapshots Repository</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </repository>
     </repositories>
 
     <pluginRepositories>
@@ -83,6 +88,11 @@
             <artifactId>nd4j-kryo_${scala.binary.version}</artifactId>
             <version>${nd4j.version}</version>
         </dependency>-->
+        <dependency>
+            <groupId>com.github.housepower</groupId>
+            <artifactId>clickhouse-spark-runtime-3.2_2.12</artifactId>
+            <version>0.2.0</version>
+        </dependency>
         <dependency>
             <groupId>ml.dmlc</groupId>
             <artifactId>xgboost4j-spark</artifactId>

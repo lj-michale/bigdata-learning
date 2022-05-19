@@ -47,7 +47,7 @@ public class FlinkTableSQLExample {
         DataStream<String> dataStream = env.fromSource(source, WatermarkStrategy.noWatermarks(), "Kafka Source");
 
         // 定义kafka_tb表类型（有序）
-        TypeInformation[] kafka_tb_types = new TypeInformation[]{Types.STRING,Types.STRING};
+        TypeInformation[] kafka_tb_types = new TypeInformation[]{Types.STRING, Types.STRING};
         RowTypeInfo kafka_tb_rowType = new RowTypeInfo(kafka_tb_types);
 
         // kafka接收到的流转换后注册成kafka_tb表
