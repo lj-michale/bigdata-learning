@@ -33,8 +33,8 @@ public class FlinkTableSQLExample {
         final StreamExecutionEnvironment env = StreamExecutionEnvironment.createLocalEnvironment();
         StreamTableEnvironment tEnv = StreamTableEnvironment.create(env);
 
-        //接入socket流,测试数据如下
-        //{'name':'kafka_tb','type':'INSERT','new':{'id':'1','name':'lxz'}}
+        // 接入socket流,测试数据如下
+        // {'name':'kafka_tb','type':'INSERT','new':{'id':'1','name':'lxz'}}
 //        DataStream<String> dataStream = env.socketTextStream("localhost", 9999);
 
         KafkaSource<String> source = KafkaSource.<String>builder()
@@ -46,10 +46,11 @@ public class FlinkTableSQLExample {
                 .build();
         DataStream<String> dataStream = env.fromSource(source, WatermarkStrategy.noWatermarks(), "Kafka Source");
 
-        //定义kafka_tb表类型（有序）
+        // 定义kafka_tb表类型（有序）
         TypeInformation[] kafka_tb_types = new TypeInformation[]{Types.STRING,Types.STRING};
         RowTypeInfo kafka_tb_rowType = new RowTypeInfo(kafka_tb_types);
-        //socket接收到的流转换后注册成kafka_tb表
+
+        // kafka接收到的流转换后注册成kafka_tb表
         DataStream<Row> ds = dataStream.flatMap(new FlatMapFunction<String, Row>() {
             @Override
             public void flatMap(String value, Collector<Row> out) throws Exception {
@@ -67,6 +68,8 @@ public class FlinkTableSQLExample {
         Table tab1 = tEnv.fromChangelogStream(ds,schema01).as("id","name");
         tEnv.createTemporaryView("kafka_tb", tab1);
 
+        ds.print();
+/*
         // 注册Hbase索引表hbase_index_tb
         tEnv.executeSql("CREATE TABLE hbase_index_tb (\n" +
                 " ID STRING,\n" +
@@ -98,6 +101,7 @@ public class FlinkTableSQLExample {
                 "on a.ID = b.ID " +
                 "join kafka_tb c " +
                 "on  c.name=b.NAME").print();
+*/
 
     }
 
