@@ -12,7 +12,7 @@ import scala.Tuple2;
 import java.util.List;
 
 /**
- * @descri ALS算法
+ * @descri 基于Spark mllib包下的ALS算法
  *
  * @author lj.michale
  * @date 2022-05-20
