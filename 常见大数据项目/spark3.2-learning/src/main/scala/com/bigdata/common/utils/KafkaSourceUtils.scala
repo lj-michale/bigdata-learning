@@ -21,6 +21,8 @@ object KafkaSourceUtils {
   private val properties: Properties = PropertiesUtils.getProperties("spark-dev.properties")
   val broker_list: String = properties.getProperty("kafka.broker.url")
 
+  var dStream: InputDStream[ConsumerRecord[String, String]] = null
+
   //////////////////////// kafka消费者配置
   var kafkaParam = collection.mutable.Map(
     // 用于初始化链接到集群的地址
@@ -51,10 +53,10 @@ object KafkaSourceUtils {
    */
   def getKafkaStream(topic: String,
                      ssc:StreamingContext ): InputDStream[ConsumerRecord[String, String]]={
-    val dStream = KafkaUtils.createDirectStream[String, String](
+    dStream = KafkaUtils.createDirectStream[String, String](
       ssc,
       LocationStrategies.PreferConsistent,
-      ConsumerStrategies.Subscribe[String,String](Array(topic), kafkaParam ))
+      ConsumerStrategies.Subscribe[String, String](Array(topic), kafkaParam ))
     dStream
   }
 
@@ -69,10 +71,10 @@ object KafkaSourceUtils {
                      ssc:StreamingContext,
                      groupId:String): InputDStream[ConsumerRecord[String, String]]={
     kafkaParam("group.id") = groupId
-    val dStream = KafkaUtils.createDirectStream[String, String](
+    dStream = KafkaUtils.createDirectStream[String, String](
       ssc,
       LocationStrategies.PreferConsistent,
-      ConsumerStrategies.Subscribe[String,String](Array(topic),kafkaParam ))
+      ConsumerStrategies.Subscribe[String, String](Array(topic), kafkaParam ))
     dStream
   }
 
@@ -89,7 +91,7 @@ object KafkaSourceUtils {
                      offset: Map[TopicPartition, Long],
                      groupId: String): InputDStream[ConsumerRecord[String, String]]={
     kafkaParam("group.id") = groupId
-    val dStream = KafkaUtils.createDirectStream[String, String](
+    dStream = KafkaUtils.createDirectStream[String, String](
       ssc,
       LocationStrategies.PreferConsistent,
       ConsumerStrategies.Subscribe[String, String](Array(topic), kafkaParam, offset))
