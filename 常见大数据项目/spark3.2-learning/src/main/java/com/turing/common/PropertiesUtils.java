@@ -22,6 +22,7 @@ public class PropertiesUtils {
      */
     public static Properties getProperties(String filePath) {
         final Properties properties = new Properties();
+
         try {
             properties.load(PropertiesUtils.class.getClassLoader().getResourceAsStream(filePath));
         } catch (IOException e) {
