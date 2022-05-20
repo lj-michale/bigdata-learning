@@ -138,16 +138,19 @@ public class MovieRecommendByALS {
     /**
      * 校验集预测数据和实际数据之间的均方根误差
      **/
-    public static Double computeRmse(MatrixFactorizationModel model, JavaRDD<Rating> data, Long n) {
+    public static Double computeRmse(MatrixFactorizationModel model,
+                                     JavaRDD<Rating> data,
+                                     Long n) {
         // 进行预测
         JavaRDD<Rating> predictions = model.predict(data.mapToPair(v -> new Tuple2<>(v.user(), v.product())));
         JavaRDD<Tuple2<Double, Double>> predictionsAndRatings = predictions
                 .mapToPair(v -> new Tuple2<>(new Tuple2<>(v.user(), v.product()), v.rating()))
                 .join(data.mapToPair(v -> new Tuple2<>(new Tuple2<>(v.user(), v.product()), v.rating()))).values();
-
         Double reduce = predictionsAndRatings.map(v -> (v._1 - v._2) * (v._1 - v._2))
                 .reduce((v1, v2) -> (v1 + v2) / n);
+
         // 正平方根
         return Math.sqrt(reduce);
     }
+
 }
