@@ -38,21 +38,21 @@ public class MovieRecommendByALS {
             return new Tuple2<>(Long.valueOf(v1[3]) % 10, rating);
         });
 
-        //装载电影目录对照表(电影ID->电影标题)
-        List<Tuple2> movies = jsc.textFile("E:\\OpenSource\\GitHub\\bigdata-learning\\常见大数据项目\\spark3.2-learning\\dataset\\u.item").map(v1 -> {
+        // 装载电影目录对照表(电影ID->电影标题)
+        List<Tuple2> movies = jsc.textFile("E:\\OpenSource\\GitHub\\bigdata-learning\\常见大数据项目\\spark3.2-learning\\dataset\\u.item")
+                .map(v1 -> {
             String[] ss = v1.split("\\|");
             return new Tuple2(ss[0], ss[1]);
         }).collect();
 
-        //统计有用户数量和电影数量以及用户对电影的评分数目
+        // 统计有用户数量和电影数量以及用户对电影的评分数目
         Long numRatings = ratings.count();
         Long numUsers = ratings.map(v1 -> ((Rating) v1._2()).user()).distinct().count();
         Long numMovies = ratings.map(v1 -> ((Rating) v1._2()).product()).distinct().count();
         System.out.println("用户：" + numUsers + "电影：" + numMovies + "评论：" + numRatings);
 
-        //将样本评分表以key值切分成3个部分，分别用于训练 (60%，并加入用户评分), 校验 (20%), and 测试 (20%)
-        //该数据在计算过程中要多次应用到，所以cache到内存
-
+        // 将样本评分表以key值切分成3个部分，分别用于训练 (60%，并加入用户评分), 校验 (20%), and 测试 (20%)
+        // 该数据在计算过程中要多次应用到，所以cache到内存
         // 分区数
         Integer numPartitions = 4;
         // 训练集
@@ -79,7 +79,7 @@ public class MovieRecommendByALS {
         Long numTest = test.count();
         System.out.println("训练集：" + numTraining + " 校验集：" + numValidation + " 测试集：" + numTest);
 
-        //训练不同参数下的模型，并在校验集中验证，获取最佳参数下的模
+        // 训练不同参数下的模型，并在校验集中验证，获取最佳参数下的模
         int[] ranks = new int[]{10, 11, 12};
 //        double[] lambdas = new double[]{0.01, 0.03, 0.1, 0.3, 1, 3};
         double[] lambdas = new double[]{0.01};
@@ -96,9 +96,9 @@ public class MovieRecommendByALS {
         for (int rank : ranks) {
             for (int numIter : numIters) {
                 for (double lambda : lambdas) {
-                    //训练集得到模型
+                    // 训练集得到模型
                     MatrixFactorizationModel model = ALS.train(training.rdd(), rank, numIter, lambda);
-                    //校验集进行预测数据和实际数据之间的均方根误差,得到误差最小的,之后返回最好的参数
+                    // 校验集进行预测数据和实际数据之间的均方根误差,得到误差最小的,之后返回最好的参数
                     Double validationRmse = computeRmse(model, validation, numValidation);
                     System.out.println("RMSE(校验集) = " + validationRmse + ", rank = " + rank + ", lambda = " + lambda + ", numIter = " + numIter);
 
@@ -113,7 +113,7 @@ public class MovieRecommendByALS {
             }
         }
 
-        //测试集用于看看提升了多少准确率
+        // 测试集用于看看提升了多少准确率
         double testRmse = computeRmse(bestModel, test, numTest);
         System.out.println("测试数据集在 最佳训练模型 rank = " + bestRank + ", lambda = " + bestLambda + ", numIter = " + bestNumIter + ", RMSE = " + testRmse);
 
@@ -129,11 +129,10 @@ public class MovieRecommendByALS {
         bestModel = ALS.train(ratings.values().rdd(), bestRank, bestNumIter, bestLambda);
         Rating[] recommendProducts = bestModel.recommendProducts(789, 10);
 
-        //打印推荐结果
+        // 打印推荐结果
         for (Rating rating : recommendProducts) {
             System.out.println(rating.user() + "->" + rating.product()+": " + rating.rating());
         }
-
     }
 
     /**
@@ -148,7 +147,7 @@ public class MovieRecommendByALS {
 
         Double reduce = predictionsAndRatings.map(v -> (v._1 - v._2) * (v._1 - v._2))
                 .reduce((v1, v2) -> (v1 + v2) / n);
-        //正平方根
+        // 正平方根
         return Math.sqrt(reduce);
     }
 }
