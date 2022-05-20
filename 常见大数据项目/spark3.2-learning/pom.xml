@@ -60,11 +60,20 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!-- spark connector系列 -->
+
+        <!-- spark connector 连接器系列 -->
         <dependency>
             <groupId>com.github.housepower</groupId>
             <artifactId>clickhouse-spark-runtime-3.2_2.12</artifactId>
             <version>0.2.0</version>
+        </dependency>
+
+        <!-- 其他依赖 -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.20</version>
+            <scope>provided</scope>
         </dependency>
 
     </dependencies>
