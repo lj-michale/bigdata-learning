@@ -15,7 +15,7 @@ import com.bigdata.common.constant.GlobalConstant.Pipeline_Global_Prpos
 object KafkaSinkUtils {
 
   private val properties: Properties = PropertiesUtils.getProperties(Pipeline_Global_Prpos)
-  val brokerUrl: String = properties.getProperty("kafka.broker.list")
+  private val brokerUrl: String = properties.getProperty("kafka.broker.list")
 
   var kafkaProducer: KafkaProducer[String, String] = null
 
