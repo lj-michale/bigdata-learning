@@ -34,6 +34,7 @@ object KafkaSinkUtils {
     try
       producer = new KafkaProducer[String, String](properties)
     catch {
+
       case e: Exception => e.printStackTrace()
     }
 
@@ -41,7 +42,7 @@ object KafkaSinkUtils {
   }
 
   /**
-   * @descr send to kafka
+   * @descr Send to Kafka
    *
    * @param topic
    * @param msg
@@ -54,7 +55,7 @@ object KafkaSinkUtils {
   }
 
   /**
-   * @descr send to kafka
+   * @descr Send to Kafka
    *
    * @param topic
    * @param key

@@ -1,4 +1,4 @@
-package com.turing.ml;
+package com.turing.pipeline.ml;
 
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;

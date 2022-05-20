@@ -1,4 +1,4 @@
-package com.bigdata.ml
+package com.bigdata.pipeline.ml
 
 import org.apache.spark.SparkConf
 import org.apache.spark.ml.feature.BucketedRandomProjectionLSH
