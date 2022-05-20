@@ -11,7 +11,7 @@ import org.apache.spark.streaming.dstream.InputDStream
 import org.apache.spark.streaming.kafka010.{ConsumerStrategies, KafkaUtils, LocationStrategies}
 
 /**
- * @descr KafkaSourceUtils
+ * @descr KafkaSourceUtils 工具类
  *
  * @author lj.michale
  * @date 2022-05-20
