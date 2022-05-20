@@ -28,13 +28,15 @@ object KafkaSinkUtils {
     properties.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer")
     properties.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer")
     properties.put("enable.idompotence",(true: java.lang.Boolean))
+
     var producer: KafkaProducer[String, String] = null
+
     try
       producer = new KafkaProducer[String, String](properties)
     catch {
-      case e: Exception =>
-        e.printStackTrace()
+      case e: Exception => e.printStackTrace()
     }
+
     producer
   }
 
