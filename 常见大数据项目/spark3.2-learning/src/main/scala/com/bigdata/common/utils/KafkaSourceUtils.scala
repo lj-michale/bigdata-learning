@@ -2,6 +2,8 @@ package com.bigdata.common.utils
 
 import java.util.Properties
 
+import com.bigdata.common.constant.GlobalConstant.Pipeline_Global_Prpos
+
 import com.turing.common.PropertiesUtils
 import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.apache.kafka.common.TopicPartition
@@ -18,7 +20,7 @@ import org.apache.spark.streaming.kafka010.{ConsumerStrategies, KafkaUtils, Loca
  */
 object KafkaSourceUtils {
 
-  private val properties: Properties = PropertiesUtils.getProperties("spark-dev.properties")
+  private val properties: Properties = PropertiesUtils.getProperties(Pipeline_Global_Prpos)
   val broker_list: String = properties.getProperty("kafka.broker.url")
 
   var dStream: InputDStream[ConsumerRecord[String, String]] = null

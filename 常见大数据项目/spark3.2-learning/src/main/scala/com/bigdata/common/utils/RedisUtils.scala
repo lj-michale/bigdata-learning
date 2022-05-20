@@ -2,6 +2,7 @@ package com.bigdata.common.utils
 
 import com.turing.common.PropertiesUtils
 import redis.clients.jedis.{Jedis, JedisPool, JedisPoolConfig}
+import com.bigdata.common.constant.GlobalConstant.Pipeline_Global_Prpos
 
 /**
  * @descr RedisUtils
@@ -17,7 +18,7 @@ object RedisUtils {
 
     if(jedisPool == null) {
       // 开起一个连接池
-      val config =  PropertiesUtils.getProperties("spark-dev.properties")
+      val config =  PropertiesUtils.getProperties(Pipeline_Global_Prpos)
       val host = config.getProperty("redis.host")
       val port = config.getProperty("redis.port")
 

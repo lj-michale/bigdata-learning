@@ -4,6 +4,7 @@ import java.util.Properties
 
 import com.turing.common.PropertiesUtils
 import org.apache.kafka.clients.producer.{KafkaProducer, ProducerRecord}
+import com.bigdata.common.constant.GlobalConstant.Pipeline_Global_Prpos
 
 /**
  * @descr KafkaSinkUtils
@@ -13,7 +14,7 @@ import org.apache.kafka.clients.producer.{KafkaProducer, ProducerRecord}
  */
 object KafkaSinkUtils {
 
-  private val properties: Properties = PropertiesUtils.getProperties("spark-dev.properties")
+  private val properties: Properties = PropertiesUtils.getProperties(Pipeline_Global_Prpos)
   val brokerUrl: String = properties.getProperty("kafka.broker.list")
 
   var kafkaProducer: KafkaProducer[String, String] = null
