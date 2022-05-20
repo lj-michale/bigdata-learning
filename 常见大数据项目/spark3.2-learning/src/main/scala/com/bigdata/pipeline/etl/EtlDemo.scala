@@ -10,7 +10,7 @@ import org.apache.spark.{SparkConf, SparkContext}
 import org.apache.spark.sql._
 
 /**
- * @descr 日志清洗ETL示例
+ * @descr 日志清洗Spark-ETL示例
  *
  * @author lj.michale
  * @date 2022-05-20
